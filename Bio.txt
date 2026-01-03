@@ -1,0 +1,143 @@
+Rofsan Sir: Brand Identity & Development Strategy
+
+Focus: O/A Level Bengali Education | Cambridge Assessment Specialist
+
+1. Brand Overview
+
+Brand Essence: Academic Excellence, Trust, and Bengali Heritage.
+
+Core Value Proposition: Learning Bengali not just as a language, but as a high-scoring academic subject guided by an official Cambridge Examiner.
+
+Target Audience
+
+Primary: English Medium students (Grades 8–12) taking CAIE O/A Level Bengali.
+
+Secondary: Parents looking for high-quality, reliable tutoring from an industry professional.
+
+Geographic: Primarily Dhaka, Bangladesh, and expatriate Bangladeshi students worldwide.
+
+2. Visual Identity (Brand Guidelines)
+
+Color Palette
+
+Based on the existing logo and the "Cambridge" association, we use a "Academic Elite" palette:
+
+Primary Navy (#003366): Represents authority, the Cambridge connection, and trust.
+
+Secondary Crimson/Deep Red (#A30000): Used for CTA buttons (Enrol Now) and to highlight "Examiner Tips."
+
+Gold/Amber (#FFD700): For achievement icons, stars, and "A*" badges.
+
+Clean White/Light Grey (#F9F9F9): Backgrounds to ensure readability of Bengali script.
+
+Typography
+
+Primary Headline (Bengali): Hind Siliguri or Kalpurush (Bold, clean, and legible).
+
+Primary Headline (English): Amaranth (as used in the logo) or Montserrat.
+
+Body Text: Open Sans or Roboto for high digital readability across devices.
+
+Imagery Style
+
+Portraiture: Professional, warm photos of Rofsan Sir in an academic setting (as seen in the "Pic.jpg" file).
+
+Graphic Elements: Use "A*" badges, Cambridge-style seals, and high-quality mockups of his published books.
+
+3. Brand Storyboard & Narrative
+
+Chapter
+
+Content Focus
+
+Key Message
+
+History
+
+10+ years of teaching at institutions like ESS and OIS.
+
+"A decade of shaping Bengali excellence."
+
+The Problem
+
+Students find Bengali difficult to score in; resources are often outdated or unofficial.
+
+"Bengali shouldn't be the subject that pulls your GPA down."
+
+The Solution
+
+Direct guidance from a CAIE Examiner who knows exactly what the mark scheme requires.
+
+"Learn from the person who understands the assessment."
+
+Teacher Identity
+
+Author of Bengali books, Assessment Specialist, Mentor.
+
+"Expertise you can trust; results you can see."
+
+4. Website Design Plan (Phase 1)
+
+Page-by-Page Strategy
+
+Home Page (The Hook):
+
+Hero Section: Image of Rofsan Sir + Headline: "Master O Level Bangla with a CAIE Examiner."
+
+Trust Bar: Logos of Cambridge, ESS, OIS.
+
+Quick Links: Latest Resources, Current Batches.
+
+About Page (The Proof):
+
+Detailed timeline of academic experience.
+
+Scans of Examiner certifications (low res for security).
+
+Teaching Philosophy: "Bridging the gap between language and assessment."
+
+Resources (The Value):
+
+Categorized by Paper 1 and Paper 2.
+
+Preview images of book covers.
+
+"Examiner Tips" blog—short, actionable advice.
+
+Student Portal (The Function):
+
+Simple login to access restricted Google Drive folders.
+
+Automated email capture for marketing.
+
+5. Development Roadmap
+
+Phase 1: Launch (Month 1)
+
+Domain & Hosting Setup: Secure rofsansir.com.
+
+Landing Page: Focus on Batch Admissions and About section.
+
+Basic SEO: Target keywords like "O Level Bangla Teacher Dhaka," "Cambridge Bengali Examiner."
+
+Phase 2: Engagement (Month 2)
+
+Resource Library: Uploading PDFs and worksheets.
+
+Review System: Adding video testimonials from students who achieved A*.
+
+Integrated Contact: WhatsApp API integration for instant course enquiries.
+
+Phase 3: Automation (Month 3+)
+
+LMS Lite: Restricted access area for paid students.
+
+Inventory Management: For selling physical copies of books directly through the site.
+
+6. Content Pillars (For Social Media & Web)
+
+The Examiner's Eye: Weekly post explaining one common mistake students make in Paper 1.
+
+Vocabulary Spotlight: Rare Bengali words with their English equivalents and usage.
+
+Student Success: Celebrating mock test toppers and final CAIE results.
