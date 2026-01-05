@@ -7,6 +7,7 @@ const Header = () => {
 
     const navLinks = [
         { label: 'Home', href: '/' },
+        { label: 'About Rofsan Sir', href: '/about' },
         { label: 'Courses & Admission', href: '/courses' },
         { label: 'Resources', href: '/resources' },
         { label: 'Examiner Tips', href: '/tips' },
@@ -40,8 +41,8 @@ const Header = () => {
 
                     {/* Desktop CTA */}
                     <div className="hidden md:block">
-                        <Button variant="default" size="sm">
-                            Students Portal
+                        <Button variant="default" size="sm" asChild>
+                            <a href="/student/login">Students Portal</a>
                         </Button>
                     </div>
 

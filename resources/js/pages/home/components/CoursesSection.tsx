@@ -1,5 +1,4 @@
-import { Button } from '@/components/ui/button';
-import { ArrowRight, CheckCircle, Monitor, BookOpen, TestTube } from 'lucide-react';
+import { CheckCircle, Monitor, BookOpen, TestTube } from 'lucide-react';
 
 const courseFeatures = [
     {
@@ -42,32 +41,33 @@ const availableClasses = [
 
 const CoursesSection = () => {
     return (
-        <section id="courses" className="bg-background py-16 lg:py-24">
-            <div className="container-max section-padding">
-                <div className="mb-12 text-center">
-                    <h2 className="mb-4 text-3xl font-bold text-foreground lg:text-4xl">
+        <section id="courses" className="bg-gradient-to-br from-slate-50 via-white to-blue-50/20 py-24">
+
+            <div className="container-max section-padding relative z-10">
+                <div className="mb-20 text-center">
+                    <h2 className="mb-6 text-4xl font-bold text-slate-900 md:text-5xl">
                         O Level Bangla Full Course
                     </h2>
-                    <p className="mx-auto max-w-2xl text-muted-foreground">
+                    <p className="mx-auto max-w-3xl text-xl leading-relaxed text-slate-600">
                         Comprehensive preparation for both papers with a Cambridge Examiner, featuring modern teaching methods and proven results.
                     </p>
                 </div>
 
                 {/* Course Features Grid */}
-                <div className="mb-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="mb-24 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                     {courseFeatures.map((feature, index) => (
                         <div
                             key={index}
-                            className="animate-fade-in flex flex-col items-center text-center p-6 rounded-xl border border-border bg-card shadow-soft"
+                            className="group animate-fade-in flex flex-col items-center text-center p-8 rounded-2xl bg-white shadow-card hover:shadow-luxury border border-slate-200/50 hover:border-primary/20 transition-all duration-300 hover:scale-105"
                             style={{ animationDelay: `${index * 0.1}s` }}
                         >
-                            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
-                                <feature.icon className="h-6 w-6 text-primary" />
+                            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/15 to-secondary/10 group-hover:from-primary/20 group-hover:to-secondary/15 transition-all duration-300 shadow-soft">
+                                <feature.icon className="h-8 w-8 text-primary group-hover:scale-110 transition-transform duration-300" />
                             </div>
-                            <h3 className="mb-2 text-lg font-semibold text-foreground">
+                            <h3 className="mb-4 text-xl font-bold text-slate-900">
                                 {feature.title}
                             </h3>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-slate-600 leading-relaxed">
                                 {feature.description}
                             </p>
                         </div>
@@ -75,21 +75,20 @@ const CoursesSection = () => {
                 </div>
 
                 {/* Available Classes */}
-                <div className="mb-12">
-                    <h3 className="mb-6 text-center text-2xl font-bold text-foreground">
+                <div className="mb-20">
+                    <h3 className="mb-16 text-center text-3xl font-bold text-slate-900">
                         Available for Classes
                     </h3>
-                    <div className="flex flex-wrap justify-center gap-6">
+                    <div className="flex flex-wrap justify-center gap-12">
                         {availableClasses.map((cls, index) => (
                             <div
                                 key={index}
-                                className="animate-fade-in flex flex-col items-center text-center p-4 rounded-lg border border-border bg-card"
-                                style={{ animationDelay: `${index * 0.1}s` }}
+                                className="group text-center p-6 rounded-2xl bg-white shadow-soft hover:shadow-card border border-slate-200/30 hover:border-primary/20 transition-all duration-300 hover:scale-105"
                             >
-                                <div className="mb-2 text-2xl font-bold text-primary">
+                                <div className="mb-4 text-5xl font-bold text-primary group-hover:scale-110 transition-transform duration-300">
                                     {cls.grade}
                                 </div>
-                                <p className="text-sm text-muted-foreground">
+                                <p className="text-slate-600 font-medium">
                                     {cls.description}
                                 </p>
                             </div>
@@ -99,17 +98,16 @@ const CoursesSection = () => {
 
                 {/* CTA Section */}
                 <div className="text-center">
-                    <div className="mb-6">
-                        <p className="text-muted-foreground mb-4">
-                            Join thousands of successful students guided by a Cambridge Examiner
-                        </p>
-                        <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-                            <Button size="lg">Enroll Now</Button>
-                            <Button variant="outline" size="lg">
-                                <ArrowRight className="h-4 w-4 mr-2" />
-                                View Course Details
-                            </Button>
-                        </div>
+                    <p className="mb-8 text-muted-foreground max-w-2xl mx-auto">
+                        Join thousands of successful students guided by a Cambridge Examiner
+                    </p>
+                    <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
+                        <button className="rounded-lg bg-primary px-6 py-3 text-base font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
+                            Enrol Now
+                        </button>
+                        <button className="rounded-lg border border-border bg-background px-6 py-3 text-base font-semibold text-foreground transition-colors hover:bg-accent">
+                            View Course Details
+                        </button>
                     </div>
                 </div>
             </div>

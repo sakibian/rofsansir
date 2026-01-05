@@ -5,7 +5,6 @@ import MentorSection from './components/MentorSection';
 import CoursesSection from './components/CoursesSection';
 import BooksSection from './components/BooksSection';
 import CTASection from './components/CTASection';
-import TrustBadges from './components/TrustBadges';
 import Footer from '@/components/Footer';
 import { Head } from '@inertiajs/react';
 
@@ -22,7 +21,6 @@ export default function Home() {
                     <CoursesSection />
                     <BooksSection />
                     <CTASection />
-                    <TrustBadges />
                 </main>
                 <Footer />
             </div>

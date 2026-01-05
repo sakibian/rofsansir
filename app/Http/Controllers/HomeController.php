@@ -25,4 +25,9 @@ class HomeController extends Controller
     {
         return Inertia::render('tips/index');
     }
+
+    public function about(): \Inertia\Response
+    {
+        return Inertia::render('about/index');
+    }
 }

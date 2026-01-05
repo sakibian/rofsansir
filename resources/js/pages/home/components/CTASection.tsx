@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import { Calendar, CheckCircle, Users } from 'lucide-react';
 
 const CTASection = () => {
@@ -6,7 +5,7 @@ const CTASection = () => {
         <section className="bg-gradient-to-r from-primary to-primary/80 py-16 lg:py-24">
             <div className="container-max section-padding text-center">
                 <div className="mb-8">
-                    <h2 className="mb-4 text-3xl font-bold text-white lg:text-4xl">
+                    <h2 className="text-3xl font-bold text-white lg:text-4xl">
                         Admission Going On
                     </h2>
 
@@ -82,20 +81,12 @@ const CTASection = () => {
                 </div>
 
                 <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                    <Button
-                        variant="outline"
-                        size="lg"
-                        className="border-white bg-white font-bold text-primary hover:bg-primary hover:text-white"
-                    >
+                    <button className="rounded-lg bg-white px-8 py-4 font-bold text-primary hover:bg-primary hover:text-white transition-colors">
                         Enroll Now
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="lg"
-                        className="border-white bg-transparent text-white hover:border-primary hover:bg-primary hover:text-white"
-                    >
+                    </button>
+                    <button className="rounded-lg border border-white bg-transparent px-8 py-4 font-medium text-white hover:border-primary hover:bg-primary hover:text-white transition-colors">
                         Contact Us
-                    </Button>
+                    </button>
                 </div>
             </div>
         </section>

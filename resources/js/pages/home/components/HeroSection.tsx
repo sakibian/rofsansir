@@ -1,5 +1,4 @@
-import { Button } from '@/components/ui/button';
-import { CheckCircle, Play } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const teacherImages = [
@@ -24,21 +23,20 @@ const HeroSection = () => {
             setCurrentImageIndex((prevIndex) =>
                 prevIndex === teacherImages.length - 1 ? 0 : prevIndex + 1,
             );
-        }, 5000); // 5 seconds
+        }, 5000);
 
         return () => clearInterval(interval);
     }, []);
 
     return (
-        <section className="relative overflow-hidden bg-surface py-12 lg:py-20">
+        <section className="relative overflow-hidden bg-surface py-16 lg:py-24">
             <div className="container-max section-padding">
                 <div className="grid items-center gap-12 lg:grid-cols-2">
-                    {/* Left Content */}
                     <div className="animate-fade-in">
                         <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2">
                             <CheckCircle className="h-4 w-4 text-primary" />
-                            <span className="text-sm font-medium text-primary">
-                                VERIFIED CAIE EXAMINER
+                            <span className="text-sm font-medium text-primary uppercase tracking-wide">
+                                Verified CAIE Examiner
                             </span>
                         </div>
 
@@ -51,15 +49,15 @@ const HeroSection = () => {
                         </p>
 
                         <div className="flex flex-col gap-4 sm:flex-row">
-                            <Button variant="hero">Enroll Now</Button>
-                            <Button variant="heroOutline">
-                                <Play className="h-4 w-4" />
+                            <button className="rounded-lg bg-primary px-6 py-3 text-base font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
+                                Enrol Now
+                            </button>
+                            <button className="rounded-lg border border-border bg-background px-6 py-3 text-base font-semibold text-foreground transition-colors hover:bg-accent">
                                 View Resources
-                            </Button>
+                            </button>
                         </div>
                     </div>
 
-                    {/* Right Content - Image Carousel */}
                     <div
                         className="animate-slide-in-right relative"
                         style={{ animationDelay: '0.2s' }}
@@ -86,7 +84,6 @@ const HeroSection = () => {
                                 </p>
                             </div>
 
-                            {/* Carousel Indicators */}
                             <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 transform gap-2">
                                 {teacherImages.map((_, index) => (
                                     <button

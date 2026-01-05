@@ -29,13 +29,13 @@ const stats = [
 
 const StatsSection = () => {
     return (
-        <section className="border-y border-border bg-background py-12">
+        <section className="border-y border-border bg-background py-16">
             <div className="container-max section-padding">
                 <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
                     {stats.map((stat, index) => (
                         <div
                             key={index}
-                            className="animate-fade-in flex flex-col items-center text-center"
+                            className="animate-fade-in flex flex-col items-center text-center p-6 rounded-xl border border-border bg-card shadow-soft"
                             style={{ animationDelay: `${index * 0.1}s` }}
                         >
                             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">

@@ -16,8 +16,8 @@
   --color-secondary-foreground: #2C3E6D;
   --color-muted: hsl(210 40% 96%);
   --color-muted-foreground: hsl(215 16% 47%);
-  --color-accent: #FFD700;
-  --color-accent-foreground: #2C3E6D;
+  --color-accent: #1565C0;
+  --color-accent-foreground: hsl(0 0% 100%);
   --color-destructive: hsl(0 84% 60%);
   --color-destructive-foreground: hsl(0 0% 100%);
   --color-border: hsl(214 32% 91%);
@@ -30,9 +30,11 @@
   --color-warning: hsl(38 92% 50%);
   --color-warning-foreground: hsl(0 0% 100%);
 
-  --shadow-soft: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
-  --shadow-card: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
-  --shadow-elevated: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
+  --shadow-soft: 0 1px 2px 0 hsl(222 84% 5% / 0.05);
+  --shadow-card: 0 1px 3px 0 hsl(222 84% 5% / 0.1), 0 1px 2px -1px hsl(222 84% 5% / 0.1);
+  --shadow-elevated: 0 4px 6px -1px hsl(222 84% 5% / 0.1), 0 2px 4px -2px hsl(222 84% 5% / 0.1);
+  --shadow-luxury: 0 20px 25px -5px hsl(222 84% 5% / 0.1), 0 8px 10px -6px hsl(222 84% 5% / 0.1);
+  --shadow-button: 0 4px 14px 0 hsl(30 100% 50% / 0.2);
 
   --radius: 0.75rem;
 }
