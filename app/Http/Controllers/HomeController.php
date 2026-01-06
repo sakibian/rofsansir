@@ -2,13 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Routine;
 use Inertia\Inertia;
 
 class HomeController extends Controller
 {
     public function index(): \Inertia\Response
     {
-        return Inertia::render('home/index');
+        $routines = Routine::active()
+            ->orderBy('day_of_week')
+            ->orderBy('start_time')
+            ->take(10) // Limit for home page display
+            ->get();
+
+        return Inertia::render('home/index', [
+            'routines' => $routines,
+        ]);
     }
 
     public function courses(): \Inertia\Response

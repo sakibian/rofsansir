@@ -12,8 +12,8 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
+import { Calendar, LayoutGrid, Mail, Users } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -24,27 +24,46 @@ const mainNavItems: NavItem[] = [
     },
 ];
 
-const footerNavItems: NavItem[] = [
+// Admin navigation items
+const adminNavItems: NavItem[] = [
     {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
+        title: 'Dashboard',
+        href: '/admin/dashboard',
+        icon: LayoutGrid,
     },
     {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
+        title: 'Students',
+        href: '/admin/students',
+        icon: Users,
+    },
+    {
+        title: 'Email Lists',
+        href: '/admin/emails',
+        icon: Mail,
+    },
+    {
+        title: 'Schedules',
+        href: '/admin/schedules',
+        icon: Calendar,
     },
 ];
 
+const footerNavItems: NavItem[] = [];
+
 export function AppSidebar() {
+    const { auth } = usePage().props as any;
+    const isAdmin = auth?.user?.isAdmin?.() || auth?.user?.role === 'admin';
+
+    // Use admin navigation for admin users, regular navigation for others
+    const navItems = isAdmin ? adminNavItems : mainNavItems;
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={dashboard()} prefetch>
+                            <Link href={isAdmin ? '/dashboard' : dashboard()} prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
@@ -53,7 +72,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain items={navItems} />
             </SidebarContent>
 
             <SidebarFooter>

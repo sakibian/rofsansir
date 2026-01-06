@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,44 +10,16 @@ import Header from '@/components/header';
 import Footer from '@/components/Footer';
 
 export default function StudentLogin() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [errors, setErrors] = useState<{ email?: string; password?: string; general?: string }>({});
-    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const { data, setData, post, processing, errors } = useForm({
+        email: '',
+        password: '',
+    });
+
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        setIsLoading(true);
-        setErrors({});
-
-        // Basic validation
-        const newErrors: typeof errors = {};
-        if (!email) newErrors.email = 'Email is required';
-        if (!password) newErrors.password = 'Password is required';
-
-        if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors);
-            setIsLoading(false);
-            return;
-        }
-
-        try {
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            
-            // Mock authentication logic
-            if (email === 'student@rofsansir.com' && password === 'student123') {
-                // Redirect to student dashboard
-                window.location.href = '/student/dashboard';
-            } else {
-                setErrors({ general: 'Invalid email or password' });
-            }
-        } catch (error) {
-            setErrors({ general: 'An error occurred. Please try again.' });
-        } finally {
-            setIsLoading(false);
-        }
+        post('/student/login');
     };
 
     return (
@@ -88,11 +60,11 @@ export default function StudentLogin() {
                                         <Input
                                             id="email"
                                             type="email"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
+                                            value={data.email}
+                                            onChange={(e) => setData('email', e.target.value)}
                                             placeholder="student@rofsansir.com"
                                             className={errors.email ? "border-destructive" : ""}
-                                            disabled={isLoading}
+                                            disabled={processing}
                                         />
                                         {errors.email && (
                                             <p className="text-sm text-destructive">{errors.email}</p>
@@ -105,17 +77,17 @@ export default function StudentLogin() {
                                             <Input
                                                 id="password"
                                                 type={showPassword ? "text" : "password"}
-                                                value={password}
-                                                onChange={(e) => setPassword(e.target.value)}
+                                                value={data.password}
+                                                onChange={(e) => setData('password', e.target.value)}
                                                 placeholder="Enter your password"
                                                 className={errors.password ? "border-destructive pr-10" : "pr-10"}
-                                                disabled={isLoading}
+                                                disabled={processing}
                                             />
                                             <button
                                                 type="button"
                                                 onClick={() => setShowPassword(!showPassword)}
                                                 className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                                                disabled={isLoading}
+                                                disabled={processing}
                                             >
                                                 {showPassword ? (
                                                     <EyeOff className="h-4 w-4 text-muted-foreground" />
@@ -129,31 +101,12 @@ export default function StudentLogin() {
                                         )}
                                     </div>
 
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center space-x-2">
-                                            <input
-                                                id="remember"
-                                                type="checkbox"
-                                                className="h-4 w-4 text-primary focus:ring-primary border-border"
-                                            />
-                                            <label htmlFor="remember" className="text-sm text-muted-foreground">
-                                                Remember me
-                                            </label>
-                                        </div>
-                                        <a
-                                            href="#"
-                                            className="text-sm font-medium text-primary hover:text-primary/80"
-                                        >
-                                            Forgot password?
-                                        </a>
-                                    </div>
-
                                     <Button
                                         type="submit"
                                         className="w-full bg-primary hover:bg-primary/90 text-white font-semibold"
-                                        disabled={isLoading}
+                                        disabled={processing}
                                     >
-                                        {isLoading ? "Signing In..." : "Sign In"}
+                                        {processing ? "Signing In..." : "Sign In"}
                                     </Button>
                                 </form>
 

@@ -55,5 +55,8 @@
     </head>
     <body class="font-sans antialiased">
         @inertia
+
+        {{-- Laravel Notify component --}}
+        <x-notify::notify />
     </body>
 </html>

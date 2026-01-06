@@ -1,6 +1,5 @@
 import {
     SidebarGroup,
-    SidebarGroupLabel,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
@@ -8,12 +7,14 @@ import {
 import { resolveUrl } from '@/lib/utils';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export function NavMain({ items = [] }: { items: NavItem[] }) {
     const page = usePage();
+    const isMobile = useIsMobile();
+
     return (
         <SidebarGroup className="px-2 py-0">
-            <SidebarGroupLabel>Platform</SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => (
                     <SidebarMenuItem key={item.title}>
@@ -23,9 +24,10 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
                                 resolveUrl(item.href),
                             )}
                             tooltip={{ children: item.title }}
+                            className={isMobile ? "text-white hover:text-white hover:bg-white/10" : ""}
                         >
                             <Link href={item.href} prefetch>
-                                {item.icon && <item.icon />}
+                                {item.icon && <item.icon className={isMobile ? "text-white" : ""} />}
                                 <span>{item.title}</span>
                             </Link>
                         </SidebarMenuButton>
