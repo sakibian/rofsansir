@@ -26,4 +26,4 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-client_secret_*.json
+client_secret_*.jsonclient_secret_*.json
