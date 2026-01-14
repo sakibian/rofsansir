@@ -1,54 +1,91 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { BookOpen, Mail, CheckCircle, LogOut } from 'lucide-react';
+import { BookOpen, CheckCircle, LogOut } from 'lucide-react';
 import Header from '@/components/header';
 import Footer from '@/components/Footer';
 
-interface Props {
-    hasCollectedEmail: boolean;
-    showEmailModal: boolean;
+interface DriveFile {
+    id: string;
+    name: string;
+    mimeType: string;
+    size: number | null;
+    webViewLink: string | null;
+    webContentLink: string | null;
+    thumbnailLink: string | null;
+    modifiedTime: string;
+    iconLink: string | null;
+    parents: string[];
+    isFolder: boolean;
 }
 
-export default function StudentDashboard({ hasCollectedEmail, showEmailModal }: Props) {
-    const [showModal, setShowModal] = useState(showEmailModal);
-    const [showDrive, setShowDrive] = useState(hasCollectedEmail);
+interface DriveData {
+    id: number;
+    name: string;
+    contents: DriveFile[];
+    has_access: boolean;
+    last_authenticated?: string | null;
+}
 
-    const { data, setData, post, processing, errors } = useForm({
-        email: '',
-        name: '',
-    });
+interface Props {
+    driveData?: DriveData;
+}
 
-    useEffect(() => {
-        if (hasCollectedEmail) {
-            setShowDrive(true);
-            setShowModal(false);
-        }
-    }, [hasCollectedEmail]);
-
-    const handleEmailSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        post('/student/collect-email', {
-            onSuccess: () => {
-                setShowModal(false);
-                setShowDrive(true);
-            },
-        });
-    };
-
-    const handleSkip = () => {
-        setShowModal(false);
-        setShowDrive(true);
-    };
+export default function StudentDashboard({ driveData }: Props) {
+    const initialData = driveData ?? { id: 1, name: 'Google Drive Study Materials', contents: [], has_access: false };
+    const [drive, setDrive] = useState<DriveData>(initialData);
+    const { props } = usePage<{
+        flash?: {
+            success?: string | null;
+            error?: string | null;
+        };
+    }>();
 
     const handleLogout = () => {
-        post('/student/logout');
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/student/logout';
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]');
+        if (csrfToken) {
+            const tokenInput = document.createElement('input');
+            tokenInput.type = 'hidden';
+            tokenInput.name = '_token';
+            tokenInput.value = csrfToken.getAttribute('content') || '';
+            form.appendChild(tokenInput);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
     };
+
+    const loadDriveContents = async () => {
+        try {
+            const response = await fetch('/student/drive/contents');
+            if (response.ok) {
+                const data = await response.json();
+                setDrive(prev => ({ ...prev, contents: data.contents, has_access: true }));
+            }
+        } catch (error) {
+            console.error('Failed to load drive contents:', error);
+        }
+    };
+
+    // Load contents for authenticated drive on mount
+    useEffect(() => {
+        if (drive.has_access && drive.contents.length === 0) {
+            void loadDriveContents();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // After successful OAuth authentication, automatically load contents
+    useEffect(() => {
+        if (props.flash?.success) {
+            void loadDriveContents();
+        }
+    }, [props.flash?.success]);
 
     return (
         <>
@@ -79,7 +116,7 @@ export default function StudentDashboard({ hasCollectedEmail, showEmailModal }: 
                         </div>
 
                         {/* Status Cards */}
-                        <div className="grid md:grid-cols-3 gap-6 mb-8">
+                        <div className="grid md:grid-cols-2 gap-6 mb-8">
                             <Card>
                                 <CardHeader className="flex flex-row items-center space-y-0 pb-2">
                                     <CardTitle className="text-sm font-medium">Account Status</CardTitle>
@@ -88,25 +125,6 @@ export default function StudentDashboard({ hasCollectedEmail, showEmailModal }: 
                                 <CardContent>
                                     <div className="text-2xl font-bold text-green-600">Active</div>
                                     <p className="text-xs text-muted-foreground">Student account verified</p>
-                                </CardContent>
-                            </Card>
-
-                            <Card>
-                                <CardHeader className="flex flex-row items-center space-y-0 pb-2">
-                                    <CardTitle className="text-sm font-medium">Email Status</CardTitle>
-                                    {hasCollectedEmail ? (
-                                        <CheckCircle className="h-4 w-4 text-green-500 ml-auto" />
-                                    ) : (
-                                        <Mail className="h-4 w-4 text-orange-500 ml-auto" />
-                                    )}
-                                </CardHeader>
-                                <CardContent>
-                                    <div className={`text-2xl font-bold ${hasCollectedEmail ? 'text-green-600' : 'text-orange-600'}`}>
-                                        {hasCollectedEmail ? 'Collected' : 'Pending'}
-                                    </div>
-                                    <p className="text-xs text-muted-foreground">
-                                        {hasCollectedEmail ? 'Email collected for updates' : 'Please provide email for updates'}
-                                    </p>
                                 </CardContent>
                             </Card>
 
@@ -123,107 +141,116 @@ export default function StudentDashboard({ hasCollectedEmail, showEmailModal }: 
                         </div>
 
                         {/* Google Drive Section */}
-                        {showDrive && (
-                            <Card className="mb-8">
-                                <CardHeader>
-                                    <CardTitle className="flex items-center gap-2">
-                                        <BookOpen className="h-5 w-5" />
-                                        Study Materials
-                                    </CardTitle>
-                                    <CardDescription>
-                                        Access your O Level Bengali study resources and materials
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="bg-gray-50 rounded-lg p-8 text-center">
-                                        <BookOpen className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                                        <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                                            Google Drive Resources
-                                        </h3>
-                                        <p className="text-gray-600 mb-6">
-                                            Your study materials will be displayed here. Google Drive integration will be added in the next phase.
-                                        </p>
-                                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <Card className="mb-8">
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-2">
+                                    <BookOpen className="h-5 w-5" />
+                                    Study Materials
+                                </CardTitle>
+                                <CardDescription>
+                                    Access your O Level Bengali study resources and materials
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                {props.flash?.error && (
+                                    <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+                                        {props.flash.error}
+                                    </div>
+                                )}
+                                {props.flash?.success && (
+                                    <div className="mb-4 rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-800">
+                                        {props.flash.success}
+                                    </div>
+                                )}
+
+                                <div className="border rounded-lg p-4">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-100">
+                                                <BookOpen className="h-5 w-5 text-blue-600" />
+                                            </div>
+                                            <div>
+                                                <h4 className="font-medium text-foreground">{drive.name}</h4>
+                                                {drive.last_authenticated && (
+                                                    <p className="text-sm text-muted-foreground">
+                                                        Last authenticated: {new Date(drive.last_authenticated).toLocaleDateString()}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+                                        {!drive.has_access && (
+                                            <a
+                                                href="/drive/access"
+                                                className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
+                                            >
+                                                Authenticate
+                                            </a>
+                                        )}
+                                    </div>
+
+                                    {drive.has_access ? (
+                                        <div className="space-y-2">
+                                            <h5 className="text-sm font-medium text-gray-900">Contents:</h5>
+                                            {drive.contents.length === 0 ? (
+                                                <p className="text-sm text-gray-500 italic">This drive appears to be empty or loading...</p>
+                                            ) : (
+                                                <div className="space-y-1">
+                                                    {drive.contents.map((file) => (
+                                                        <div key={file.id} className="flex items-center justify-between py-2 px-3 rounded bg-gray-50">
+                                                            <div className="flex items-center gap-2">
+                                                                {file.isFolder ? (
+                                                                    <span className="text-blue-500">📁</span>
+                                                                ) : (
+                                                                    <span className="text-gray-500">📄</span>
+                                                                )}
+                                                                <span className="text-sm">{file.name}</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-2">
+                                                                {!file.isFolder && file.webContentLink && (
+                                                                    <a
+                                                                        href={file.webContentLink}
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                        className="text-blue-600 hover:text-blue-800 text-sm underline"
+                                                                    >
+                                                                        Download
+                                                                    </a>
+                                                                )}
+                                                                {file.webViewLink && (
+                                                                    <a
+                                                                        href={file.webViewLink}
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                        className="text-gray-600 hover:text-gray-800 text-sm underline"
+                                                                    >
+                                                                        View
+                                                                    </a>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
                                             <p className="text-sm text-yellow-800">
-                                                <strong>Note:</strong> Google Drive integration is coming soon. For now, this demonstrates the portal structure.
+                                                <strong>Authentication Required:</strong> Click "Authenticate" to access study materials with your Gmail account.
                                             </p>
                                         </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        )}
+                                    )}
+                                </div>
+
+                                <div className="bg-green-50 border border-green-200 rounded-lg p-4 mt-6">
+                                    <p className="text-sm text-green-800">
+                                        <strong>Access Granted:</strong> You have read-only access to view and download files from Google Drive.
+                                        Files include PDFs, documents, and other study materials.
+                                    </p>
+                                </div>
+                            </CardContent>
+                        </Card>
                     </div>
                 </main>
-
-                {/* Email Collection Modal */}
-                <Dialog open={showModal} onOpenChange={setShowModal}>
-                    <DialogContent className="sm:max-w-md">
-                        <DialogHeader>
-                            <DialogTitle className="flex items-center gap-2">
-                                <Mail className="h-5 w-5" />
-                                Stay Updated
-                            </DialogTitle>
-                            <DialogDescription>
-                                Help us keep you updated with new study materials and important announcements.
-                            </DialogDescription>
-                        </DialogHeader>
-
-                        <form onSubmit={handleEmailSubmit} className="space-y-4">
-                            {errors.email && (
-                                <Alert variant="destructive">
-                                    <AlertDescription>{errors.email}</AlertDescription>
-                                </Alert>
-                            )}
-
-                            <div className="space-y-2">
-                                <Label htmlFor="email">Email Address *</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    value={data.email}
-                                    onChange={(e) => setData('email', e.target.value)}
-                                    placeholder="your.email@example.com"
-                                    required
-                                />
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="name">Full Name (Optional)</Label>
-                                <Input
-                                    id="name"
-                                    type="text"
-                                    value={data.name}
-                                    onChange={(e) => setData('name', e.target.value)}
-                                    placeholder="Your full name"
-                                />
-                            </div>
-
-                            <div className="flex gap-3 pt-4">
-                                <Button
-                                    type="submit"
-                                    disabled={processing}
-                                    className="flex-1"
-                                >
-                                    {processing ? 'Submitting...' : 'Submit & Continue'}
-                                </Button>
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    onClick={handleSkip}
-                                    className="flex-1"
-                                >
-                                    Skip for Now
-                                </Button>
-                            </div>
-                        </form>
-
-                        <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                            <p className="text-xs text-blue-800">
-                                <strong>Privacy:</strong> Your email will only be used to send updates about study materials and course information.
-                            </p>
-                        </div>
-                    </DialogContent>
-                </Dialog>
 
                 <Footer />
             </div>

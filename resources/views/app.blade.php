@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>
@@ -58,5 +59,8 @@
 
         {{-- Laravel Notify component --}}
         <x-notify::notify />
+
+        {{-- Hidden admin access comment - not visible to users --}}
+        <!-- Admin login: /admin-login or /login -->
     </body>
 </html>

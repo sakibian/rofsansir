@@ -34,7 +34,14 @@ interface Props {
     stats?: Stats;
 }
 
+const defaultStats: Stats = {
+    total_students: 0,
+    total_emails_collected: 0,
+    recent_logins: [],
+};
+
 export default function Dashboard({ stats }: Props) {
+    const safeStats = stats ?? defaultStats;
     const { auth } = usePage().props as any;
     const isAdmin = auth?.user?.isAdmin?.() || auth?.user?.role === 'admin';
 
@@ -63,7 +70,7 @@ export default function Dashboard({ stats }: Props) {
                                     <Users className="h-4 w-4 text-muted-foreground" />
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="text-2xl font-bold">{stats?.total_students || 0}</div>
+                                    <div className="text-2xl font-bold">{safeStats.total_students}</div>
                                     <p className="text-xs text-muted-foreground">Active student accounts</p>
                                 </CardContent>
                             </Card>
@@ -74,7 +81,7 @@ export default function Dashboard({ stats }: Props) {
                                     <Mail className="h-4 w-4 text-muted-foreground" />
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="text-2xl font-bold">{stats?.total_emails_collected || 0}</div>
+                                    <div className="text-2xl font-bold">{safeStats.total_emails_collected}</div>
                                     <p className="text-xs text-muted-foreground">Student email addresses</p>
                                 </CardContent>
                             </Card>
@@ -85,7 +92,7 @@ export default function Dashboard({ stats }: Props) {
                                     <Calendar className="h-4 w-4 text-muted-foreground" />
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="text-2xl font-bold">{stats?.recent_logins?.length || 0}</div>
+                                    <div className="text-2xl font-bold">{safeStats.recent_logins.length}</div>
                                     <p className="text-xs text-muted-foreground">Recent student logins</p>
                                 </CardContent>
                             </Card>
@@ -102,7 +109,7 @@ export default function Dashboard({ stats }: Props) {
                             </Card>
                         </div>
 
-                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-8">
+                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
                             <Card className="hover:shadow-md transition-shadow">
                                 <CardHeader>
                                     <CardTitle className="flex items-center gap-2">
@@ -153,6 +160,26 @@ export default function Dashboard({ stats }: Props) {
                                     </Link>
                                 </CardContent>
                             </Card>
+
+                            <Card className="hover:shadow-md transition-shadow">
+                                <CardHeader>
+                                    <CardTitle className="flex items-center gap-2">
+                                        <svg className="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z" />
+                                        </svg>
+                                        Google Drive
+                                    </CardTitle>
+                                    <CardDescription>
+                                        Manage student access to Google Drive folders
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <Link href="/admin/drive">
+                                        <Button className="w-full" variant="outline">Manage Drive Access</Button>
+                                    </Link>
+                                </CardContent>
+                            </Card>
                         </div>
 
                         <Card>
@@ -163,9 +190,9 @@ export default function Dashboard({ stats }: Props) {
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
-                                {stats?.recent_logins && stats.recent_logins.length > 0 ? (
+                                {safeStats.recent_logins.length > 0 ? (
                                     <div className="space-y-4">
-                                        {stats.recent_logins.map((student) => (
+                                        {safeStats.recent_logins.map((student) => (
                                             <div key={student.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
                                                 <div className="flex items-center space-x-3">
                                                     <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">

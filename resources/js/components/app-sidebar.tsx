@@ -13,7 +13,7 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { Calendar, LayoutGrid, Mail, Users } from 'lucide-react';
+import { Calendar, Folder, LayoutGrid, Mail, Users } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -46,6 +46,11 @@ const adminNavItems: NavItem[] = [
         href: '/admin/schedules',
         icon: Calendar,
     },
+    {
+        title: 'Google Drive',
+        href: '/admin/drive',
+        icon: Folder,
+    },
 ];
 
 const footerNavItems: NavItem[] = [];
@@ -63,7 +68,10 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={isAdmin ? '/dashboard' : dashboard()} prefetch>
+                            <Link
+                                href={isAdmin ? '/dashboard' : dashboard()}
+                                prefetch
+                            >
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

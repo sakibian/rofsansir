@@ -3,8 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Routine;
+use App\Models\RoutineEntry;
+use App\Models\PaymentPlan;
+use App\Models\StudentDriveFolder;
 use App\Models\StudentEmail;
+use App\Models\AccessLog;
+use App\Models\BlockedGmail;
 use App\Models\User;
+use App\Services\GoogleDriveService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -416,6 +423,525 @@ class AdminController extends Controller
 
         return Inertia::render('admin-schedules', [
             'schedules' => $this->getSchedulesData(),
+        ]);
+    }
+
+    /**
+     * Admin drive folders page
+     */
+    public function adminDrive(): \Inertia\Response
+    {
+        $this->authorizeAdmin();
+
+        $isDriveConfigured = Cache::has('admin_google_oauth_token');
+        $driveStatus = [
+            'isConfigured' => $isDriveConfigured,
+            'lastConfigured' => $isDriveConfigured ? Cache::get('admin_google_oauth_token')['created'] ?? null : null,
+            'status' => $isDriveConfigured ? 'Connected' : 'Not Connected',
+            'message' => $isDriveConfigured
+                ? 'Google Drive is configured and ready for student access.'
+                : 'Google Drive is not configured. Students cannot access drive contents.',
+        ];
+
+        return Inertia::render('admin-drive', [
+            'accessLogs' => $this->getAccessLogsData(),
+            'blockedGmails' => $this->getBlockedGmailsData(),
+            'stats' => $this->getDriveStats(),
+            'driveStatus' => $driveStatus,
+        ]);
+    }
+
+    /**
+     * Get Google Drive folders data for API
+     */
+    public function getDriveFolders(): JsonResponse
+    {
+        $this->authorizeAdmin();
+
+        return response()->json([
+            'folders' => $this->getDriveFoldersData(),
+        ]);
+    }
+
+    /**
+     * Grant folder access to a student
+     */
+    public function grantDriveAccess(Request $request)
+    {
+        $this->authorizeAdmin();
+
+        $request->validate([
+            'student_email' => 'required|email',
+            'drive_folder_id' => 'required|string',
+            'folder_name' => 'required|string',
+        ]);
+
+        // Find student by email
+        $student = User::where('role', User::ROLE_STUDENT)
+            ->where('email', $request->student_email)
+            ->first();
+
+        if (! $student) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Student not found with this email address',
+            ], 404);
+        }
+
+        // Check if already has access
+        $existing = StudentDriveFolder::where('user_id', $student->id)
+            ->where('drive_folder_id', $request->drive_folder_id)
+            ->first();
+
+        if ($existing) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Student already has access to this folder',
+            ], 400);
+        }
+
+        // Share folder via Google Drive API
+        $driveService = app(GoogleDriveService::class);
+        $shared = $driveService->shareFolder($request->drive_folder_id, $request->student_email);
+
+        if (! $shared) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to share folder via Google Drive',
+            ], 500);
+        }
+
+        // Create database record
+        StudentDriveFolder::create([
+            'user_id' => $student->id,
+            'drive_folder_id' => $request->drive_folder_id,
+            'folder_name' => $request->folder_name,
+            'student_email' => $request->student_email,
+            'granted_at' => now(),
+        ]);
+
+        notify()
+            ->success()
+            ->title('Access Granted')
+            ->message("Folder access granted to {$request->student_email}")
+            ->send();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Folder access granted successfully',
+        ]);
+    }
+
+    /**
+     * Revoke folder access from a student
+     */
+    public function revokeDriveAccess(Request $request)
+    {
+        $this->authorizeAdmin();
+
+        $request->validate([
+            'folder_id' => 'required|integer',
+        ]);
+
+        $folderAssignment = StudentDriveFolder::find($request->folder_id);
+
+        if (! $folderAssignment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Folder assignment not found',
+            ], 404);
+        }
+
+        // Revoke access via Google Drive API
+        $driveService = app(GoogleDriveService::class);
+        $revoked = $driveService->revokeAccess(
+            $folderAssignment->drive_folder_id,
+            $folderAssignment->student_email
+        );
+
+        // Deactivate the assignment regardless of API result
+        $folderAssignment->update(['is_active' => false]);
+
+        notify()
+            ->success()
+            ->title('Access Revoked')
+            ->message("Folder access revoked from {$folderAssignment->student_email}")
+            ->send();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Folder access revoked successfully',
+        ]);
+    }
+
+    /**
+     * Get students with their collected emails
+     */
+    private function getStudentsWithEmails(): array
+    {
+        return StudentEmail::with('user')
+            ->orderBy('collected_at', 'desc')
+            ->get()
+            ->map(function ($studentEmail) {
+                return [
+                    'id' => $studentEmail->user->id ?? null,
+                    'email' => $studentEmail->email,
+                    'name' => $studentEmail->name,
+                    'collected_at' => $studentEmail->collected_at,
+                ];
+            })
+            ->toArray();
+    }
+
+    /**
+     * Get formatted drive folders data
+     */
+    private function getDriveFoldersData(): array
+    {
+        return StudentDriveFolder::with('user')
+            ->orderBy('granted_at', 'desc')
+            ->get()
+            ->map(function ($folder) {
+                return [
+                    'id' => $folder->id,
+                    'student_email' => $folder->student_email,
+                    'student_name' => $folder->user->name ?? 'Unknown',
+                    'folder_name' => $folder->folder_name,
+                    'drive_folder_id' => $folder->drive_folder_id,
+                    'is_active' => $folder->is_active,
+                    'granted_at' => $folder->granted_at,
+                    'last_accessed_at' => $folder->last_accessed_at,
+                ];
+            })
+            ->toArray();
+    }
+
+    /**
+     * Get access logs data
+     */
+    private function getAccessLogsData(): array
+    {
+        return AccessLog::query()
+            ->orderBy('accessed_at', 'desc')
+            ->limit(100)
+            ->get()
+            ->map(function ($log) {
+                return [
+                    'id' => $log->id,
+                    'gmail' => $log->gmail,
+                    'folder_name' => $log->folder_name,
+                    'folder_id' => $log->folder_id,
+                    'accessed_at' => $log->accessed_at,
+                    'ip_address' => $log->ip_address,
+                ];
+            })
+            ->toArray();
+    }
+
+    /**
+     * Get blocked Gmails data
+     */
+    private function getBlockedGmailsData(): array
+    {
+        return BlockedGmail::with('blocker')
+            ->orderBy('blocked_at', 'desc')
+            ->get()
+            ->map(function ($blocked) {
+                return [
+                    'id' => $blocked->id,
+                    'gmail' => $blocked->gmail,
+                    'blocked_at' => $blocked->blocked_at,
+                    'blocked_by' => $blocked->blocker?->name ?? 'System',
+                    'reason' => $blocked->reason,
+                ];
+            })
+            ->toArray();
+    }
+
+    /**
+     * Get drive statistics
+     */
+    private function getDriveStats(): array
+    {
+        $accessLogStats = AccessLog::getStats();
+        $blockedStats = BlockedGmail::getStats();
+
+        return array_merge($accessLogStats, $blockedStats);
+    }
+
+    /**
+     * Block a Gmail account
+     */
+    public function blockGmail(Request $request)
+    {
+        $this->authorizeAdmin();
+
+        $request->validate([
+            'gmail' => 'required|email',
+            'reason' => 'nullable|string|max:255',
+        ]);
+
+        $gmail = $request->gmail;
+
+        // Check if already blocked
+        if (\App\Models\BlockedGmail::isBlocked($gmail)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'This Gmail is already blocked',
+            ], 400);
+        }
+
+        // Block the Gmail
+        \App\Models\BlockedGmail::block($gmail, auth()->user()->id, $request->reason);
+
+        notify()
+            ->warning()
+            ->title('Gmail Blocked')
+            ->message("{$gmail} has been blocked from accessing Drive folders")
+            ->send();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Gmail blocked successfully',
+        ]);
+    }
+
+    /**
+     * Unblock a Gmail account
+     */
+    public function unblockGmail(Request $request)
+    {
+        $this->authorizeAdmin();
+
+        $request->validate([
+            'gmail' => 'required|email',
+        ]);
+
+        $gmail = $request->gmail;
+
+        // Unblock the Gmail
+        $unblocked = \App\Models\BlockedGmail::unblock($gmail);
+
+        if (! $unblocked) {
+            return response()->json([
+                'success' => false,
+                'message' => 'This Gmail is not currently blocked',
+            ], 400);
+        }
+
+        notify()
+            ->success()
+            ->title('Gmail Unblocked')
+            ->message("{$gmail} has been unblocked")
+            ->send();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Gmail unblocked successfully',
+        ]);
+    }
+
+    /**
+     * Setup Google Drive for admin - authenticate and store admin OAuth token
+     */
+    public function setupGoogleDrive(Request $request): RedirectResponse
+    {
+        $this->authorizeAdmin();
+
+        // Check if admin token is already stored
+        $adminToken = Cache::get('admin_google_oauth_token');
+        if ($adminToken) {
+            notify()
+                ->info()
+                ->title('Already Configured')
+                ->message('Google Drive is already configured for admin access')
+                ->send();
+
+            return redirect('/admin/drive?tab=drive');
+        }
+
+        // Generate secure state token for admin setup
+        $stateToken = \Illuminate\Support\Str::random(32);
+        $stateData = [
+            'type' => 'admin_setup',
+            'admin_id' => auth()->id(),
+            'timestamp' => now()->timestamp,
+        ];
+
+        // Cache state data for 10 minutes
+        \Illuminate\Support\Facades\Cache::put("admin_drive_setup_{$stateToken}", $stateData, 600);
+
+        // Build Google OAuth URL for admin with broader scopes
+        $client = new \Google\Client;
+        $client->setClientId(config('google.client_id'));
+        $client->setClientSecret(config('google.client_secret'));
+        $client->setRedirectUri(config('google.redirect_uri'));
+        $client->setScopes([
+            \Google\Service\Oauth2::USERINFO_EMAIL,
+            \Google\Service\Drive::DRIVE_READONLY, // Read access to all files user has access to
+        ]);
+        $client->setAccessType('offline'); // Get refresh token
+        $client->setState($stateToken);
+        $client->setPrompt('consent'); // Force consent screen to get refresh token
+
+        $authUrl = $client->createAuthUrl();
+
+        return redirect($authUrl);
+    }
+
+    /**
+     * Store a new routine entry
+     */
+    public function storeRoutine(Request $request)
+    {
+        $this->authorizeAdmin();
+
+        $request->validate([
+            'class_level' => 'required|string',
+            'batch' => 'required|string',
+            'day_1' => 'nullable|string',
+            'time_1' => 'nullable|string',
+            'classroom_1' => 'nullable|string',
+            'day_2' => 'nullable|string',
+            'time_2' => 'nullable|string',
+            'classroom_2' => 'nullable|string',
+            'session_year' => 'required|string',
+        ]);
+
+        RoutineEntry::create($request->all());
+
+        notify()
+            ->success()
+            ->title('Routine Created')
+            ->message('Routine entry created successfully')
+            ->send();
+
+        return redirect()->back();
+    }
+
+    /**
+     * Update an existing routine entry
+     */
+    public function updateRoutine(Request $request, RoutineEntry $routine)
+    {
+        $this->authorizeAdmin();
+
+        $request->validate([
+            'class_level' => 'sometimes|string',
+            'batch' => 'sometimes|string',
+            'day_1' => 'nullable|string',
+            'time_1' => 'nullable|string',
+            'classroom_1' => 'nullable|string',
+            'day_2' => 'nullable|string',
+            'time_2' => 'nullable|string',
+            'classroom_2' => 'nullable|string',
+            'session_year' => 'sometimes|string',
+            'is_active' => 'sometimes|boolean',
+        ]);
+
+        $routine->update($request->all());
+
+        notify()
+            ->success()
+            ->title('Routine Updated')
+            ->message('Routine entry updated successfully')
+            ->send();
+
+        return redirect()->back();
+    }
+
+    /**
+     * Delete a routine entry
+     */
+    public function destroyRoutine(RoutineEntry $routine): JsonResponse
+    {
+        $this->authorizeAdmin();
+
+        $routine->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Routine entry deleted successfully',
+        ]);
+    }
+
+    /**
+     * Store a new payment plan
+     */
+    public function storePaymentPlan(Request $request)
+    {
+        $this->authorizeAdmin();
+
+        $request->validate([
+            'class_level' => 'required|string',
+            'monthly_fee' => 'required|numeric',
+            'months' => 'required|integer',
+            'total_fee' => 'required|numeric',
+            'full_payment_discount' => 'nullable|numeric',
+            'installment_amount' => 'nullable|numeric',
+            'admission_fee' => 'nullable|string',
+            'books_fee' => 'nullable|string',
+            'additional_fee' => 'nullable|string',
+            'features' => 'nullable|string',
+            'payment_terms' => 'nullable|string',
+        ]);
+
+        PaymentPlan::create($request->all());
+
+        notify()
+            ->success()
+            ->title('Payment Plan Created')
+            ->message('Payment plan created successfully')
+            ->send();
+
+        return redirect()->back();
+    }
+
+    /**
+     * Update an existing payment plan
+     */
+    public function updatePaymentPlan(Request $request, PaymentPlan $plan)
+    {
+        $this->authorizeAdmin();
+
+        $request->validate([
+            'class_level' => 'sometimes|string',
+            'monthly_fee' => 'sometimes|numeric',
+            'months' => 'sometimes|integer',
+            'total_fee' => 'sometimes|numeric',
+            'full_payment_discount' => 'nullable|numeric',
+            'installment_amount' => 'nullable|numeric',
+            'admission_fee' => 'nullable|string',
+            'books_fee' => 'nullable|string',
+            'additional_fee' => 'nullable|string',
+            'features' => 'nullable|string',
+            'payment_terms' => 'nullable|string',
+            'is_active' => 'sometimes|boolean',
+        ]);
+
+        $plan->update($request->all());
+
+        notify()
+            ->success()
+            ->title('Payment Plan Updated')
+            ->message('Payment plan updated successfully')
+            ->send();
+
+        return redirect()->back();
+    }
+
+    /**
+     * Delete a payment plan
+     */
+    public function destroyPaymentPlan(PaymentPlan $plan): JsonResponse
+    {
+        $this->authorizeAdmin();
+
+        $plan->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment plan deleted successfully',
         ]);
     }
 }

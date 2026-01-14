@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\StudentEmail;
+use App\Services\GoogleDriveService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class StudentController extends Controller
@@ -31,13 +34,7 @@ class StudentController extends Controller
                 return back()->withErrors(['general' => 'Access denied. Student account required.']);
             }
 
-            // Check if student has collected email
-            $hasCollectedEmail = $user->hasCollectedEmail();
-
-            return Inertia::render('student/dashboard', [
-                'hasCollectedEmail' => $hasCollectedEmail,
-                'showEmailModal' => ! $hasCollectedEmail,
-            ]);
+            return redirect()->route('student.dashboard');
         }
 
         return back()->withErrors(['general' => 'Invalid email or password']);
@@ -85,20 +82,98 @@ class StudentController extends Controller
             return redirect('/student/login');
         }
 
-        $hasCollectedEmail = $user->hasCollectedEmail();
+        // Check if student has authenticated recently (within last 24 hours)
+        $hasRecentAccess = \App\Models\AccessLog::where('gmail', $user->studentEmail?->email ?? '')
+            ->where('accessed_at', '>=', now()->subDay())
+            ->exists();
+
+        // Get Google Drive access status
+        $driveData = [
+            'id' => 1,
+            'name' => 'Google Drive Study Materials',
+            'contents' => [], // Will be loaded after OAuth
+            'has_access' => $hasRecentAccess,
+            'last_authenticated' => $hasRecentAccess ? \App\Models\AccessLog::where('gmail', $user->studentEmail?->email ?? '')
+                ->latest('accessed_at')
+                ->first()?->accessed_at : null,
+        ];
 
         return Inertia::render('student/dashboard', [
-            'hasCollectedEmail' => $hasCollectedEmail,
-            'showEmailModal' => ! $hasCollectedEmail,
+            'driveData' => $driveData,
         ]);
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         return redirect('/student/login');
     }
+
+    /**
+     * Get all Google Drive contents for authenticated students
+     */
+    public function getDriveContents(Request $request)
+    {
+        $user = Auth::user();
+
+        // Ensure user is authenticated and is a student
+        if (! $user || ! $user->isStudent()) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        try {
+            // Check for admin OAuth token
+            /** @var array<string, mixed>|null $adminToken */
+            $adminToken = Cache::get('admin_google_oauth_token');
+
+            if (! $adminToken) {
+                return response()->json([
+                    'error' => 'Google Drive not configured. Please contact administrator.',
+                    'contents' => [],
+                ], 503);
+            }
+
+            // Use admin's Google Drive access to get all contents
+            $driveService = app(GoogleDriveService::class);
+            $driveService->setAccessToken($adminToken);
+
+            $contents = $driveService->getAllDriveContents();
+
+            // Transform to frontend format
+            $formattedContents = array_map(function ($item) {
+                return [
+                    'id' => $item['id'],
+                    'name' => $item['name'],
+                    'mimeType' => $item['mimeType'],
+                    'size' => $item['size'] ?? null,
+                    'webViewLink' => $item['webViewLink'] ?? null,
+                    'webContentLink' => $item['webContentLink'] ?? null,
+                    'thumbnailLink' => $item['thumbnailLink'] ?? null,
+                    'modifiedTime' => $item['modifiedTime'],
+                    'iconLink' => $item['iconLink'] ?? null,
+                    'parents' => $item['parents'],
+                    'isFolder' => $item['isFolder'],
+                ];
+            }, $contents);
+
+            return response()->json([
+                'contents' => $formattedContents,
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Failed to load Google Drive contents', [
+                'error' => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'error' => 'Unable to load study materials. Please try again later.',
+                'contents' => [],
+            ], 500);
+        }
+    }
 }
+

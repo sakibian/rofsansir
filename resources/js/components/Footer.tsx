@@ -255,10 +255,19 @@ const Footer = () => {
                                 >
                                     Sitemap
                                 </a>
+                                <a
+                                    href="/admin-login"
+                                    className="text-gray-400 transition-colors hover:text-white"
+                                >
+                                    Admin
+                                </a>
                             </div>
-                            <p className="text-sm text-gray-400">
+                            <a
+                                href="https://sakibian.com"
+                                className="text-sm text-gray-400"
+                            >
                                 Website Developed by sakibian.com
-                            </p>
+                            </a>
                         </div>
                     </div>
                 </div>
