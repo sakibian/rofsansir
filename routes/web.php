@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/courses', [HomeController::class, 'courses'])->name('courses');
+Route::get('/courses/foundation', [HomeController::class, 'foundationCourse'])->name('courses.foundation');
+Route::get('/courses/class9', [HomeController::class, 'class9Course'])->name('courses.class9');
+Route::get('/courses/class10', [HomeController::class, 'class10Course'])->name('courses.class10');
 Route::get('/resources', [HomeController::class, 'resources'])->name('resources');
 Route::get('/tips', [HomeController::class, 'tips'])->name('tips');
 
@@ -30,7 +33,6 @@ Route::prefix('student')->name('student.')->group(function () {
 
 // Google OAuth Callback Route
 Route::get('/google/callback', [App\Http\Controllers\DriveAccessController::class, 'oauthCallback'])->name('google.callback');
-
 
 // Google Drive Access Routes
 Route::middleware(['auth'])->group(function () {
@@ -79,7 +81,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
-require __DIR__ . '/settings.php';
+require __DIR__.'/settings.php';
 
 // API-like routes for frontend data fetching
 Route::get('/routines', [App\Http\Controllers\RoutinePaymentController::class, 'getRoutines']);

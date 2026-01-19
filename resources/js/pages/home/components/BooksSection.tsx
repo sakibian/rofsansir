@@ -1,154 +1,85 @@
-import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
-import { useState } from 'react';
-
 const books = [
     {
+        title: 'O Level Bengali FOUNDATION PLUS',
+        subtitle:
+            'A foundation book to make O Level Bengali easier and more manageable for learners.',
+        image: '/books/4.png',
+    },
+    {
         title: 'O Level Bengali BASICS PLUS',
-        subtitle: 'A Complete Guide to O Level Bengali - CAIE Subject Code 3204/2 - Paper 02',
-        focus: 'Foundational grammar, core concepts, and essential language structures',
+        subtitle:
+            'A Complete guide to O Level Bengali Language and Comprehension part— CAIE subject code 3204/2 Paper-02',
         image: '/books/1.png',
-        isNew: false,
     },
     {
         title: 'O Level Bengali COMPOSITION PLUS',
-        subtitle: 'A Complete Guide to O Level Bengali Composition Writing - CAIE Subject Code 3204/1 - Paper 01',
-        focus: 'Comprehensive composition writing techniques and creative expression strategies',
+        subtitle:
+            'A complete guide to O Level Bengali composition writing — CAIE Subject code 3204/1 Paper 01',
         image: '/books/2.png',
-        isNew: false,
     },
     {
         title: 'O Level Bengali PRACTICE PLUS',
-        subtitle: 'Intensive Preparation for Cambridge O Level Bengali 3204 - Paper 1 & 2',
-        focus: 'Extensive practice materials, exercises, and topic-wise drills',
+        subtitle:
+            'Intensive Preparation for Cambridge O Level Bengali 3204 — Paper 1 & 2',
         image: '/books/3.png',
-        isNew: false,
-    },
-    {
-        title: 'O Level Bengali FOUNDATION PLUS',
-        subtitle: 'Building Strong Basics in Bengali for O Level Students',
-        focus: 'Complete foundation course with step-by-step integrated approach',
-        image: '/books/4.png',
-        isNew: true,
     },
     {
         title: 'O Level Bengali REVISION PLUS',
-        subtitle: 'Topic Wise Past Paper of CAIE O Level Bengali 3204',
-        focus: 'Organized past papers by topic with detailed solutions',
+        subtitle: 'Topic wise past paper of CAIE O Level Bengali 3204',
         image: '/books/5.png',
-        isNew: false,
-    },
-    {
-        title: 'Aspects of Bengali Language',
-        subtitle: 'A Complete Guide to \'O\' Level Bengali - CIE Subject Code: 3204/2 - Paper-2',
-        focus: 'Comprehensive Paper 2 preparation',
-        image: '/books/6.png',
-        isNew: false,
-    },
-    {
-        title: 'Bengali Easy Composition',
-        subtitle: 'A Complete Guide to \'O\' level Bengali Composition Writing - CIE Subject Code: 3204/1 - Paper-1',
-        focus: 'Simplified composition writing for Paper 1',
-        image: '/books/7.png',
-        isNew: false,
     },
 ];
 
 const BooksSection = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const booksPerView = 4; // Show 4 books on desktop, 2 on tablet, 1 on mobile
-    const maxIndex = Math.max(0, books.length - booksPerView);
-
-    const nextSlide = () => {
-        setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
-    };
-
-    const prevSlide = () => {
-        setCurrentIndex((prev) => Math.max(prev - 1, 0));
-    };
-
-    const visibleBooks = books.slice(currentIndex, currentIndex + booksPerView);
-
     return (
-        <section id="books" className="bg-surface py-16 lg:py-24">
-            <div className="container-max section-padding">
-                <div className="mb-12 text-center">
-                    <h2 className="mb-4 text-3xl font-bold text-foreground lg:text-4xl">
+        <section id="books" className="py-20 px-4 md:px-8 bg-gray-50">
+            <div className="container mx-auto max-w-6xl">
+                <div className="mb-16 text-center">
+                    <h2 className="mb-4 text-3xl md:text-4xl font-bold text-[#344871]">
                         Rofsan Khan's Published Guidebooks
                     </h2>
-                    <p className="mx-auto max-w-2xl text-muted-foreground">
-                        Comprehensive O Level Bengali Resources by a Cambridge Examiner
+                    <p className="mx-auto max-w-2xl text-gray-600">
+                        Comprehensive O Level Bengali Resources by Rofsan Sir
                     </p>
                 </div>
 
-                {/* Books Carousel */}
-                <div className="relative">
-                    {/* Navigation Arrows */}
-                    <button
-                        onClick={prevSlide}
-                        disabled={currentIndex === 0}
-                        className="absolute left-0 top-1/2 z-10 -translate-y-1/2 -translate-x-4 rounded-full bg-white p-2 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary hover:text-white transition-colors"
-                        aria-label="Previous books"
-                    >
-                        <ArrowLeft className="h-5 w-5" />
-                    </button>
+                {/* Books Modern Grid */}
+                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                    {books.map((book, index) => (
+                        <div
+                            key={index}
+                            className="group"
+                        >
+                            <div className="relative mb-6 overflow-hidden rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 p-1 shadow-lg transition-all duration-500 hover:scale-105 hover:shadow-2xl">
+                                <div className="relative overflow-hidden rounded-xl bg-white">
+                                    <div className="aspect-[4/5] overflow-hidden">
+                                        <img
+                                            src={book.image}
+                                            alt={book.title}
+                                            className="h-full w-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:brightness-110"
+                                        />
+                                    </div>
 
-                    <button
-                        onClick={nextSlide}
-                        disabled={currentIndex >= maxIndex}
-                        className="absolute right-0 top-1/2 z-10 -translate-y-1/2 translate-x-4 rounded-full bg-white p-2 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary hover:text-white transition-colors"
-                        aria-label="Next books"
-                    >
-                        <ArrowRight className="h-5 w-5" />
-                    </button>
+                                    {/* Overlay gradient */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                    {/* Books Grid */}
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                        {visibleBooks.map((book, index) => (
-                            <div
-                                key={currentIndex + index}
-                                className="group animate-fade-in cursor-pointer"
-                                style={{ animationDelay: `${index * 0.1}s` }}
-                            >
-                                <div className="relative mb-4 aspect-[3/4] overflow-hidden rounded-xl shadow-soft transition-all duration-300 group-hover:shadow-card">
-                                    <img
-                                        src={book.image}
-                                        alt={book.title}
-                                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                    />
-                                    {book.isNew && (
-                                        <div className="absolute top-2 right-2 rounded-full bg-red-500 px-2 py-1 text-xs font-bold text-white">
-                                            NEW
-                                        </div>
-                                    )}
-                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                                </div>
-
-                                <h3 className="mb-1 font-semibold text-foreground transition-colors group-hover:text-primary line-clamp-2">
-                                    {book.title}
-                                </h3>
-                                <p className="mb-2 text-xs text-muted-foreground line-clamp-2">
-                                    {book.subtitle}
-                                </p>
-                                <p className="mb-3 text-xs text-muted-foreground line-clamp-2">
-                                    {book.focus}
-                                </p>
-
-                                <div className="flex items-center justify-between">
-                                    <span className="text-sm font-medium text-primary">
-                                        View Details
-                                    </span>
-                                    <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-primary" />
+                                    {/* Floating badge */}
+                                    <div className="absolute top-3 right-3 translate-y-2 transform rounded-full bg-[#E9BA08] px-2 py-1 text-xs font-bold text-[#344871] opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                        {index + 1}
+                                    </div>
                                 </div>
                             </div>
-                        ))}
-                    </div>
-                </div>
 
-                {/* Bottom Text */}
-                <div className="mt-12 text-center">
-                    <p className="mx-auto max-w-3xl text-sm text-muted-foreground">
-                        These published works reflect Rofsan Khan's commitment to high-quality academic resources rooted in classroom realities and learner needs. Each book is designed by a Cambridge Examiner to address real challenges faced by English medium students.
-                    </p>
+                            <div className="px-2 text-center">
+                                <h3 className="mb-3 text-base leading-tight font-bold text-[#344871] transition-colors duration-300 group-hover:text-[#006DD6]">
+                                    {book.title}
+                                </h3>
+                                <p className="line-clamp-3 text-xs leading-relaxed text-gray-600 transition-colors duration-300 group-hover:text-gray-700">
+                                    {book.subtitle}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </section>

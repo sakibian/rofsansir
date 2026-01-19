@@ -25,6 +25,21 @@ class HomeController extends Controller
         return Inertia::render('courses/index');
     }
 
+    public function foundationCourse(): \Inertia\Response
+    {
+        return Inertia::render('courses/foundation');
+    }
+
+    public function class9Course(): \Inertia\Response
+    {
+        return Inertia::render('courses/class9');
+    }
+
+    public function class10Course(): \Inertia\Response
+    {
+        return Inertia::render('courses/class10');
+    }
+
     public function resources(): \Inertia\Response
     {
         return Inertia::render('resources/index');

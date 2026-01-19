@@ -40,47 +40,6 @@ const Footer = () => {
 
     return (
         <>
-            {/* Footer CTA Section */}
-            <section className="bg-gradient-to-r from-primary to-foreground py-12">
-                <div className="container-max section-padding text-center">
-                    <h2 className="mb-4 text-2xl font-bold text-white lg:text-3xl">
-                        Ready to Excel in O Level Bengali?
-                    </h2>
-                    <p className="mx-auto mb-6 max-w-2xl text-white/90">
-                        Join thousands of successful students guided by a
-                        Cambridge Examiner
-                    </p>
-                    <div className="mb-4 flex flex-col justify-center gap-4 sm:flex-row">
-                        <button className="rounded-lg bg-white px-6 py-3 font-bold text-primary transition-colors hover:bg-primary hover:text-white">
-                            Enroll Now
-                        </button>
-                        <button className="rounded-lg border-2 border-white px-6 py-3 font-medium text-white transition-colors hover:bg-white hover:text-primary">
-                            View Resources
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            {/* Trust Badges */}
-            <section className="border-t border-border bg-background py-8">
-                <div className="container-max section-padding">
-                    <div className="flex flex-wrap items-center justify-center gap-8">
-                        {trustBadges.map((badge, index) => (
-                            <div
-                                key={index}
-                                className="flex items-center justify-center rounded-lg bg-white p-4 shadow-soft"
-                            >
-                                <img
-                                    src={badge.logo}
-                                    alt={badge.alt}
-                                    className="h-12 w-auto object-contain opacity-70"
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
             {/* Main Footer */}
             <footer className="bg-foreground pt-16 pb-8 text-white">
                 <div className="container-max section-padding">
@@ -109,7 +68,7 @@ const Footer = () => {
                                     <li key={link.label}>
                                         <a
                                             href={link.href}
-                                            className="text-sm text-gray-300 transition-colors hover:text-white"
+                                            className="text-sm text-gray-300 transition-all duration-300 hover:text-white hover:translate-x-1"
                                         >
                                             {link.label}
                                         </a>

@@ -11,13 +11,13 @@ export default function Resources() {
                 <Header />
 
                 {/* Page Header */}
-                <section className="bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-16">
+                <section className="bg-gradient-to-br from-brand-blue/5 via-white to-brand-navy/5 py-16">
                     <div className="container-max section-padding">
                         <div className="text-center">
-                            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+                            <h1 className="text-4xl md:text-5xl font-bold text-brand-navy mb-4">
                                 Expert Resources for O Level Bengali Excellence
                             </h1>
-                            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
                                 Free and Premium study materials created by a Cambridge Examiner
                             </p>
                         </div>
@@ -27,7 +27,7 @@ export default function Resources() {
                 {/* Resource Categories */}
                 <section className="py-16">
                     <div className="container-max section-padding">
-                        <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Resource Categories</h2>
+                        <h2 className="text-3xl font-bold text-brand-navy mb-12 text-center">Resource Categories</h2>
 
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {[
@@ -92,23 +92,35 @@ export default function Resources() {
                                     ],
                                     filter: "Topic | Grade Level"
                                 }
-                            ].map((category, index) => (
-                                <div key={index} className="bg-card p-6 rounded-xl border border-border">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <category.icon className="h-6 w-6 text-primary" />
-                                        <h3 className="font-semibold text-foreground">{category.title}</h3>
+                            ].map((category, index) => {
+                                const colors = [
+                                    { border: 'border-t-brand-blue', icon: 'text-brand-blue', bgIcon: 'bg-brand-blue/10' },
+                                    { border: 'border-t-brand-navy', icon: 'text-brand-navy', bgIcon: 'bg-brand-navy/10' },
+                                    { border: 'border-t-brand-gold', icon: 'text-brand-navy', bgIcon: 'bg-brand-gold/10' },
+                                    { border: 'border-t-brand-blue', icon: 'text-brand-blue', bgIcon: 'bg-brand-blue/10' },
+                                    { border: 'border-t-brand-navy', icon: 'text-brand-navy', bgIcon: 'bg-brand-navy/10' },
+                                ];
+                                const color = colors[index % colors.length];
+                                return (
+                                    <div key={index} className={`group flex flex-col rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 ${color.border} border-t-4`}>
+                                        <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-lg transition-all duration-300 group-hover:scale-110 mx-auto ${color.bgIcon}`}>
+                                            <category.icon className={`h-8 w-8 ${color.icon} transition-transform duration-300`} />
+                                        </div>
+                                        <h3 className="mb-4 text-xl font-bold text-brand-navy">
+                                            {category.title}
+                                        </h3>
+                                        <ul className="space-y-1 text-sm text-muted-foreground mb-4">
+                                            {category.items.map((item, itemIndex) => (
+                                                <li key={itemIndex}>• {item}</li>
+                                            ))}
+                                        </ul>
+                                        <div className="flex items-center gap-2 text-xs text-primary">
+                                            <Filter className="h-3 w-3" />
+                                            <span>Filter by: {category.filter}</span>
+                                        </div>
                                     </div>
-                                    <ul className="space-y-1 text-sm text-muted-foreground mb-4">
-                                        {category.items.map((item, itemIndex) => (
-                                            <li key={itemIndex}>• {item}</li>
-                                        ))}
-                                    </ul>
-                                    <div className="flex items-center gap-2 text-xs text-primary">
-                                        <Filter className="h-3 w-3" />
-                                        <span>Filter by: {category.filter}</span>
-                                    </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
                 </section>
@@ -117,8 +129,8 @@ export default function Resources() {
                 <section className="py-16 bg-surface">
                     <div className="container-max section-padding">
                         <div className="text-center mb-12">
-                            <h2 className="text-3xl font-bold text-foreground mb-4">Published Guidebooks</h2>
-                            <p className="text-muted-foreground max-w-2xl mx-auto">
+                            <h2 className="text-3xl font-bold text-brand-navy mb-4">Published Guidebooks</h2>
+                            <p className="text-gray-600 max-w-2xl mx-auto">
                                 Comprehensive O Level Bengali Resources by a Cambridge Examiner
                             </p>
                         </div>
@@ -129,79 +141,95 @@ export default function Resources() {
                                     title: "O Level Bengali BASICS PLUS",
                                     subtitle: "A Complete Guide to O Level Bengali - CAIE Subject Code 3204/2 - Paper 02",
                                     focus: "Foundational grammar, core concepts, and essential language structures",
-                                    status: "premium"
+                                    status: "premium",
+                                    color: "blue"
                                 },
                                 {
                                     title: "O Level Bengali COMPOSITION PLUS",
                                     subtitle: "A Complete Guide to O Level Bengali Composition Writing - CAIE Subject Code 3204/1 - Paper 01",
                                     focus: "Comprehensive composition writing techniques and creative expression strategies",
-                                    status: "premium"
+                                    status: "premium",
+                                    color: "navy"
                                 },
                                 {
                                     title: "O Level Bengali PRACTICE PLUS",
                                     subtitle: "Intensive Preparation for Cambridge O Level Bengali 3204 - Paper 1 & 2",
                                     focus: "Extensive practice materials, exercises, and topic-wise drills",
-                                    status: "premium"
+                                    status: "premium",
+                                    color: "gold"
                                 },
                                 {
                                     title: "O Level Bengali FOUNDATION PLUS",
                                     subtitle: "Building Strong Basics in Bengali for O Level Students",
                                     focus: "Complete foundation course with step-by-step integrated approach",
-                                    status: "new"
+                                    status: "new",
+                                    color: "blue"
                                 },
                                 {
                                     title: "O Level Bengali REVISION PLUS",
                                     subtitle: "Topic Wise Past Paper of CAIE O Level Bengali 3204",
                                     focus: "Organized past papers by topic with detailed solutions",
-                                    status: "premium"
+                                    status: "premium",
+                                    color: "navy"
                                 },
                                 {
                                     title: "Aspects of Bengali Language",
                                     subtitle: "A Complete Guide to 'O' Level Bengali - CIE Subject Code: 3204/2 - Paper-2",
                                     focus: "Comprehensive Paper 2 preparation",
-                                    status: "premium"
+                                    status: "premium",
+                                    color: "gold"
                                 },
                                 {
                                     title: "Bengali Easy Composition",
                                     subtitle: "A Complete Guide to 'O' level Bengali Composition Writing - CIE Subject Code: 3204/1 - Paper-1",
                                     focus: "Simplified composition writing for Paper 1",
-                                    status: "premium"
+                                    status: "premium",
+                                    color: "blue"
                                 },
                                 {
                                     title: "O Level Bengali REVISION BOOK",
                                     subtitle: "CAIE O Level Bengali 3204 - Cambridge Past Papers with Solutions",
                                     focus: "Past papers, mark schemes, examiner commentary",
-                                    status: "premium"
+                                    status: "premium",
+                                    color: "navy"
                                 }
-                            ].map((book, index) => (
-                                <div key={index} className="bg-card p-6 rounded-xl border border-border relative">
-                                    {book.status === "new" && (
-                                        <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full font-semibold">
-                                            NEW
+                            ].map((book, index) => {
+                                const colorClasses = {
+                                    blue: { bg: 'bg-brand-blue', text: 'text-white', badge: 'bg-brand-gold' },
+                                    navy: { bg: 'bg-brand-navy', text: 'text-white', badge: 'bg-brand-gold' },
+                                    gold: { bg: 'bg-brand-gold', text: 'text-brand-navy', badge: 'bg-brand-navy' }
+                                };
+                                const colorClass = colorClasses[book.color as keyof typeof colorClasses];
+                                return (
+                                    <div key={index} className="group bg-white p-6 rounded-2xl border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative">
+                                        {book.status === "new" && (
+                                            <div className="absolute -top-2 -right-2 bg-brand-gold text-brand-navy text-xs px-2 py-1 rounded-full font-semibold shadow-lg">
+                                                NEW
+                                            </div>
+                                        )}
+                                        <div className="mb-4">
+                                            <h3 className="font-bold text-brand-navy mb-2 group-hover:text-brand-blue transition-colors">{book.title}</h3>
+                                            <p className="text-sm text-gray-600 mb-3">{book.subtitle}</p>
+                                            <p className="text-sm text-brand-navy mb-4"><strong>Focus:</strong> {book.focus}</p>
+                                            <p className="text-xs text-gray-500"><strong>Author:</strong> Rofsan Khan</p>
                                         </div>
-                                    )}
-                                    <div className="mb-4">
-                                        <h3 className="font-bold text-foreground mb-2">{book.title}</h3>
-                                        <p className="text-sm text-muted-foreground mb-3">{book.subtitle}</p>
-                                        <p className="text-sm text-foreground mb-4"><strong>Focus:</strong> {book.focus}</p>
-                                        <p className="text-xs text-muted-foreground"><strong>Author:</strong> Rofsan Khan</p>
+                                        <div className="flex gap-2">
+                                            <button className={`flex-1 ${colorClass.bg} ${colorClass.text} px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-all duration-300 hover:scale-105 shadow-lg`}>
+                                                <Download className="h-4 w-4 inline mr-1" />
+                                                Download PDF
+                                            </button>
+                                            <button className="flex-1 border border-gray-300 bg-gray-50 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-100 transition-colors">
+                                                Order Physical Copy
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div className="flex gap-2">
-                                        <button className="flex-1 bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors">
-                                            <Download className="h-4 w-4 inline mr-1" />
-                                            Download PDF
-                                        </button>
-                                        <button className="flex-1 border border-border bg-background px-4 py-2 rounded-lg text-sm font-semibold hover:bg-accent transition-colors">
-                                            Order Physical Copy
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
 
-                        <div className="mt-12 p-6 bg-card rounded-xl border border-border">
-                            <h3 className="font-semibold text-foreground mb-4">About the Author</h3>
-                            <p className="text-muted-foreground">
+                        <div className="mt-12 p-6 bg-white rounded-2xl border border-gray-200 shadow-lg">
+                            <h3 className="font-semibold text-brand-navy mb-4">About the Author</h3>
+                            <p className="text-gray-600">
                                 These published works reflect Rofsan Khan's commitment to high-quality academic resources rooted in classroom realities and learner needs. As a Cambridge-trained examiner with years of teaching experience at leading institutions, each book is designed to address real challenges faced by English medium students learning Bengali.
                             </p>
                         </div>

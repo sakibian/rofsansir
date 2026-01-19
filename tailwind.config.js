@@ -69,6 +69,16 @@ export default {
           DEFAULT: "hsl(var(--warning))",
           foreground: "hsl(var(--warning-foreground))",
         },
+        // Brand Colors
+        brand: {
+          'navy': '#344871',
+          'blue-light': '#1877F2',
+          'blue': '#006DD6',
+          'blue-medium': '#0080FF',
+          'blue-dark': '#0054A5',
+          'white': '#FFF',
+          'gold': '#E9BA08',
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

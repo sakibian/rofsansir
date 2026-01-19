@@ -27,3 +27,10 @@ yarn-error.log
 /.vscode
 /.zed
 client_secret_*.jsonclient_secret_*.json
+/Bio.txt
+/AGENTS.md
+/requirements.txt
+/requirements-files
+/rofsan_website_content
+/rules
+/tasks

@@ -11,13 +11,13 @@ export default function Tips() {
                 <Header />
 
                 {/* Page Header */}
-                <section className="bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-16">
+                <section className="bg-gradient-to-br from-brand-blue/5 via-white to-brand-navy/5 py-16">
                     <div className="container-max section-padding">
                         <div className="text-center">
-                            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+                            <h1 className="text-4xl md:text-5xl font-bold text-brand-navy mb-4">
                                 The Examiner's Eye: Insider Secrets to O Level Bengali Success
                             </h1>
-                            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                                 Direct insights from a Cambridge Bengali Examiner - Learn what actually gets you marks
                             </p>
                         </div>
@@ -28,10 +28,10 @@ export default function Tips() {
                 <section className="py-16">
                     <div className="container-max section-padding">
                         <div className="max-w-4xl mx-auto text-center">
-                            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                            <p className="text-lg text-gray-600 leading-relaxed mb-6">
                                 As an official CAIE Bengali Examiner and Cambridge-trained Assessment Specialist, I evaluate hundreds of scripts every examination session. With over 5 years of experience leading Bengali departments at Oxford International School and European Standard School, I've developed deep insights into what actually earns marks and what causes students to lose them.
                             </p>
-                            <p className="text-lg text-muted-foreground leading-relaxed">
+                            <p className="text-lg text-gray-600 leading-relaxed">
                                 Here, I share the patterns I observe, common mistakes that cost students valuable marks, and proven strategies that have helped thousands of candidates achieve A* grades. These aren't generic tips—they're examiner insights from someone who designs assessments, trains teachers, and marks your actual exam papers.
                             </p>
                         </div>
@@ -41,92 +41,98 @@ export default function Tips() {
                 {/* Examiner Tips Categories */}
                 <section className="py-16 bg-surface">
                     <div className="container-max section-padding">
-                        <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Examiner Tips Blog Categories</h2>
+                        <h2 className="text-3xl font-bold text-brand-navy mb-12 text-center">Examiner Tips Blog Categories</h2>
 
                         <div className="grid md:grid-cols-2 gap-8">
                             {/* Paper 1 Tips */}
-                            <div className="bg-card p-8 rounded-xl border border-border">
+                            <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-lg">
                                 <div className="flex items-center gap-3 mb-6">
-                                    <Target className="h-6 w-6 text-primary" />
-                                    <h3 className="text-xl font-bold text-primary">Paper 1: Composition & Comprehension Tips</h3>
+                                    <div className="w-12 h-12 bg-brand-blue/10 rounded-full flex items-center justify-center">
+                                        <Target className="h-6 w-6 text-brand-blue" />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-brand-navy">Paper 1: Composition & Comprehension Tips</h3>
                                 </div>
                                 <div className="space-y-4">
-                                    <div className="border-l-4 border-primary/30 pl-4">
-                                        <h4 className="font-semibold text-foreground mb-1">Tip #1: The 10-Second First Impression</h4>
-                                        <p className="text-sm text-muted-foreground">What examiners look for in the opening paragraph of your composition.</p>
+                                    <div className="border-l-4 border-brand-blue/30 pl-4">
+                                        <h4 className="font-semibold text-brand-navy mb-1">Tip #1: The 10-Second First Impression</h4>
+                                        <p className="text-sm text-gray-600">What examiners look for in the opening paragraph of your composition.</p>
                                     </div>
-                                    <div className="border-l-4 border-primary/30 pl-4">
-                                        <h4 className="font-semibold text-foreground mb-1">Tip #2: Vocabulary That Impresses</h4>
-                                        <p className="text-sm text-muted-foreground">Rare Bengali words that demonstrate language sophistication (with examples and usage).</p>
+                                    <div className="border-l-4 border-brand-blue/30 pl-4">
+                                        <h4 className="font-semibold text-brand-navy mb-1">Tip #2: Vocabulary That Impresses</h4>
+                                        <p className="text-sm text-gray-600">Rare Bengali words that demonstrate language sophistication (with examples and usage).</p>
                                     </div>
-                                    <div className="border-l-4 border-primary/30 pl-4">
-                                        <h4 className="font-semibold text-foreground mb-1">Tip #3: Common Composition Mistakes</h4>
-                                        <p className="text-sm text-muted-foreground">Five errors that appear in 80% of scripts - and how to avoid them.</p>
+                                    <div className="border-l-4 border-brand-blue/30 pl-4">
+                                        <h4 className="font-semibold text-brand-navy mb-1">Tip #3: Common Composition Mistakes</h4>
+                                        <p className="text-sm text-gray-600">Five errors that appear in 80% of scripts - and how to avoid them.</p>
                                     </div>
-                                    <div className="border-l-4 border-primary/30 pl-4">
-                                        <h4 className="font-semibold text-foreground mb-1">Tip #4: Comprehension Question Strategies</h4>
-                                        <p className="text-sm text-muted-foreground">How to identify what the question is really asking for.</p>
+                                    <div className="border-l-4 border-brand-blue/30 pl-4">
+                                        <h4 className="font-semibold text-brand-navy mb-1">Tip #4: Comprehension Question Strategies</h4>
+                                        <p className="text-sm text-gray-600">How to identify what the question is really asking for.</p>
                                     </div>
-                                    <div className="border-l-4 border-primary/30 pl-4">
-                                        <h4 className="font-semibold text-foreground mb-1">Tip #5: Time Management in Paper 1</h4>
-                                        <p className="text-sm text-muted-foreground">Allocating 2 hours effectively across all questions.</p>
+                                    <div className="border-l-4 border-brand-blue/30 pl-4">
+                                        <h4 className="font-semibold text-brand-navy mb-1">Tip #5: Time Management in Paper 1</h4>
+                                        <p className="text-sm text-gray-600">Allocating 2 hours effectively across all questions.</p>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Paper 2 Tips */}
-                            <div className="bg-card p-8 rounded-xl border border-border">
+                            <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-lg">
                                 <div className="flex items-center gap-3 mb-6">
-                                    <Lightbulb className="h-6 w-6 text-secondary" />
-                                    <h3 className="text-xl font-bold text-secondary">Paper 2: Language & Grammar Tips</h3>
+                                    <div className="w-12 h-12 bg-brand-navy/10 rounded-full flex items-center justify-center">
+                                        <Lightbulb className="h-6 w-6 text-brand-navy" />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-brand-navy">Paper 2: Language & Grammar Tips</h3>
                                 </div>
                                 <div className="space-y-4">
-                                    <div className="border-l-4 border-secondary/30 pl-4">
-                                        <h4 className="font-semibold text-foreground mb-1">Tip #6: Grammar Questions That Trip Students Up</h4>
-                                        <p className="text-sm text-muted-foreground">The three grammar topics where most marks are lost.</p>
+                                    <div className="border-l-4 border-brand-navy/30 pl-4">
+                                        <h4 className="font-semibold text-brand-navy mb-1">Tip #6: Grammar Questions That Trip Students Up</h4>
+                                        <p className="text-sm text-gray-600">The three grammar topics where most marks are lost.</p>
                                     </div>
-                                    <div className="border-l-4 border-secondary/30 pl-4">
-                                        <h4 className="font-semibold text-foreground mb-1">Tip #7: Translation Excellence</h4>
-                                        <p className="text-sm text-muted-foreground">Moving from literal translation to natural Bengali expression.</p>
+                                    <div className="border-l-4 border-brand-navy/30 pl-4">
+                                        <h4 className="font-semibold text-brand-navy mb-1">Tip #7: Translation Excellence</h4>
+                                        <p className="text-sm text-gray-600">Moving from literal translation to natural Bengali expression.</p>
                                     </div>
-                                    <div className="border-l-4 border-secondary/30 pl-4">
-                                        <h4 className="font-semibold text-foreground mb-1">Tip #8: Mark Scheme Secrets</h4>
-                                        <p className="text-sm text-muted-foreground">Understanding how examiners award marks for grammar questions.</p>
+                                    <div className="border-l-4 border-brand-navy/30 pl-4">
+                                        <h4 className="font-semibold text-brand-navy mb-1">Tip #8: Mark Scheme Secrets</h4>
+                                        <p className="text-sm text-gray-600">Understanding how examiners award marks for grammar questions.</p>
                                     </div>
-                                    <div className="border-l-4 border-secondary/30 pl-4">
-                                        <h4 className="font-semibold text-foreground mb-1">Tip #9: Sentence Construction Mastery</h4>
-                                        <p className="text-sm text-muted-foreground">Building complex sentences that showcase language ability.</p>
+                                    <div className="border-l-4 border-brand-navy/30 pl-4">
+                                        <h4 className="font-semibold text-brand-navy mb-1">Tip #9: Sentence Construction Mastery</h4>
+                                        <p className="text-sm text-gray-600">Building complex sentences that showcase language ability.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* General Exam Strategy Tips */}
-                        <div className="mt-12 bg-card p-8 rounded-xl border border-border">
+                        <div className="mt-12 bg-white p-8 rounded-2xl border border-gray-200 shadow-lg">
                             <div className="flex items-center gap-3 mb-6">
-                                <TrendingUp className="h-6 w-6 text-primary" />
-                                <h3 className="text-xl font-bold text-primary">General Exam Strategy Tips</h3>
+                                <div className="w-12 h-12 bg-brand-gold/10 rounded-full flex items-center justify-center">
+                                    <TrendingUp className="h-6 w-6 text-brand-navy" />
+                                </div>
+                                <h3 className="text-xl font-bold text-brand-navy">General Exam Strategy Tips</h3>
                             </div>
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                <div className="border-l-4 border-primary/30 pl-4">
-                                    <h4 className="font-semibold text-foreground mb-1">Tip #10: The A* Mindset</h4>
-                                    <p className="text-sm text-muted-foreground">What separates grade A students from A* students.</p>
+                                <div className="border-l-4 border-brand-gold/30 pl-4">
+                                    <h4 className="font-semibold text-brand-navy mb-1">Tip #10: The A* Mindset</h4>
+                                    <p className="text-sm text-gray-600">What separates grade A students from A* students.</p>
                                 </div>
-                                <div className="border-l-4 border-primary/30 pl-4">
-                                    <h4 className="font-semibold text-foreground mb-1">Tip #11: Past Paper Practice Method</h4>
-                                    <p className="text-sm text-muted-foreground">The right way to use past papers for maximum improvement.</p>
+                                <div className="border-l-4 border-brand-gold/30 pl-4">
+                                    <h4 className="font-semibold text-brand-navy mb-1">Tip #11: Past Paper Practice Method</h4>
+                                    <p className="text-sm text-gray-600">The right way to use past papers for maximum improvement.</p>
                                 </div>
-                                <div className="border-l-4 border-primary/30 pl-4">
-                                    <h4 className="font-semibold text-foreground mb-1">Tip #12: Handwriting & Presentation</h4>
-                                    <p className="text-sm text-muted-foreground">Yes, it matters - here's how much.</p>
+                                <div className="border-l-4 border-brand-gold/30 pl-4">
+                                    <h4 className="font-semibold text-brand-navy mb-1">Tip #12: Handwriting & Presentation</h4>
+                                    <p className="text-sm text-gray-600">Yes, it matters - here's how much.</p>
                                 </div>
-                                <div className="border-l-4 border-primary/30 pl-4">
-                                    <h4 className="font-semibold text-foreground mb-1">Tip #13: Revision Strategy</h4>
-                                    <p className="text-sm text-muted-foreground">A 6-week plan for comprehensive Bengali revision.</p>
+                                <div className="border-l-4 border-brand-gold/30 pl-4">
+                                    <h4 className="font-semibold text-brand-navy mb-1">Tip #13: Revision Strategy</h4>
+                                    <p className="text-sm text-gray-600">A 6-week plan for comprehensive Bengali revision.</p>
                                 </div>
-                                <div className="border-l-4 border-primary/30 pl-4">
-                                    <h4 className="font-semibold text-foreground mb-1">Tip #14: Exam Day Checklist</h4>
-                                    <p className="text-sm text-muted-foreground">What to do the night before and morning of your exam.</p>
+                                <div className="border-l-4 border-brand-gold/30 pl-4">
+                                    <h4 className="font-semibold text-brand-navy mb-1">Tip #14: Exam Day Checklist</h4>
+                                    <p className="text-sm text-gray-600">What to do the night before and morning of your exam.</p>
                                 </div>
                             </div>
                         </div>

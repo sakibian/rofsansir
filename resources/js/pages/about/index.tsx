@@ -1,405 +1,272 @@
 import Header from '@/components/header';
 import Footer from '@/components/Footer';
 import { Head } from '@inertiajs/react';
-import { Award, BookOpen, Users, GraduationCap, MapPin, Phone, Mail, Star, CheckCircle } from 'lucide-react';
+import {
+    User,
+    Award,
+    BookOpen,
+    GraduationCap,
+    Users,
+    Target,
+    CheckCircle,
+    Star,
+    MapPin,
+    Phone,
+    Mail,
+    Lightbulb,
+    Trophy,
+    Heart
+} from 'lucide-react';
+
+type AboutCard = {
+    icon: React.ComponentType<{ className?: string }>;
+    title: string;
+    items: string[];
+    summary: string;
+    color: ColorType;
+};
+
+const aboutCards: AboutCard[] = [
+    {
+        icon: User,
+        title: 'Meet Rofsan Sir',
+        items: [
+            'CAIE-Certified Bengali Educator',
+            'Cambridge-approved O Level Examiner',
+            '8+ years teaching experience',
+            'Published author of Bengali guidebooks'
+        ],
+        summary: 'A dedicated educator specializing in making Bengali accessible for English-medium students, combining Cambridge expertise with modern teaching methods.',
+        color: 'blue'
+    },
+    {
+        icon: Award,
+        title: 'Professional Experience',
+        items: [
+            'Senior Faculty at Oxford International School',
+            'Lead Teacher at European Standard School',
+            'Department leadership and teacher training',
+            'Curriculum development and assessment design'
+        ],
+        summary: 'Extensive leadership experience in prestigious educational institutions, focusing on curriculum excellence and teacher development.',
+        color: 'navy'
+    },
+    {
+        icon: GraduationCap,
+        title: 'Academic Excellence',
+        items: [
+            'Honours & Master\'s in Bengali Literature',
+            'Cambridge International Education training',
+            'Assessment Specialist certification',
+            'Continuous professional development'
+        ],
+        summary: 'Strong academic foundation combined with specialized Cambridge training, ensuring world-class Bengali language instruction.',
+        color: 'gold'
+    },
+    {
+        icon: Target,
+        title: 'Examiner Insights',
+        items: [
+            'Direct Cambridge marking experience',
+            'Deep understanding of mark schemes',
+            'Assessment methodology expertise',
+            'Exam preparation strategies'
+        ],
+        summary: 'Unique dual perspective as both teacher and examiner, providing students with insider knowledge for exam success.',
+        color: 'blue'
+    },
+    {
+        icon: Lightbulb,
+        title: 'Teaching Philosophy',
+        items: [
+            'Research-based modern approach',
+            'Student-centered learning',
+            'Simplified grammar instruction',
+            'Anti-rote learning design'
+        ],
+        summary: 'Innovative pedagogy that makes Bengali accessible without compromising academic rigor, focusing on genuine language proficiency.',
+        color: 'navy'
+    },
+    {
+        icon: Trophy,
+        title: 'Student Success',
+        items: [
+            'Consistent high grades (A* and A)',
+            'Increased confidence in Bengali',
+            'Strong Paper 1 & Paper 2 performance',
+            'Genuine language proficiency'
+        ],
+        summary: 'Proven track record of transforming student confidence and achieving outstanding examination results year after year.',
+        color: 'gold'
+    },
+    {
+        icon: BookOpen,
+        title: 'Published Author',
+        items: [
+            'O Level Bengali Basics Plus',
+            'O Level Bengali Compositions Plus',
+            'O Level Bengali Practice Plus',
+            'O Level Bengali Foundation Plus'
+        ],
+        summary: 'Author of comprehensive guidebooks addressing real classroom challenges, providing practical solutions for English-medium learners.',
+        color: 'blue'
+    },
+    {
+        icon: Users,
+        title: 'Modern Learning Environment',
+        items: [
+            'Technology-integrated classrooms',
+            'Interactive digital resources',
+            'Regular assessments & feedback',
+            'Supportive atmosphere'
+        ],
+        summary: 'Contemporary learning environment with digital tools, multimedia resources, and personalized attention for optimal student success.',
+        color: 'navy'
+    },
+    {
+        icon: Heart,
+        title: 'Why Choose Rofsan Sir',
+        items: [
+            'Easy-to-understand teaching',
+            'Confidence-building approach',
+            'Clear exam preparation',
+            'Strong foundational skills'
+        ],
+        summary: 'Choose clarity, confidence, and excellence in Bengali education. Experience teaching that makes learning enjoyable and successful.',
+        color: 'gold'
+    }
+];
+
+type ColorType = 'blue' | 'navy' | 'gold';
+
+const colorClasses: Record<ColorType, { border: string; icon: string; bgIcon: string; hover: string }> = {
+    blue: {
+        border: 'border-t-brand-blue',
+        icon: 'text-brand-blue',
+        bgIcon: 'bg-brand-blue/10',
+        hover: 'hover:shadow-brand-blue/20'
+    },
+    navy: {
+        border: 'border-t-brand-navy',
+        icon: 'text-brand-navy',
+        bgIcon: 'bg-brand-navy/10',
+        hover: 'hover:shadow-brand-navy/20'
+    },
+    gold: {
+        border: 'border-t-brand-gold',
+        icon: 'text-brand-navy',
+        bgIcon: 'bg-brand-gold/10',
+        hover: 'hover:shadow-brand-gold/20'
+    }
+};
 
 export default function About() {
     return (
         <>
             <Head title="About Rofsan Sir - Cambridge Examiner" />
-            <div className="min-h-screen bg-background">
+            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
                 <Header />
 
                 {/* Page Header */}
-                <section className="bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-16">
+                <section className="bg-gradient-to-br from-brand-blue/5 via-white to-brand-navy/5 py-20">
                     <div className="container-max section-padding">
                         <div className="text-center">
-                            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-                                Meet Your Cambridge Examiner
+                            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-brand-navy to-brand-blue bg-clip-text text-transparent mb-6">
+                                Meet Your Bengali Teacher
                             </h1>
-                            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                                CAIE-Certified Bengali Educator | Assessment Specialist | Published Author
+                            <p className="text-xl md:text-2xl text-brand-navy max-w-4xl mx-auto font-light">
+                                CAIE-Certified Educator | Cambridge Examiner | Published Author
                             </p>
+                            <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm text-brand-navy/80">
+                                <span className="flex items-center gap-2">
+                                    <Star className="h-4 w-4 text-brand-gold" />
+                                    8+ Years Experience
+                                </span>
+                                <span className="flex items-center gap-2">
+                                    <GraduationCap className="h-4 w-4 text-brand-blue" />
+                                    Cambridge Trained
+                                </span>
+                                <span className="flex items-center gap-2">
+                                    <BookOpen className="h-4 w-4 text-brand-navy" />
+                                    Published Author
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                {/* Professional Overview */}
-                <section className="py-16">
-                    <div className="container-max section-padding">
-                        <div className="max-w-4xl mx-auto">
-                            <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Professional Overview</h2>
-                            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                                Rofsan Khan is a CAIE-certified and Cambridge-trained Bengali educator, currently serving as an <strong className="text-primary">Examiner and Assessment Specialist for Cambridge O Level Bengali</strong>. With a distinguished career spanning over five years in leadership positions at Bangladesh's premier English medium institutions, he has established himself as one of the country's leading authorities on O Level Bengali instruction and assessment.
+                {/* About Cards Grid */}
+                <section className="py-20 px-4 md:px-8">
+                    <div className="container mx-auto max-w-7xl">
+                        <div className="mb-16 text-center">
+                            <h2 className="mb-6 text-3xl md:text-5xl font-bold text-brand-navy">
+                                Discover Rofsan Sir's Journey
+                            </h2>
+                            <p className="mx-auto max-w-3xl text-lg text-gray-600 leading-relaxed">
+                                A comprehensive overview of expertise, experience, and dedication to
+                                Bengali language education that has helped thousands of students succeed.
                             </p>
+                        </div>
+
+                        {/* Cards Grid */}
+                        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                            {aboutCards.map((card, index) => {
+                                const colorClass = colorClasses[card.color];
+                                return (
+                                    <div
+                                        key={index}
+                                        className={`group flex flex-col rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2 ${colorClass.border} border-t-4 ${colorClass.hover}`}
+                                    >
+                                        <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-lg transition-all duration-300 group-hover:scale-110 mx-auto ${colorClass.bgIcon}`}>
+                                            <card.icon className={`h-8 w-8 ${colorClass.icon} transition-transform duration-300`} />
+                                        </div>
+                                        <h3 className="mb-4 text-xl font-bold text-brand-navy">
+                                            {card.title}
+                                        </h3>
+                                        <ul className="space-y-2 mb-6 text-left">
+                                            {card.items.map((item, idx) => (
+                                                <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
+                                                    <CheckCircle className={`h-4 w-4 text-green-500 mt-0.5 flex-shrink-0`} />
+                                                    {item}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        <p className="text-gray-600 leading-relaxed text-sm">
+                                            {card.summary}
+                                        </p>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </section>
 
-                {/* Career Journey & Teaching Leadership */}
-                <section className="py-16 bg-surface">
+                {/* Vision & Mission Section */}
+                <section className="py-20 bg-gradient-to-r from-brand-navy/5 to-brand-blue/5">
                     <div className="container-max section-padding">
-                        <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Career Journey & Teaching Leadership</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold text-brand-navy mb-12 text-center">Vision & Mission</h2>
 
-                        <div className="space-y-8 max-w-4xl mx-auto">
-                            <div className="bg-card p-8 rounded-xl border border-border">
+                        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                            <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-lg">
                                 <div className="flex items-center gap-3 mb-6">
-                                    <GraduationCap className="h-8 w-8 text-primary" />
-                                    <h3 className="text-2xl font-bold text-primary">2019 - 2024: Oxford International School (OIS)</h3>
-                                </div>
-                                <h4 className="text-xl font-semibold text-foreground mb-4">Senior Faculty of Bengali</h4>
-                                <ul className="space-y-3 text-muted-foreground">
-                                    <li className="flex items-start gap-3">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                                        <span>Developed comprehensive curriculum frameworks for O Level Bengali</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                                        <span>Designed internal assessments aligned with Cambridge standards</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                                        <span>Mentored junior faculty members in effective teaching methodologies</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                                        <span>Led departmental training sessions on assessment techniques</span>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div className="bg-card p-8 rounded-xl border border-border">
-                                <div className="flex items-center gap-3 mb-6">
-                                    <Users className="h-8 w-8 text-secondary" />
-                                    <h3 className="text-2xl font-bold text-secondary">European Standard School (ESS)</h3>
-                                </div>
-                                <h4 className="text-xl font-semibold text-foreground mb-4">Lead Teacher, Bengali Department</h4>
-                                <ul className="space-y-3 text-muted-foreground">
-                                    <li className="flex items-start gap-3">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                                        <span>Overall leadership of the Bengali language program</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                                        <span>Syllabus planning and curriculum development</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                                        <span>Internal assessment design and standardization</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                                        <span>Departmental training and professional development</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                                        <span>Quality assurance for Bengali language instruction across multiple levels</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Academic Qualifications */}
-                <section className="py-16">
-                    <div className="container-max section-padding">
-                        <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Academic Qualifications</h2>
-
-                        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                            <div className="bg-card p-8 rounded-xl border border-border">
-                                <h3 className="text-xl font-bold text-primary mb-6">University of Chittagong</h3>
-                                <ul className="space-y-3">
-                                    <li className="flex items-start gap-3">
-                                        <Award className="h-5 w-5 text-primary mt-0.5" />
-                                        <span className="text-muted-foreground"><strong>Honours Degree</strong> in Bengali Language and Literature</span>
-                                    </li>
-                                    <li className="flex items-start gap-3">
-                                        <Award className="h-5 w-5 text-primary mt-0.5" />
-                                        <span className="text-muted-foreground"><strong>Master's Degree</strong> in Bengali Language and Literature</span>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div className="bg-card p-8 rounded-xl border border-border">
-                                <h3 className="text-xl font-bold text-secondary mb-6">Cambridge International Education</h3>
-                                <p className="text-muted-foreground mb-4">Completed formal training programs in:</p>
-                                <ul className="space-y-3 text-muted-foreground">
-                                    <li>• Syllabus interpretation and delivery</li>
-                                    <li>• Assessment methodology and marking standards</li>
-                                    <li>• Exam preparation strategies aligned with global academic standards</li>
-                                    <li>• Cambridge examination system and mark scheme application</li>
-                                </ul>
-                                <div className="mt-4 p-3 bg-secondary/10 rounded-lg">
-                                    <p className="text-sm font-semibold text-secondary">Professional Certifications:</p>
-                                    <p className="text-sm text-secondary">CAIE-Certified Educator, Cambridge Assessment Trained Examiner, Assessment Specialist for O Level Bengali</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Examiner & Assessment Expertise */}
-                <section className="py-16 bg-surface">
-                    <div className="container-max section-padding">
-                        <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Examiner & Assessment Expertise</h2>
-
-                        <div className="max-w-4xl mx-auto">
-                            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                                As a <strong className="text-primary">Cambridge-appointed Examiner</strong>, Rofsan brings invaluable insider knowledge to his teaching:
-                            </p>
-
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <div className="space-y-4">
-                                    <div className="flex items-start gap-3">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                                        <span className="text-muted-foreground">In-depth understanding of Cambridge mark schemes</span>
+                                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-blue/10">
+                                        <Target className="h-6 w-6 text-brand-blue" />
                                     </div>
-                                    <div className="flex items-start gap-3">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                                        <span className="text-muted-foreground">Direct experience evaluating thousands of O Level scripts</span>
-                                    </div>
-                                    <div className="flex items-start gap-3">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                                        <span className="text-muted-foreground">Expert knowledge of what examiners look for in high-scoring answers</span>
-                                    </div>
-                                    <div className="flex items-start gap-3">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                                        <span className="text-muted-foreground">Practical insights into common mistakes and how to avoid them</span>
-                                    </div>
-                                    <div className="flex items-start gap-3">
-                                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                                        <span className="text-muted-foreground">Comprehensive understanding of assessment methodology</span>
-                                    </div>
+                                    <h3 className="text-2xl font-bold text-brand-navy">Vision</h3>
                                 </div>
-
-                                <div className="bg-card p-6 rounded-xl border border-border">
-                                    <p className="text-muted-foreground leading-relaxed">
-                                        This unique position allows him to guide students with precision, ensuring they understand not just what to write, but <strong className="text-primary">how examiners will evaluate their work</strong>.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Teaching Philosophy & Methodology */}
-                <section className="py-16">
-                    <div className="container-max section-padding">
-                        <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Teaching Philosophy & Methodology</h2>
-
-                        <div className="max-w-4xl mx-auto">
-                            <h3 className="text-2xl font-bold text-primary mb-6">A Research-Based, Modern Approach</h3>
-
-                            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                                A core strength of Rofsan's professional journey is his <strong className="text-primary">research-based, modern, and activity-driven approach to teaching Bengali</strong>, developed specifically for English medium learners. His pedagogy represents a fundamental shift from traditional methods:
-                            </p>
-
-                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                                <div className="bg-card p-6 rounded-xl border border-border">
-                                    <h4 className="font-semibold text-foreground mb-3">1. Linguistic Analysis Integration</h4>
-                                    <p className="text-sm text-muted-foreground">Breaking down complex grammar and language structures into understandable components through systematic linguistic analysis</p>
-                                </div>
-                                <div className="bg-card p-6 rounded-xl border border-border">
-                                    <h4 className="font-semibold text-foreground mb-3">2. Student-Centered Learning</h4>
-                                    <p className="text-sm text-muted-foreground">Activity-driven classroom techniques that engage students actively rather than passive listening</p>
-                                </div>
-                                <div className="bg-card p-6 rounded-xl border border-border">
-                                    <h4 className="font-semibold text-foreground mb-3">3. Simplified Grammar Instruction</h4>
-                                    <p className="text-sm text-muted-foreground">Making Bengali grammar accessible without oversimplification, maintaining academic rigor while ensuring clarity</p>
-                                </div>
-                                <div className="bg-card p-6 rounded-xl border border-border">
-                                    <h4 className="font-semibold text-foreground mb-3">4. Literary Appreciation Development</h4>
-                                    <p className="text-sm text-muted-foreground">Teaching students to engage with Bengali literature critically and appreciatively, not just memorize texts</p>
-                                </div>
-                                <div className="bg-card p-6 rounded-xl border border-border">
-                                    <h4 className="font-semibold text-foreground mb-3">5. Anti-Rote Learning Design</h4>
-                                    <p className="text-sm text-muted-foreground">Deliberately designed to reduce dependency on rote memorization and translation</p>
-                                </div>
-                            </div>
-
-                            <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-8 rounded-xl border border-primary/20">
-                                <h4 className="text-xl font-bold text-primary mb-4">The Goal: Real Fluency</h4>
-                                <p className="text-muted-foreground leading-relaxed mb-4">
-                                    Rofsan's method empowers students to:
-                                </p>
-                                <ul className="space-y-2 text-muted-foreground">
-                                    <li>• Engage critically with the Bengali language</li>
-                                    <li>• Develop genuine fluency and confidence</li>
-                                    <li>• Move beyond translation dependency</li>
-                                    <li>• Understand cultural contexts and nuances</li>
-                                    <li>• Value Bengali as a living language, not just an exam subject</li>
-                                </ul>
-                                <p className="text-muted-foreground leading-relaxed mt-4">
-                                    <strong className="text-primary">Making Bengali Accessible:</strong> His approach makes Bengali not just a subject to pass, but a language students understand, value, and carry forward as English medium learners. Students leave his classes with both excellent exam results and genuine language competency.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Teaching Impact & Student Success */}
-                <section className="py-16 bg-surface">
-                    <div className="container-max section-padding">
-                        <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Teaching Impact & Student Success</h2>
-
-                        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                            <div className="bg-card p-8 rounded-xl border border-border">
-                                <h3 className="text-xl font-bold text-primary mb-6">Proven Track Record</h3>
-                                <ul className="space-y-3 text-muted-foreground">
-                                    <li>• Guided thousands of O Level candidates to strong examination success</li>
-                                    <li>• Consistent achievement of high grades (A* and A) by students</li>
-                                    <li>• Students report increased confidence in Bengali language skills</li>
-                                    <li>• High success rate maintained year after year across different batches</li>
-                                </ul>
-                            </div>
-
-                            <div className="bg-card p-8 rounded-xl border border-border">
-                                <h3 className="text-xl font-bold text-secondary mb-6">Student Outcomes</h3>
-                                <ul className="space-y-3 text-muted-foreground">
-                                    <li>• Strong examination performance in both Paper 1 and Paper 2</li>
-                                    <li>• Development of genuine language proficiency beyond exam requirements</li>
-                                    <li>• Cultural connection and appreciation for Bengali heritage</li>
-                                    <li>• Skills that students carry forward into higher education and beyond</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div className="mt-8 bg-gradient-to-r from-secondary/10 to-primary/10 p-8 rounded-xl border border-secondary/20 max-w-4xl mx-auto">
-                            <h3 className="text-xl font-bold text-primary mb-4">Teaching Approach Focus</h3>
-                            <div className="grid md:grid-cols-3 gap-6 text-center">
-                                <div>
-                                    <h4 className="font-semibold text-foreground mb-2">Clarity</h4>
-                                    <p className="text-sm text-muted-foreground">Clear explanation and instruction</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-foreground mb-2">Readiness</h4>
-                                    <p className="text-sm text-muted-foreground">Exam readiness and strategic preparation</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-semibold text-foreground mb-2">Connection</h4>
-                                    <p className="text-sm text-muted-foreground">Cultural connection and authentic language use</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Published Works & Academic Contributions */}
-                <section className="py-16">
-                    <div className="container-max section-padding">
-                        <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Published Works & Academic Contributions</h2>
-
-                        <div className="max-w-4xl mx-auto">
-                            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                                Rofsan is the author of <strong className="text-primary">four comprehensive O Level Bengali guidebooks</strong> that have become essential resources for thousands of students:
-                            </p>
-
-                            <div className="grid md:grid-cols-2 gap-6 mb-8">
-                                <div className="bg-card p-6 rounded-xl border border-border">
-                                    <h3 className="font-bold text-foreground mb-2">O Level Bengali Basics Plus</h3>
-                                    <p className="text-sm text-muted-foreground mb-3">Foundational guide covering core concepts, grammar fundamentals, and essential language structures for students beginning their O Level journey.</p>
-                                </div>
-                                <div className="bg-card p-6 rounded-xl border border-border">
-                                    <h3 className="font-bold text-foreground mb-2">O Level Bengali Compositions Plus</h3>
-                                    <p className="text-sm text-muted-foreground mb-3">Comprehensive composition writing guide with essay structures, sample pieces, and techniques for creative and analytical writing.</p>
-                                </div>
-                                <div className="bg-card p-6 rounded-xl border border-border">
-                                    <h3 className="font-bold text-foreground mb-2">O Level Bengali Practice Plus</h3>
-                                    <p className="text-sm text-muted-foreground mb-3">Extensive practice materials with topic-wise exercises, grammar drills, and comprehensive answer keys aligned to CAIE standards.</p>
-                                </div>
-                                <div className="bg-card p-6 rounded-xl border border-border relative">
-                                    <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full font-semibold">
-                                        NEW
-                                    </div>
-                                    <h3 className="font-bold text-foreground mb-2">O Level Bengali Foundation Plus</h3>
-                                    <p className="text-sm text-muted-foreground mb-3">Complete foundation course offering integrated, step-by-step preparation covering the entire O Level syllabus.</p>
-                                </div>
-                            </div>
-
-                            <div className="bg-card p-8 rounded-xl border border-border">
-                                <h3 className="text-xl font-bold text-primary mb-4">Author's Philosophy</h3>
-                                <p className="text-muted-foreground leading-relaxed">
-                                    These published works reflect Rofsan's commitment to <strong className="text-primary">high-quality academic resources rooted in classroom realities and learner needs</strong>. Each book addresses real challenges he has observed in years of teaching English medium students, providing practical solutions that work in actual learning environments.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Professional Approach */}
-                <section className="py-16 bg-surface">
-                    <div className="container-max section-padding">
-                        <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Professional Approach</h2>
-
-                        <div className="max-w-4xl mx-auto">
-                            <h3 className="text-2xl font-bold text-primary mb-8">What Sets Rofsan Apart</h3>
-
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <div className="space-y-4">
-                                    <div className="flex items-start gap-3">
-                                        <Star className="h-5 w-5 text-amber-500 mt-0.5" />
-                                        <span className="text-muted-foreground"><strong>Dual Perspective:</strong> Both teacher and examiner—understands learning challenges AND assessment standards</span>
-                                    </div>
-                                    <div className="flex items-start gap-3">
-                                        <Star className="h-5 w-5 text-amber-500 mt-0.5" />
-                                        <span className="text-muted-foreground"><strong>Research-Based Methods:</strong> Teaching approach grounded in linguistic research and pedagogical best practices</span>
-                                    </div>
-                                    <div className="flex items-start gap-3">
-                                        <Star className="h-5 w-5 text-amber-500 mt-0.5" />
-                                        <span className="text-muted-foreground"><strong>English Medium Expertise:</strong> Specialized understanding of challenges faced by English medium students learning Bengali</span>
-                                    </div>
-                                </div>
-
-                                <div className="space-y-4">
-                                    <div className="flex items-start gap-3">
-                                        <Star className="h-5 w-5 text-amber-500 mt-0.5" />
-                                        <span className="text-muted-foreground"><strong>Leadership Experience:</strong> Proven track record leading departments and training other teachers</span>
-                                    </div>
-                                    <div className="flex items-start gap-3">
-                                        <Star className="h-5 w-5 text-amber-500 mt-0.5" />
-                                        <span className="text-muted-foreground"><strong>Continuous Development:</strong> Ongoing Cambridge training and professional development</span>
-                                    </div>
-                                    <div className="flex items-start gap-3">
-                                        <Star className="h-5 w-5 text-amber-500 mt-0.5" />
-                                        <span className="text-muted-foreground"><strong>Published Authority:</strong> Author of widely-used guidebooks demonstrating deep subject expertise</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="mt-8 bg-gradient-to-r from-primary/10 to-secondary/10 p-8 rounded-xl border border-primary/20">
-                                <h3 className="text-xl font-bold text-primary mb-4">Commitment to Excellence</h3>
-                                <p className="text-muted-foreground leading-relaxed">
-                                    Rofsan's work is driven by a commitment to:
-                                </p>
-                                <ul className="space-y-2 text-muted-foreground mt-4">
-                                    <li>• Academic excellence without compromising accessibility</li>
-                                    <li>• Student success measured not just by grades but by genuine learning</li>
-                                    <li>• Cultural connection through language education</li>
-                                    <li>• Professional integrity in teaching and assessment</li>
-                                    <li>• Continuous improvement and innovation in teaching methods</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Vision & Mission */}
-                <section className="py-16">
-                    <div className="container-max section-padding">
-                        <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Vision & Mission</h2>
-
-                        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                            <div className="bg-card p-8 rounded-xl border border-border">
-                                <h3 className="text-xl font-bold text-primary mb-6">Vision</h3>
-                                <p className="text-muted-foreground leading-relaxed">
+                                <p className="text-gray-600 leading-relaxed">
                                     To make Bengali language education accessible, engaging, and successful for English medium students across Bangladesh and beyond, while preserving the beauty and cultural richness of the language.
                                 </p>
                             </div>
 
-                            <div className="bg-card p-8 rounded-xl border border-border">
-                                <h3 className="text-xl font-bold text-secondary mb-6">Mission</h3>
-                                <p className="text-muted-foreground leading-relaxed">
+                            <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-lg">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-gold/10">
+                                        <Lightbulb className="h-6 w-6 text-brand-navy" />
+                                    </div>
+                                    <h3 className="text-2xl font-bold text-brand-navy">Mission</h3>
+                                </div>
+                                <p className="text-gray-600 leading-relaxed">
                                     To provide world-class Bengali language instruction that combines Cambridge assessment expertise with innovative, student-centered teaching methods, enabling students to achieve academic excellence while developing genuine language proficiency and cultural appreciation.
                                 </p>
                             </div>
@@ -407,47 +274,64 @@ export default function About() {
                     </div>
                 </section>
 
-                {/* Connect With Rofsan Khan */}
-                <section className="py-16 bg-surface">
+                {/* Connect Section */}
+                <section className="py-20">
                     <div className="container-max section-padding">
-                        <h2 className="text-3xl font-bold text-foreground mb-12 text-center">Connect With Rofsan Khan</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold text-brand-navy mb-12 text-center">Connect With Rofsan Khan</h2>
 
-                        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                            <div className="space-y-6">
-                                <div className="flex items-start gap-4">
-                                    <Mail className="h-6 w-6 text-primary mt-1" />
-                                    <div>
-                                        <h3 className="font-semibold text-foreground">Professional Inquiries</h3>
-                                        <p className="text-muted-foreground">rofsankhan@gmail.com</p>
+                        <div className="max-w-4xl mx-auto">
+                            <div className="grid md:grid-cols-2 gap-8">
+                                <div className="space-y-6">
+                                    <div className="flex items-start gap-4">
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-blue/10">
+                                            <Mail className="h-5 w-5 text-brand-blue" />
+                                        </div>
+                                        <div>
+                                            <h3 className="font-semibold text-brand-navy">Email</h3>
+                                            <p className="text-gray-600">rofsankhan@gmail.com</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-start gap-4">
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-navy/10">
+                                            <MapPin className="h-5 w-5 text-brand-navy" />
+                                        </div>
+                                        <div>
+                                            <h3 className="font-semibold text-brand-navy">Location</h3>
+                                            <p className="text-gray-600">Lalmatia, Dhaka-1207, Bangladesh</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-start gap-4">
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-gold/10">
+                                            <Phone className="h-5 w-5 text-brand-navy" />
+                                        </div>
+                                        <div>
+                                            <h3 className="font-semibold text-brand-navy">Phone</h3>
+                                            <p className="text-gray-600">+880 1948-116595</p>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="flex items-start gap-4">
-                                    <MapPin className="h-6 w-6 text-primary mt-1" />
-                                    <div>
-                                        <h3 className="font-semibold text-foreground">Teaching Location</h3>
-                                        <p className="text-muted-foreground">Lalmatia, Dhaka-1207, Bangladesh</p>
-                                    </div>
-                                </div>
-
-                                <div className="flex items-start gap-4">
-                                    <Phone className="h-6 w-6 text-primary mt-1" />
-                                    <div>
-                                        <h3 className="font-semibold text-foreground">Phone</h3>
-                                        <p className="text-muted-foreground">+880 1948-116595</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="bg-card p-8 rounded-xl border border-border">
-                                <h3 className="text-xl font-bold text-primary mb-4">Website</h3>
-                                <p className="text-muted-foreground mb-4">www.rofsankhan.com</p>
-
-                                <div className="border-t border-border pt-4">
-                                    <p className="text-muted-foreground italic leading-relaxed">
-                                        "Learning Bengali should never be about just passing an exam. It's about connecting with your heritage, understanding a beautiful language, and carrying that knowledge forward with pride and confidence."
+                                <div className="bg-gradient-to-br from-brand-blue/5 to-brand-navy/5 p-8 rounded-2xl border border-brand-blue/20">
+                                    <h3 className="text-xl font-bold text-brand-navy mb-4">Get Started Today</h3>
+                                    <p className="text-gray-600 mb-6 leading-relaxed">
+                                        Ready to excel in O Level Bengali? Join Rofsan Sir's proven program and experience the difference that Cambridge expertise and modern teaching methods can make.
                                     </p>
-                                    <p className="text-primary font-semibold mt-2">— Rofsan Khan</p>
+                                    <div className="flex flex-col sm:flex-row gap-4">
+                                        <a
+                                            href="/courses"
+                                            className="flex-1 inline-flex items-center justify-center gap-3 bg-gradient-to-r from-brand-blue to-brand-navy text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105"
+                                        >
+                                            Explore Courses
+                                        </a>
+                                        <a
+                                            href="/contact"
+                                            className="flex-1 inline-flex items-center justify-center gap-3 bg-white text-brand-navy border border-brand-navy px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-brand-navy hover:text-white"
+                                        >
+                                            Contact Now
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
