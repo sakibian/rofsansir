@@ -1,5 +1,4 @@
 import React from 'react';
-import { useCardHoverAnimation } from '../hooks/useHoverAnimation';
 
 interface AnimatedCardProps {
     children: React.ReactNode;
@@ -14,15 +13,11 @@ export const AnimatedCard: React.FC<AnimatedCardProps> = ({
     hoverEffect = true,
     onClick,
 }) => {
-    const { hoverStyles, hoverHandlers } = useCardHoverAnimation();
-
     const baseStyles = 'bg-white rounded-2xl shadow-lg border border-gray-100 transition-all duration-300';
 
     return (
         <div
-            className={`${baseStyles} ${hoverEffect ? 'hover:shadow-xl' : ''} ${className}`}
-            style={hoverEffect ? hoverStyles : undefined}
-            {...(hoverEffect ? hoverHandlers : {})}
+            className={`${baseStyles} ${hoverEffect ? 'hover:shadow-xl hover:-translate-y-2' : ''} ${className}`}
             onClick={onClick}
         >
             {children}
@@ -36,22 +31,19 @@ export const AnimatedFeatureCard: React.FC<{
     title: string;
     description: string;
     className?: string;
-}> = ({ icon: Icon, title, description, className = '' }) => {
-    const { hoverStyles, hoverHandlers } = useCardHoverAnimation();
-
+    staggerIndex?: number;
+}> = ({ icon: Icon, title, description, className = '', staggerIndex = 1 }) => {
     return (
         <div
-            className={`group rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 ${className}`}
-            style={hoverStyles}
-            {...hoverHandlers}
+            className={`card-sophisticated stagger-sophisticated-${staggerIndex} animate-on-scroll ${className}`}
         >
-            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-blue/10 mx-auto group-hover:bg-brand-blue/20 transition-colors">
-                <Icon className="h-8 w-8 text-brand-blue group-hover:scale-110 transition-transform duration-300" />
+            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-blue/10 mx-auto group-hover:bg-brand-blue/20 transition-colors duration-500">
+                <Icon className="h-8 w-8 text-brand-blue group-hover:scale-110 transition-transform duration-500 animate-elastic-sophisticated" />
             </div>
-            <h3 className="mb-4 text-xl font-bold text-brand-navy group-hover:text-brand-blue transition-colors">
+            <h3 className="mb-4 text-xl font-bold text-brand-navy group-hover:text-brand-blue transition-colors duration-500">
                 {title}
             </h3>
-            <p className="text-gray-600 leading-relaxed">
+            <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
                 {description}
             </p>
         </div>
@@ -66,16 +58,9 @@ export const AnimatedImageCard: React.FC<{
     subtitle?: string;
     className?: string;
 }> = ({ src, alt, title, subtitle, className = '' }) => {
-    const { hoverStyles, hoverHandlers } = useCardHoverAnimation({
-        scale: 1.05,
-        translateY: -4,
-        shadow: '0 20px 40px rgba(0,0,0,0.15)',
-        transition: 'all 400ms cubic-bezier(0.22, 1, 0.36, 1)',
-    });
-
     return (
-        <div className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 p-1 shadow-lg ${className}`}>
-            <div className="relative overflow-hidden rounded-xl bg-white" style={hoverStyles} {...hoverHandlers}>
+        <div className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 p-1 shadow-lg hover:shadow-2xl transition-all duration-400 ${className}`}>
+            <div className="relative overflow-hidden rounded-xl bg-white transform hover:scale-105 hover:-translate-y-1 transition-all duration-400">
                 <div className="aspect-[4/5] overflow-hidden">
                     <img
                         src={src}

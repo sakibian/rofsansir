@@ -3,7 +3,7 @@ import Footer from '@/components/Footer';
 import { Head } from '@inertiajs/react';
 import { BookOpen, FileText, Search, Download, Clock, Shield, Lock, CheckCircle, Filter } from 'lucide-react';
 import { useScrollAnimation } from '@/animations/hooks/useScrollAnimation';
-import { useCardHoverAnimation, useButtonHoverAnimation } from '@/animations/hooks/useHoverAnimation';
+import { useCardHoverAnimation } from '@/animations/hooks/useHoverAnimation';
 import AnimatedSection from '@/animations/components/AnimatedSection';
 import AnimatedGrid from '@/animations/components/AnimatedGrid';
 
@@ -44,7 +44,6 @@ export default function Resources() {
     });
 
     const { hoverStyles: cardHoverStyles, hoverHandlers: cardHoverHandlers } = useCardHoverAnimation();
-    const { hoverStyles: buttonHoverStyles, hoverHandlers: buttonHoverHandlers } = useButtonHoverAnimation();
 
     return (
         <>

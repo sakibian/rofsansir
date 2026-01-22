@@ -3,7 +3,7 @@ import Footer from '@/components/Footer';
 import { Head } from '@inertiajs/react';
 import { BookOpen, CheckCircle, Lightbulb, MessageCircle, Target, TrendingUp, AlertTriangle, Calendar, Star } from 'lucide-react';
 import { useScrollAnimation } from '@/animations/hooks/useScrollAnimation';
-import { useCardHoverAnimation, useButtonHoverAnimation } from '@/animations/hooks/useHoverAnimation';
+import { useCardHoverAnimation } from '@/animations/hooks/useHoverAnimation';
 import AnimatedSection from '@/animations/components/AnimatedSection';
 import AnimatedGrid from '@/animations/components/AnimatedGrid';
 
@@ -54,7 +54,6 @@ export default function Tips() {
     });
 
     const { hoverStyles: cardHoverStyles, hoverHandlers: cardHoverHandlers } = useCardHoverAnimation();
-    const { hoverStyles: buttonHoverStyles, hoverHandlers: buttonHoverHandlers } = useButtonHoverAnimation();
 
     return (
         <>

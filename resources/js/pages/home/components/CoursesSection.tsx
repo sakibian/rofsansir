@@ -1,6 +1,4 @@
 import { BookOpen, CheckCircle, TestTube } from 'lucide-react';
-import useStaggeredAnimation from '@/animations/hooks/useStaggeredAnimation';
-import { useCardHoverAnimation } from '@/animations/hooks/useHoverAnimation';
 
 const courseFeatures = [
     {
@@ -24,20 +22,10 @@ const courseFeatures = [
 ];
 
 const CoursesSection = () => {
-    const { elementRef, isIntersecting } = useStaggeredAnimation({
-        threshold: 0.1,
-        triggerOnce: true,
-    });
-
-    const { hoverStyles, hoverHandlers } = useCardHoverAnimation();
-
     return (
         <section
-            ref={elementRef}
             id="courses"
-            className={`py-20 px-4 md:px-8 transition-opacity duration-1000 ${
-                isIntersecting ? 'opacity-100' : 'opacity-0'
-            }`}
+            className="py-20 px-4 md:px-8"
             aria-label="O Level Bangla Course Features"
             role="region"
         >
@@ -65,9 +53,7 @@ const CoursesSection = () => {
                         return (
                             <div
                                 key={index}
-                                className={`flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-lg transition-all duration-300 ${color.border} border-t-4`}
-                                style={hoverStyles}
-                                {...hoverHandlers}
+                                className={`group flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-1 ${color.border} border-t-4`}
                             >
                                 <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-lg transition-all duration-300 group-hover:scale-110 ${color.bgIcon}`}>
                                     <feature.icon className={`h-8 w-8 ${color.icon} transition-transform duration-300`} />

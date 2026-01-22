@@ -1,3 +1,4 @@
+import { useCardHoverAnimation } from '@/animations/hooks/useHoverAnimation';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import {
     ArrowRight,
@@ -11,7 +12,6 @@ import {
     Trophy,
     Users,
 } from 'lucide-react';
-import { useCardHoverAnimation, useButtonHoverAnimation } from '@/animations/hooks/useHoverAnimation';
 
 const MentorSection = () => {
     const { elementRef, isIntersecting } = useIntersectionObserver({
@@ -19,14 +19,14 @@ const MentorSection = () => {
         triggerOnce: true,
     });
 
-    const { hoverStyles: cardHoverStyles, hoverHandlers: cardHoverHandlers } = useCardHoverAnimation();
-    const { hoverStyles: buttonHoverStyles, hoverHandlers: buttonHoverHandlers } = useButtonHoverAnimation();
+    const { hoverStyles: cardHoverStyles, hoverHandlers: cardHoverHandlers } =
+        useCardHoverAnimation();
 
     return (
         <section
             ref={elementRef}
             id="about"
-            className={`relative overflow-hidden py-20 px-4 md:px-8 transition-opacity duration-1000 ${
+            className={`relative overflow-hidden px-4 py-20 transition-opacity duration-1000 md:px-8 ${
                 isIntersecting ? 'opacity-100' : 'opacity-0'
             }`}
         >
@@ -34,13 +34,13 @@ const MentorSection = () => {
                 <div className="grid items-center gap-16 lg:grid-cols-2">
                     {/* Left - Image */}
                     <div className="relative">
-                        <div className="relative overflow-hidden rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300">
+                        <div className="hover:shadow-3xl relative overflow-hidden rounded-2xl shadow-2xl transition-shadow duration-300">
                             {/* Badge Overlay */}
                             <div className="absolute top-4 left-4 z-20">
                                 <div className="rounded-full bg-brand-navy px-3 py-2 shadow-lg">
                                     <div className="flex items-center gap-2">
-                                        <Star className="h-4 w-4 fill-current text-brand-navy" />
-                                        <span className="text-sm font-bold text-brand-navy">
+                                        <Star className="h-4 w-4 fill-current text-white" />
+                                        <span className="text-sm font-bold text-white">
                                             Top Educator
                                         </span>
                                     </div>
@@ -60,7 +60,7 @@ const MentorSection = () => {
                             </div>
 
                             <img
-                                src="/teacher/Pic.jpg"
+                                src="/teacher/12.jpg"
                                 alt="Rofsan Sir teaching"
                                 className="h-auto w-full object-cover"
                             />
@@ -82,13 +82,16 @@ const MentorSection = () => {
                             Cambridge Certified Professional
                         </div>
 
-                        <h2 className="text-3xl md:text-4xl leading-tight font-bold text-brand-navy">
+                        <h2 className="text-3xl leading-tight font-bold text-brand-navy md:text-4xl">
                             CAIE-Certified Bengali Educator | Examiner |
-                            <span className="text-brand-blue"> Published Author</span>
+                            <span className="text-brand-blue">
+                                {' '}
+                                Published Author
+                            </span>
                         </h2>
 
                         {/* Name Highlight */}
-                        <div className="rounded-2xl bg-gradient-to-r from-brand-blue/10 to-brand-navy/10 p-6 border border-brand-blue/20">
+                        <div className="rounded-2xl border border-brand-blue/20 bg-gradient-to-r from-brand-blue/10 to-brand-navy/10 p-6">
                             <p className="mb-2 text-2xl font-bold text-brand-navy">
                                 Rofsan Sir
                             </p>
@@ -109,7 +112,11 @@ const MentorSection = () => {
 
                             <div className="grid gap-4 md:grid-cols-2">
                                 <div className="space-y-4">
-                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300" style={cardHoverStyles} {...cardHoverHandlers}>
+                                    <div
+                                        className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300"
+                                        style={cardHoverStyles}
+                                        {...cardHoverHandlers}
+                                    >
                                         <div className="mb-2 flex items-center gap-3">
                                             <div className="rounded-lg bg-brand-blue/10 p-2 transition-colors">
                                                 <Award className="h-5 w-5 text-brand-blue" />
@@ -120,7 +127,11 @@ const MentorSection = () => {
                                         </div>
                                     </div>
 
-                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300" style={cardHoverStyles} {...cardHoverHandlers}>
+                                    <div
+                                        className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300"
+                                        style={cardHoverStyles}
+                                        {...cardHoverHandlers}
+                                    >
                                         <div className="mb-2 flex items-center gap-3">
                                             <div className="rounded-lg bg-brand-navy/10 p-2 transition-colors">
                                                 <Users className="h-5 w-5 text-brand-navy" />
@@ -131,7 +142,11 @@ const MentorSection = () => {
                                         </div>
                                     </div>
 
-                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300" style={cardHoverStyles} {...cardHoverHandlers}>
+                                    <div
+                                        className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300"
+                                        style={cardHoverStyles}
+                                        {...cardHoverHandlers}
+                                    >
                                         <div className="mb-2 flex items-center gap-3">
                                             <div className="rounded-lg bg-brand-navy/10 p-2 transition-colors">
                                                 <Trophy className="h-5 w-5 text-brand-navy" />
@@ -144,7 +159,11 @@ const MentorSection = () => {
                                 </div>
 
                                 <div className="space-y-4">
-                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300" style={cardHoverStyles} {...cardHoverHandlers}>
+                                    <div
+                                        className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300"
+                                        style={cardHoverStyles}
+                                        {...cardHoverHandlers}
+                                    >
                                         <div className="mb-2 flex items-center gap-3">
                                             <div className="rounded-lg bg-brand-navy/10 p-2 transition-colors">
                                                 <BookOpen className="h-5 w-5 text-brand-navy" />
@@ -155,7 +174,11 @@ const MentorSection = () => {
                                         </div>
                                     </div>
 
-                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300" style={cardHoverStyles} {...cardHoverHandlers}>
+                                    <div
+                                        className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300"
+                                        style={cardHoverStyles}
+                                        {...cardHoverHandlers}
+                                    >
                                         <div className="mb-2 flex items-center gap-3">
                                             <div className="rounded-lg bg-brand-blue/10 p-2 transition-colors">
                                                 <Target className="h-5 w-5 text-brand-blue" />
@@ -172,9 +195,7 @@ const MentorSection = () => {
                         <div className="pt-4">
                             <a
                                 href="/about"
-                                className="inline-flex items-center gap-3 rounded-lg bg-gradient-to-r from-brand-blue to-brand-navy px-6 py-3 font-semibold text-white transition-all duration-300"
-                                style={buttonHoverStyles}
-                                {...buttonHoverHandlers}
+                                className="inline-flex items-center gap-3 rounded-lg bg-gradient-to-r from-brand-blue to-brand-navy px-6 py-3 font-semibold text-white transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:shadow-lg hover:shadow-brand-blue/30"
                             >
                                 Read Full Biography
                                 <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />

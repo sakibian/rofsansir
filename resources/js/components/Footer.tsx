@@ -19,21 +19,21 @@ const Footer = () => {
     ];
 
     const courses = [
-        { label: 'O Level Bengali', href: '/courses/o-level-bengali' },
-        { label: 'Paper 1: Composition', href: '/courses/paper-1' },
-        { label: 'Paper 2: Language', href: '/courses/paper-2' },
-        { label: 'Grammar Mastery', href: '/courses/grammar' },
-        { label: 'Vocabulary Building', href: '/courses/vocabulary' },
-        { label: 'Exam Preparation', href: '/courses/exam-prep' },
+        { label: 'O Level Bengali', href: '/courses' },
+        { label: 'Paper 1: Composition', href: '/courses' },
+        { label: 'Paper 2: Language', href: '/courses' },
+        { label: 'Grammar Mastery', href: '/courses' },
+        { label: 'Vocabulary Building', href: '/courses' },
+        { label: 'Exam Preparation', href: '/courses' },
     ];
 
     const resources = [
-        { label: 'Study Materials', href: '/resources/study-materials' },
-        { label: 'Practice Tests', href: '/resources/practice-tests' },
-        { label: 'Video Tutorials', href: '/resources/video-tutorials' },
-        { label: 'Exam Tips', href: '/resources/exam-tips' },
-        { label: 'Downloads', href: '/resources/downloads' },
-        { label: 'Blog', href: '/resources/blog' },
+        { label: 'Study Materials', href: '/resources' },
+        { label: 'Practice Tests', href: '/resources' },
+        { label: 'Video Tutorials', href: '/resources' },
+        { label: 'Exam Tips', href: '/resources' },
+        { label: 'Downloads', href: '/resources' },
+        { label: 'Blog', href: '/resources' },
     ];
 
     return (
@@ -46,7 +46,7 @@ const Footer = () => {
                         behavior: 'smooth',
                     })
                 }
-                className="fixed right-6 bottom-6 z-50 flex items-center gap-2 rounded-lg bg-brand-navy px-4 py-2 font-semibold text-brand-navy shadow-lg transition-all duration-300 hover:bg-brand-navy/90"
+                className="fixed right-6 bottom-6 z-50 flex items-center gap-2 rounded-lg bg-gradient-to-r from-brand-blue to-brand-navy px-4 py-2 font-semibold text-white shadow-lg transition-all duration-300 hover:bg-brand-navy/90"
             >
                 <svg
                     className="h-4 w-4"
@@ -70,12 +70,12 @@ const Footer = () => {
                     <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
                         {/* Brand Section */}
                         <div className="space-y-6">
-                            <div className="flex items-center gap-3">
-                                <div className="flex items-center justify-center rounded-xl bg-white/10 backdrop-blur-sm">
+                            <div className="flex items-center justify-center rounded-xl bg-white/20">
+                                <div className="group relative">
                                     <img
-                                        src="/logos/footer-logo.png"
+                                        src="/logos/logo.png"
                                         alt="Rofsan Sir Logo"
-                                        className="h-64 w-64"
+                                        className="relative h-64 w-64 transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-xl"
                                     />
                                 </div>
                             </div>
@@ -84,7 +84,8 @@ const Footer = () => {
                                 <div className="flex items-center gap-3">
                                     <MapPin className="h-4 w-4 text-white/80" />
                                     <span>
-                                        Lalmatia, Dhaka-1207, Bangladesh
+                                        8/12, Block B, Lalmatia, Dhaka 1207,
+                                        Bangladesh
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-3">
@@ -102,7 +103,7 @@ const Footer = () => {
                                     href="https://www.facebook.com/rofsankhan"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-300 hover:bg-brand-navy hover:text-brand-navy"
+                                    className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-300 hover:bg-brand-navy hover:text-white"
                                     aria-label="Facebook"
                                 >
                                     <Facebook className="h-5 w-5" />
@@ -111,7 +112,7 @@ const Footer = () => {
                                     href="https://www.youtube.com/@rofsankhan"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-300 hover:bg-brand-navy hover:text-brand-navy"
+                                    className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-300 hover:bg-brand-navy hover:text-white"
                                     aria-label="YouTube"
                                 >
                                     <Youtube className="h-5 w-5" />
@@ -120,7 +121,7 @@ const Footer = () => {
                                     href="https://www.instagram.com/rofsankhan"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-300 hover:bg-brand-navy hover:text-brand-navy"
+                                    className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-300 hover:bg-brand-navy hover:text-white"
                                     aria-label="Instagram"
                                 >
                                     <Instagram className="h-5 w-5" />
@@ -129,7 +130,7 @@ const Footer = () => {
                                     href="https://www.linkedin.com/in/rofsankhan"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-300 hover:bg-brand-navy hover:text-brand-navy"
+                                    className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-300 hover:bg-brand-navy hover:text-white"
                                     aria-label="LinkedIn"
                                 >
                                     <Linkedin className="h-5 w-5" />
@@ -206,18 +207,6 @@ const Footer = () => {
                             </p>
 
                             <div className="flex items-center gap-6 text-sm text-white/70">
-                                <a
-                                    href="/privacy"
-                                    className="transition-colors hover:text-white"
-                                >
-                                    Privacy Policy
-                                </a>
-                                <a
-                                    href="/terms"
-                                    className="transition-colors hover:text-white"
-                                >
-                                    Terms of Service
-                                </a>
                                 <a
                                     href="/sitemap"
                                     className="transition-colors hover:text-white"

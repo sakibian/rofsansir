@@ -1,3 +1,5 @@
+import { useCardHoverAnimation } from '@/animations/hooks/useHoverAnimation';
+import useStaggeredAnimation from '@/animations/hooks/useStaggeredAnimation';
 import {
     Award,
     BookOpen,
@@ -6,8 +8,6 @@ import {
     Target,
     TrendingUp,
 } from 'lucide-react';
-import useStaggeredAnimation from '@/animations/hooks/useStaggeredAnimation';
-import { useCardHoverAnimation, useButtonHoverAnimation } from '@/animations/hooks/useHoverAnimation';
 
 const WhyRofsanSirSection = () => {
     const { elementRef, isIntersecting } = useStaggeredAnimation({
@@ -15,8 +15,8 @@ const WhyRofsanSirSection = () => {
         triggerOnce: true,
     });
 
-    const { hoverStyles: cardHoverStyles, hoverHandlers: cardHoverHandlers } = useCardHoverAnimation();
-    const { hoverStyles: buttonHoverStyles, hoverHandlers: buttonHoverHandlers } = useButtonHoverAnimation();
+    const { hoverStyles: cardHoverStyles, hoverHandlers: cardHoverHandlers } =
+        useCardHoverAnimation();
 
     const keyPoints = [
         {
@@ -51,18 +51,22 @@ const WhyRofsanSirSection = () => {
     return (
         <section
             ref={elementRef}
-            className={`py-20 px-4 md:px-8 transition-opacity duration-1000 ${
+            className={`px-4 py-20 transition-opacity duration-1000 md:px-8 ${
                 isIntersecting ? 'opacity-100' : 'opacity-0'
             }`}
         >
-            <div className="container mx-auto max-w-6xl" aria-label="Why choose Rofsan Sir" role="region">
+            <div
+                className="container mx-auto max-w-6xl"
+                aria-label="Why choose Rofsan Sir"
+                role="region"
+            >
                 {/* Header */}
                 <div className="mb-16 text-center">
                     <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-brand-blue/10 px-4 py-2 text-sm font-medium text-brand-blue">
                         <Sparkles className="h-4 w-4" />
                         Cambridge Certified Educator
                     </div>
-                    <h2 className="mb-4 text-3xl md:text-4xl font-bold text-brand-navy">
+                    <h2 className="mb-4 text-3xl font-bold text-brand-navy md:text-4xl">
                         Why Rofsan Sir?
                     </h2>
                     <p className="mx-auto max-w-2xl text-lg text-gray-600">
@@ -83,7 +87,7 @@ const WhyRofsanSirSection = () => {
                             <div className={`mb-4 text-4xl ${point.color}`}>
                                 <point.icon className="h-12 w-12" />
                             </div>
-                            <h3 className="mb-3 text-xl font-bold text-brand-navy group-hover:text-brand-blue transition-colors">
+                            <h3 className="mb-3 text-xl font-bold text-brand-navy transition-colors group-hover:text-brand-blue">
                                 {point.title}
                             </h3>
                             <p className="leading-relaxed text-gray-600">
@@ -94,13 +98,13 @@ const WhyRofsanSirSection = () => {
                 </div>
 
                 {/* Unique Value Proposition */}
-                <div className="mb-16 rounded-2xl bg-gradient-to-r from-brand-blue/10 to-brand-navy/10 p-8 md:p-12 border border-brand-blue/20">
+                <div className="mb-16 rounded-2xl border border-brand-blue/20 bg-gradient-to-r from-brand-blue/10 to-brand-navy/10 p-8 md:p-12">
                     <div className="mx-auto max-w-4xl text-center">
                         <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-brand-blue shadow-sm">
                             <TrendingUp className="h-4 w-4" />
                             Proven Results
                         </div>
-                        <h3 className="mb-8 text-2xl md:text-3xl font-bold text-brand-navy">
+                        <h3 className="mb-8 text-2xl font-bold text-brand-navy md:text-3xl">
                             What Makes Rofsan Sir Different?
                         </h3>
                         <div className="grid gap-8 text-center md:grid-cols-3">
@@ -149,19 +153,17 @@ const WhyRofsanSirSection = () => {
             </div>
 
             {/* Full Width CTA */}
-            <div className="bg-gradient-to-r from-brand-blue to-brand-navy py-20 px-4 md:px-8 text-center">
+            <div className="bg-gradient-to-r from-brand-blue to-brand-navy px-4 py-20 text-center md:px-8">
                 <div className="container mx-auto max-w-4xl">
                     <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-white/20 px-6 py-3 text-sm font-medium text-white backdrop-blur-sm">
                         <Sparkles className="h-5 w-5" />
                         Start Your Success Journey Today
                     </div>
 
-                    <h3 className="mb-8 text-3xl md:text-4xl leading-tight font-bold text-white">
+                    <h3 className="mb-8 text-3xl leading-tight font-bold text-white md:text-4xl">
                         Ready to Build Confidence in
                         <br />
-                        <span className="text-brand-navy">
-                            O Level Bengali?
-                        </span>
+                        <span className="text-white/90">O Level Bengali?</span>
                     </h3>
 
                     <p className="mx-auto mb-12 max-w-3xl text-lg leading-relaxed text-white/90">
@@ -172,18 +174,10 @@ const WhyRofsanSirSection = () => {
                     </p>
 
                     <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-                        <button
-                            className="bg-brand-navy text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors shadow-lg hover:bg-brand-navy/90"
-                            style={buttonHoverStyles}
-                            {...buttonHoverHandlers}
-                        >
+                        <button className="rounded-lg bg-gradient-to-r from-brand-blue to-brand-navy px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-xl hover:shadow-brand-blue/30">
                             Join Now
                         </button>
-                        <button
-                            className="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors"
-                            style={buttonHoverStyles}
-                            {...buttonHoverHandlers}
-                        >
+                        <button className="rounded-lg border-2 border-white px-8 py-4 text-lg font-bold text-white transition-all duration-300 hover:scale-105 hover:bg-white hover:text-brand-navy hover:shadow-lg">
                             Free Consultation
                         </button>
                     </div>

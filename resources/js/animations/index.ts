@@ -1,28 +1,32 @@
-// Animation Components
-export { default as AnimatedButton } from './components/AnimatedButton';
-export { default as AnimatedCTA } from './components/AnimatedCTA';
-export { default as AnimatedCard } from './components/AnimatedCard';
-export { default as AnimatedFeatureCard } from './components/AnimatedFeatureCard';
-export { default as AnimatedImageCard } from './components/AnimatedImageCard';
-export { default as AnimatedSection } from './components/AnimatedSection';
-export { default as AnimatedGrid } from './components/AnimatedGrid';
+// Simple CSS-based Animation Components
+export { default as AnimatedButton, AnimatedCTA } from './components/AnimatedButton';
 
-// Animation Hooks
-export { useScrollAnimation, useStaggeredAnimation, useParallaxAnimation } from './hooks/useScrollAnimation';
-export { 
-    useButtonHoverAnimation, 
-    useCardHoverAnimation, 
-    useLinkHoverAnimation, 
-    useImageHoverAnimation 
-} from './hooks/useHoverAnimation';
+// Simple CSS Animation Classes (no JavaScript overhead)
+export const animationClasses = {
+  // Fade animations
+  'fade-in': 'opacity-0 animate-fade-in',
+  'fade-in-up': 'opacity-0 animate-fade-in-up',
+  'fade-in-down': 'opacity-0 animate-fade-in-down',
+  'fade-in-left': 'opacity-0 animate-fade-in-left',
+  'fade-in-right': 'opacity-0 animate-fade-in-right',
 
-// Animation Utils
-export { prefersReducedMotion, intersectionOptions } from './utils/animationPresets';
-export { 
-    initializeAnimations, 
-    debounce, 
-    throttle, 
-    isInViewport, 
-    setupLazyLoading, 
-    cleanupAnimations 
-} from './utils/performanceUtils';
+  // Scale animations
+  'scale-in': 'opacity-0 animate-scale-in',
+
+  // Hover effects
+  'hover-lift': 'transition-all duration-300 hover:-translate-y-2 hover:shadow-xl',
+  'hover-scale': 'transition-transform duration-300 hover:scale-105',
+  'hover-glow': 'transition-all duration-300 hover:shadow-lg hover:shadow-brand-blue/30',
+
+  // Combined effects
+  'card-hover': 'hover:shadow-xl hover:-translate-y-2 transition-all duration-300',
+  'button-hover': 'hover:scale-105 hover:shadow-lg hover:shadow-brand-blue/30 transition-all duration-300',
+};
+
+// Utility function to apply staggered delays
+export const getStaggerDelay = (index: number, baseDelay: number = 100) => ({
+  animationDelay: `${index * baseDelay}ms`,
+});
+
+// Performance utilities (simplified)
+export { prefersReducedMotion } from './utils/animationPresets';

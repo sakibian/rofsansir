@@ -1,85 +1,89 @@
-import React, { ReactNode, useRef } from 'react';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 
 interface AnimatedSectionProps {
     children: ReactNode;
     className?: string;
-    animationType?: 'fade-in' | 'fade-in-up' | 'fade-in-down' | 'slide-in-left' | 'slide-in-right' | 'scale-in';
     delay?: number;
     duration?: string;
     threshold?: number;
     triggerOnce?: boolean;
     staggerChildren?: boolean;
     staggerDelay?: number;
-    ref?: React.RefObject<HTMLElement | null>;
 }
 
 const AnimatedSection: React.FC<AnimatedSectionProps> = ({
     children,
     className = '',
-    animationType = 'fade-in-up',
     delay = 0,
     duration = '600ms',
     threshold = 0.1,
     triggerOnce = true,
     staggerChildren = false,
     staggerDelay = 100,
-    ref: externalRef,
 }) => {
-    const internalRef = useRef<HTMLElement | null>(null);
-    const elementRef = externalRef || internalRef;
+    const [isVisible, setIsVisible] = useState(false);
+    const [hasTriggered, setHasTriggered] = useState(false);
+    const elementRef = useRef<HTMLDivElement>(null);
 
-    const { isIntersecting } = useScrollAnimation({
-        threshold,
-        triggerOnce,
-    });
+    useEffect(() => {
+        const element = elementRef.current;
+        if (!element) return;
 
-    const getAnimationClasses = () => {
-        const baseClasses = `transition-all duration-${duration.replace('ms', '')} ease-out`;
-        const animationClasses = isIntersecting
-            ? `${animationType} animate-${animationType}`
-            : 'opacity-0';
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    if (triggerOnce && hasTriggered) return;
 
-        return `${baseClasses} ${animationClasses}`;
-    };
+                    setTimeout(() => {
+                        setIsVisible(true);
+                        if (triggerOnce) {
+                            setHasTriggered(true);
+                        }
+                    }, delay);
+
+                    if (triggerOnce) {
+                        observer.disconnect();
+                    }
+                } else if (!triggerOnce) {
+                    setIsVisible(false);
+                }
+            },
+            { threshold, rootMargin: '50px' }
+        );
+
+        observer.observe(element);
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [threshold, triggerOnce, delay, hasTriggered]);
 
     const renderChildren = () => {
-        if (!staggerChildren) {
+        if (!staggerChildren || !Array.isArray(children)) {
             return children;
         }
 
-        // Handle array children for staggering
-        if (Array.isArray(children)) {
-            return children.map((child, index) => {
-                const childDelay = delay + (index * staggerDelay);
-                return (
-                    <div
-                        key={index}
-                        style={{
-                            animationDelay: `${childDelay}ms`,
-                            animationFillMode: 'forwards',
-                        }}
-                        className={isIntersecting ? `${animationType} animate-${animationType}` : 'opacity-0'}
-                    >
-                        {child}
-                    </div>
-                );
-            });
-        }
-
-        return children;
-    };
-
-    const style: React.CSSProperties = {
-        animationDelay: `${delay}ms`,
-        animationFillMode: 'forwards',
+        return children.map((child, index) => (
+            <div
+                key={index}
+                className={`animate-on-scroll stagger-item stagger-${index + 1} ${isVisible ? 'in-view' : ''}`}
+                style={{
+                    transitionDelay: `${(index + 1) * staggerDelay}ms`
+                }}
+            >
+                {child}
+            </div>
+        ));
     };
 
     return (
         <div
             ref={elementRef}
-            className={`${getAnimationClasses()} ${className}`}
-            style={style}
+            className={`animate-on-scroll ${isVisible ? 'in-view' : ''} ${className}`}
+            style={{
+                transitionDelay: `${delay}ms`,
+                transitionDuration: duration
+            }}
         >
             {renderChildren()}
         </div>

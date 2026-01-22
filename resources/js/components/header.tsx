@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
+import { useState } from 'react';
 
 const Header = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -13,95 +12,155 @@ const Header = () => {
         { label: 'Examiner Tips', href: '/tips' },
     ];
 
+    // Get current active link
+    const currentPath =
+        typeof window !== 'undefined' ? window.location.pathname : '/';
+
     return (
-        <header className="sticky top-0 z-50 w-full border-b border-brand-navy/20 bg-white/95 backdrop-blur-md transition-all duration-300 supports-[backdrop-filter]:bg-white/90">
-            <div className="container-max section-padding">
-                <div className="flex h-16 items-center justify-between">
-                    {/* Logo */}
-                    <a
-                        href="#"
-                        className="flex items-center gap-2 transition-transform duration-300 hover:scale-105"
-                    >
-                        <img
-                            src="/logos/logo.png"
-                            alt="Rofsan Sir Logo"
-                            className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 lg:h-16 lg:w-16 xl:h-20 xl:w-20"
-                        />
+        <header className="sticky top-0 z-50 w-full border-b border-brand-navy/10 bg-white/95 shadow-sm backdrop-blur-md transition-all duration-300 supports-[backdrop-filter]:bg-white/90">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex h-20 items-center justify-between">
+                    <a href="/" className="flex items-center gap-3">
+                        <div className="relative">
+                            <img
+                                src="/logos/logo.png"
+                                alt="Rofsan Sir Logo"
+                                className="h-48 w-48"
+                            />
+                        </div>
                     </a>
 
                     {/* Desktop Navigation */}
-                    <nav className="hidden items-center gap-8 md:flex">
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.label}
-                                href={link.href}
-                                className="relative rounded px-2 py-1 text-sm font-medium text-brand-navy/70 transition-all duration-300 hover:text-brand-navy focus:text-brand-navy focus:ring-2 focus:ring-brand-navy/20 focus:ring-offset-2 focus:outline-none"
-                            >
-                                {link.label}
-                                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-brand-navy transition-all duration-300 group-hover:w-full"></span>
-                            </a>
-                        ))}
+                    <nav className="hidden items-center gap-8 lg:flex">
+                        {navLinks.map((link) => {
+                            const isActive = currentPath === link.href;
+                            return (
+                                <a
+                                    key={link.label}
+                                    href={link.href}
+                                    className={`group relative overflow-hidden px-6 py-3 text-sm font-medium transition-all duration-300 hover:text-brand-blue focus:text-brand-blue focus:outline-none ${
+                                        isActive
+                                            ? 'font-semibold text-brand-blue'
+                                            : 'text-gray-700'
+                                    }`}
+                                >
+                                    {/* Glossy background effect */}
+                                    <div
+                                        className={`absolute inset-0 rounded-lg backdrop-blur-sm transition-all duration-300 ${
+                                            isActive
+                                                ? 'border border-brand-blue/10 bg-white/95 shadow-lg shadow-brand-blue/10'
+                                                : 'bg-white/40 opacity-0 group-hover:bg-white/70 group-hover:opacity-100 group-hover:shadow-md'
+                                        }`}
+                                    ></div>
+
+                                    {/* Glossy shadow overlay */}
+                                    <div
+                                        className={`absolute inset-0 rounded-lg transition-all duration-300 ${
+                                            isActive
+                                                ? 'shadow-inner shadow-brand-blue/5'
+                                                : 'group-hover:shadow-inner group-hover:shadow-gray-100/50'
+                                        }`}
+                                    ></div>
+
+                                    {/* Text with smooth transition */}
+                                    <span className="relative z-10 transition-all duration-300 group-hover:font-medium">
+                                        {link.label}
+                                    </span>
+                                </a>
+                            );
+                        })}
                     </nav>
 
                     {/* Desktop CTA */}
-                    <div className="hidden md:block">
-                        <Button
-                            variant="default"
-                            size="sm"
-                            asChild
-                            className="bg-brand-navy text-white transition-all duration-300 hover:bg-brand-navy/90 hover:shadow-lg hover:shadow-brand-navy/25"
+                    <div className="hidden lg:block">
+                        <a
+                            href="/student/login"
+                            className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-brand-blue to-brand-navy px-6 py-3 font-medium text-white transition-colors duration-300 hover:bg-gradient-to-r hover:from-brand-blue/90 hover:to-brand-navy/90 focus:ring-2 focus:ring-brand-blue/20 focus:ring-offset-2"
                         >
-                            <a href="/student/login">Students Portal</a>
-                        </Button>
+                            <span>Students Portal</span>
+                            <svg
+                                className="h-4 w-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </a>
                     </div>
 
-                    {/* Mobile Menu Button */}
+                    {/* Mobile Menu Button with Enhanced Touch Target */}
                     <button
-                        className="rounded-lg p-2 transition-colors duration-300 hover:bg-brand-navy/10 focus:ring-2 focus:ring-brand-navy/20 focus:outline-none md:hidden"
+                        className="touch-manipulation rounded-lg p-3 transition-all duration-300 hover:scale-110 hover:bg-brand-navy/10 focus:ring-2 focus:ring-brand-navy/20 focus:outline-none active:scale-95 lg:hidden"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                         aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
                     >
                         {mobileMenuOpen ? (
-                            <X className="h-6 w-6 rotate-90 text-brand-navy transition-transform duration-300" />
+                            <X className="animate-elastic-sophisticated h-7 w-7 rotate-90 text-brand-navy transition-transform duration-300" />
                         ) : (
-                            <Menu className="h-6 w-6 text-brand-navy transition-transform duration-300" />
+                            <Menu className="animate-elastic-sophisticated h-7 w-7 text-brand-navy transition-transform duration-300" />
                         )}
                     </button>
                 </div>
 
-                {/* Mobile Menu */}
+                {/* Enhanced Mobile Menu */}
                 <div
-                    className={`overflow-hidden border-t border-brand-navy/20 bg-white/95 backdrop-blur-md transition-all duration-500 md:hidden ${
+                    className={`overflow-hidden border-t border-brand-navy/10 bg-white/95 backdrop-blur-md transition-all duration-500 lg:hidden ${
                         mobileMenuOpen
-                            ? 'max-h-96 opacity-100'
+                            ? 'max-h-screen opacity-100'
                             : 'max-h-0 opacity-0'
                     }`}
                 >
-                    <nav className="flex flex-col gap-4 py-4">
-                        {navLinks.map((link, index) => (
+                    <nav className="flex flex-col gap-1 px-4 py-6">
+                        {navLinks.map((link) => {
+                            const isActive = currentPath === link.href;
+                            return (
+                                <a
+                                    key={link.label}
+                                    href={link.href}
+                                    className={`relative rounded-lg px-4 py-3 text-base font-medium transition-all duration-300 hover:bg-gray-50 hover:text-brand-blue ${
+                                        isActive
+                                            ? 'bg-blue-50 font-semibold text-brand-blue'
+                                            : 'text-gray-700'
+                                    }`}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                >
+                                    {link.label}
+                                    {/* Clean active indicator for mobile */}
+                                    {isActive && (
+                                        <div className="absolute top-1/2 left-0 h-8 w-1 -translate-y-1/2 transform rounded-r-full bg-brand-blue"></div>
+                                    )}
+                                </a>
+                            );
+                        })}
+
+                        <div className="mt-6 border-t border-brand-navy/10 pt-6">
                             <a
-                                key={link.label}
-                                href={link.href}
-                                className="rounded px-2 py-1 text-sm font-medium text-brand-navy/70 transition-all duration-300 hover:translate-x-2 hover:text-brand-navy focus:text-brand-navy focus:ring-2 focus:ring-brand-navy/20 focus:ring-offset-2 focus:outline-none"
+                                href="/student/login"
+                                className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-brand-blue to-brand-navy px-6 py-3 font-medium text-white transition-colors duration-300 hover:bg-gradient-to-r hover:from-brand-blue/90 hover:to-brand-navy/90 focus:ring-2 focus:ring-brand-blue/20 focus:ring-offset-2"
                                 onClick={() => setMobileMenuOpen(false)}
-                                style={{
-                                    transitionDelay: mobileMenuOpen
-                                        ? `${index * 50}ms`
-                                        : '0ms',
-                                    transform: mobileMenuOpen
-                                        ? 'translateX(0)'
-                                        : 'translateX(-10px)',
-                                }}
                             >
-                                {link.label}
+                                <span>Students Portal</span>
+                                <svg
+                                    className="h-4 w-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M9 5l7 7-7 7"
+                                    />
+                                </svg>
                             </a>
-                        ))}
-                        <Button
-                            variant="default"
-                            className="mt-2 bg-brand-navy text-white transition-all duration-300 hover:bg-brand-navy/90 hover:shadow-lg hover:shadow-brand-navy/25"
-                        >
-                            Enroll Now
-                        </Button>
+                        </div>
                     </nav>
                 </div>
             </div>

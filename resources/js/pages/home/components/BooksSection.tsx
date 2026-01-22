@@ -1,5 +1,3 @@
-import useStaggeredAnimation from '@/animations/hooks/useStaggeredAnimation';
-import { useCardHoverAnimation } from '@/animations/hooks/useHoverAnimation';
 
 const books = [
     {
@@ -34,24 +32,14 @@ const books = [
 ];
 
 const BooksSection = () => {
-    const { elementRef, isIntersecting } = useStaggeredAnimation({
-        threshold: 0.1,
-        triggerOnce: true,
-    });
-
-    const { hoverStyles, hoverHandlers } = useCardHoverAnimation();
-
     return (
         <section
-            ref={elementRef}
             id="books"
-            className={`py-20 px-4 md:px-8 bg-gray-50 transition-opacity duration-1000 ${
-                isIntersecting ? 'opacity-100' : 'opacity-0'
-            }`}
+            className="bg-gray-50 px-4 py-20 md:px-8"
         >
             <div className="container mx-auto max-w-6xl">
                 <div className="mb-16 text-center">
-                    <h2 className="mb-4 text-3xl md:text-4xl font-bold text-brand-navy">
+                    <h2 className="mb-4 text-3xl font-bold text-brand-navy md:text-4xl">
                         Rofsan Khan's Published Guidebooks
                     </h2>
                     <p className="mx-auto max-w-2xl text-gray-600">
@@ -65,10 +53,8 @@ const BooksSection = () => {
                         <div
                             key={index}
                             className="group"
-                            style={hoverStyles}
-                            {...hoverHandlers}
                         >
-                            <div className="relative mb-6 overflow-hidden rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 p-1 shadow-lg transition-all duration-500 hover:scale-105 hover:shadow-2xl">
+                            <div className="relative mb-6 overflow-hidden rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 p-1 shadow-lg transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:-translate-y-1">
                                 <div className="relative overflow-hidden rounded-xl bg-white">
                                     <div className="aspect-[4/5] overflow-hidden">
                                         <img
@@ -78,11 +64,8 @@ const BooksSection = () => {
                                         />
                                     </div>
 
-                                    {/* Overlay gradient */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
                                     {/* Floating badge */}
-                                    <div className="absolute top-3 right-3 translate-y-2 transform rounded-full bg-brand-navy px-2 py-1 text-xs font-bold text-brand-navy opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                    <div className="absolute top-3 right-3 translate-y-2 transform rounded-full bg-brand-navy px-2 py-1 text-xs font-bold text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                                         {index + 1}
                                     </div>
                                 </div>
