@@ -35,7 +35,6 @@
   --color-brand-blue: #006DD6;
   --color-brand-blue-dark: #0054A5;
   --color-brand-white: #FFF;
-  --color-brand-gold: #E9BA08;
 
   --sidebar-background: hsl(0 0% 98%);
   --sidebar-foreground: hsl(240 5% 26%);
@@ -146,15 +145,8 @@
     background-clip: text;
   }
 
-  .text-gradient-gold {
-    background: linear-gradient(135deg, var(--color-brand-gold), #f59e0b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
   .text-gradient-premium {
-    background: linear-gradient(135deg, var(--color-brand-navy), var(--color-brand-blue), var(--color-brand-gold));
+    background: linear-gradient(135deg, var(--color-brand-navy), var(--color-brand-blue));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -207,19 +199,8 @@
   background: linear-gradient(135deg, var(--color-brand-blue-light), var(--color-brand-blue));
 }
 
-.bg-brand-gold-gradient {
-  background: linear-gradient(135deg, var(--color-brand-gold), #f59e0b);
-}
-
 .text-gradient-primary {
   background: linear-gradient(135deg, var(--color-brand-blue), var(--color-brand-blue-dark));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-gold {
-  background: linear-gradient(135deg, var(--color-brand-gold), #f59e0b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -275,36 +256,7 @@
   box-shadow: var(--shadow-luxury);
 }
 
-.btn-gold {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, var(--color-brand-gold), #f59e0b);
-  color: white;
-  font-weight: bold;
-  padding: 1rem 2rem;
-  border-radius: 0.75rem;
-  box-shadow: var(--shadow-card);
-  transition: all 0.3s ease;
-  border: 2px solid var(--color-brand-gold);
-}
 
-.btn-gold:hover {
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: var(--shadow-button);
-}
-
-.btn-gold::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #f59e0b, var(--color-brand-gold));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.btn-gold:hover::before {
-  opacity: 1;
-}
 
 .btn-outline {
   border: 2px solid var(--color-brand-navy);
@@ -333,7 +285,7 @@
 .card-premium:hover {
   box-shadow: var(--shadow-luxury);
   transform: translateY(-4px);
-  border-color: rgba(233, 186, 8, 0.2);
+  border-color: rgba(30, 136, 229, 0.2);
 }
 
 .card-gradient {
@@ -417,20 +369,19 @@
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 10px rgba(233, 186, 8, 0.3);
+    box-shadow: 0 0 10px rgba(30, 136, 229, 0.3);
   }
   50% {
-    box-shadow: 0 0 25px rgba(233, 186, 8, 0.6);
+    box-shadow: 0 0 25px rgba(30, 136, 229, 0.6);
   }
 }
 
 /* Focus States for Accessibility */
 .btn-primary:focus-visible,
 .btn-secondary:focus-visible,
-.btn-gold:focus-visible,
 .btn-outline:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(233, 186, 8, 0.5);
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.5);
 }
 
 @layer components {

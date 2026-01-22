@@ -11,12 +11,16 @@ import {
     Trophy,
     Users,
 } from 'lucide-react';
+import { useCardHoverAnimation, useButtonHoverAnimation } from '@/animations/hooks/useHoverAnimation';
 
 const MentorSection = () => {
     const { elementRef, isIntersecting } = useIntersectionObserver({
         threshold: 0.1,
         triggerOnce: true,
     });
+
+    const { hoverStyles: cardHoverStyles, hoverHandlers: cardHoverHandlers } = useCardHoverAnimation();
+    const { hoverStyles: buttonHoverStyles, hoverHandlers: buttonHoverHandlers } = useButtonHoverAnimation();
 
     return (
         <section
@@ -33,10 +37,10 @@ const MentorSection = () => {
                         <div className="relative overflow-hidden rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300">
                             {/* Badge Overlay */}
                             <div className="absolute top-4 left-4 z-20">
-                                <div className="rounded-full bg-[#E9BA08] px-3 py-2 shadow-lg">
+                                <div className="rounded-full bg-brand-navy px-3 py-2 shadow-lg">
                                     <div className="flex items-center gap-2">
-                                        <Star className="h-4 w-4 fill-current text-[#344871]" />
-                                        <span className="text-sm font-bold text-[#344871]">
+                                        <Star className="h-4 w-4 fill-current text-brand-navy" />
+                                        <span className="text-sm font-bold text-brand-navy">
                                             Top Educator
                                         </span>
                                     </div>
@@ -45,7 +49,7 @@ const MentorSection = () => {
 
                             {/* Experience Badge */}
                             <div className="absolute right-4 bottom-4 z-20">
-                                <div className="rounded-full bg-gradient-to-r from-[#006DD6] to-[#344871] px-4 py-2 text-white shadow-lg">
+                                <div className="rounded-full bg-gradient-to-r from-brand-blue to-brand-navy px-4 py-2 text-white shadow-lg">
                                     <div className="flex items-center gap-2">
                                         <GraduationCap className="h-4 w-4" />
                                         <span className="text-sm font-bold">
@@ -66,26 +70,26 @@ const MentorSection = () => {
                         </div>
 
                         {/* Decorative Elements */}
-                        <div className="absolute -right-4 -bottom-4 h-24 w-24 rounded-full bg-gradient-to-br from-[#006DD6]/20 to-[#344871]/20 blur-xl"></div>
-                        <div className="absolute -top-4 -left-4 h-16 w-16 rounded-full bg-gradient-to-br from-[#E9BA08]/30 to-[#006DD6]/20 blur-lg"></div>
+                        <div className="absolute -right-4 -bottom-4 h-24 w-24 rounded-full bg-gradient-to-br from-brand-blue/20 to-brand-navy/20 blur-xl"></div>
+                        <div className="absolute -top-4 -left-4 h-16 w-16 rounded-full bg-gradient-to-br from-brand-navy/30 to-brand-blue/20 blur-lg"></div>
                     </div>
 
                     {/* Right - Content */}
                     <div className="space-y-6">
                         {/* Header Badge */}
-                        <div className="inline-flex items-center gap-2 rounded-full bg-[#006DD6]/10 px-4 py-2 text-sm font-medium text-[#006DD6]">
+                        <div className="inline-flex items-center gap-2 rounded-full bg-brand-blue/10 px-4 py-2 text-sm font-medium text-brand-blue">
                             <Sparkles className="h-4 w-4" />
                             Cambridge Certified Professional
                         </div>
 
-                        <h2 className="text-3xl md:text-4xl leading-tight font-bold text-[#344871]">
+                        <h2 className="text-3xl md:text-4xl leading-tight font-bold text-brand-navy">
                             CAIE-Certified Bengali Educator | Examiner |
-                            <span className="text-[#006DD6]"> Published Author</span>
+                            <span className="text-brand-blue"> Published Author</span>
                         </h2>
 
                         {/* Name Highlight */}
-                        <div className="rounded-2xl bg-gradient-to-r from-[#006DD6]/10 to-[#344871]/10 p-6 border border-[#006DD6]/20">
-                            <p className="mb-2 text-2xl font-bold text-[#344871]">
+                        <div className="rounded-2xl bg-gradient-to-r from-brand-blue/10 to-brand-navy/10 p-6 border border-brand-blue/20">
+                            <p className="mb-2 text-2xl font-bold text-brand-navy">
                                 Rofsan Sir
                             </p>
                             <p className="leading-relaxed text-gray-700">
@@ -98,41 +102,41 @@ const MentorSection = () => {
                         </div>
 
                         <div>
-                            <h3 className="mb-6 flex items-center gap-2 text-xl font-bold text-[#344871]">
-                                <CheckCircle className="h-5 w-5 text-[#E9BA08]" />
+                            <h3 className="mb-6 flex items-center gap-2 text-xl font-bold text-brand-navy">
+                                <CheckCircle className="h-5 w-5 text-brand-navy" />
                                 Why Choose Rofsan Sir
                             </h3>
 
                             <div className="grid gap-4 md:grid-cols-2">
                                 <div className="space-y-4">
-                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300" style={cardHoverStyles} {...cardHoverHandlers}>
                                         <div className="mb-2 flex items-center gap-3">
-                                            <div className="rounded-lg bg-[#006DD6]/10 p-2 group-hover:bg-[#006DD6]/20 transition-colors">
-                                                <Award className="h-5 w-5 text-[#006DD6]" />
+                                            <div className="rounded-lg bg-brand-blue/10 p-2 transition-colors">
+                                                <Award className="h-5 w-5 text-brand-blue" />
                                             </div>
-                                            <span className="font-bold text-[#344871] group-hover:text-[#006DD6] transition-colors">
+                                            <span className="font-bold text-brand-navy transition-colors">
                                                 Cambridge Examiner Insight
                                             </span>
                                         </div>
                                     </div>
 
-                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300" style={cardHoverStyles} {...cardHoverHandlers}>
                                         <div className="mb-2 flex items-center gap-3">
-                                            <div className="rounded-lg bg-[#344871]/10 p-2 group-hover:bg-[#344871]/20 transition-colors">
-                                                <Users className="h-5 w-5 text-[#344871]" />
+                                            <div className="rounded-lg bg-brand-navy/10 p-2 transition-colors">
+                                                <Users className="h-5 w-5 text-brand-navy" />
                                             </div>
-                                            <span className="font-bold text-[#344871] group-hover:text-[#344871] transition-colors">
+                                            <span className="font-bold text-brand-navy transition-colors">
                                                 Student-Friendly Approach
                                             </span>
                                         </div>
                                     </div>
 
-                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300" style={cardHoverStyles} {...cardHoverHandlers}>
                                         <div className="mb-2 flex items-center gap-3">
-                                            <div className="rounded-lg bg-[#E9BA08]/10 p-2 group-hover:bg-[#E9BA08]/20 transition-colors">
-                                                <Trophy className="h-5 w-5 text-[#344871]" />
+                                            <div className="rounded-lg bg-brand-navy/10 p-2 transition-colors">
+                                                <Trophy className="h-5 w-5 text-brand-navy" />
                                             </div>
-                                            <span className="font-bold text-[#344871]">
+                                            <span className="font-bold text-brand-navy">
                                                 Proven Track Record
                                             </span>
                                         </div>
@@ -140,23 +144,23 @@ const MentorSection = () => {
                                 </div>
 
                                 <div className="space-y-4">
-                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300" style={cardHoverStyles} {...cardHoverHandlers}>
                                         <div className="mb-2 flex items-center gap-3">
-                                            <div className="rounded-lg bg-[#E9BA08]/10 p-2 group-hover:bg-[#E9BA08]/20 transition-colors">
-                                                <BookOpen className="h-5 w-5 text-[#344871]" />
+                                            <div className="rounded-lg bg-brand-navy/10 p-2 transition-colors">
+                                                <BookOpen className="h-5 w-5 text-brand-navy" />
                                             </div>
-                                            <span className="font-bold text-[#344871]">
+                                            <span className="font-bold text-brand-navy transition-colors">
                                                 Published Author
                                             </span>
                                         </div>
                                     </div>
 
-                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                                    <div className="group rounded-xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300" style={cardHoverStyles} {...cardHoverHandlers}>
                                         <div className="mb-2 flex items-center gap-3">
-                                            <div className="rounded-lg bg-[#006DD6]/10 p-2 group-hover:bg-[#006DD6]/20 transition-colors">
-                                                <Target className="h-5 w-5 text-[#006DD6]" />
+                                            <div className="rounded-lg bg-brand-blue/10 p-2 transition-colors">
+                                                <Target className="h-5 w-5 text-brand-blue" />
                                             </div>
-                                            <span className="font-bold text-[#344871] group-hover:text-[#006DD6] transition-colors">
+                                            <span className="font-bold text-brand-navy transition-colors">
                                                 Comprehensive Preparation
                                             </span>
                                         </div>
@@ -168,7 +172,9 @@ const MentorSection = () => {
                         <div className="pt-4">
                             <a
                                 href="/about"
-                                className="inline-flex items-center gap-3 rounded-lg bg-gradient-to-r from-[#006DD6] to-[#344871] px-6 py-3 font-semibold text-white hover:shadow-lg transition-all duration-300 hover:scale-105"
+                                className="inline-flex items-center gap-3 rounded-lg bg-gradient-to-r from-brand-blue to-brand-navy px-6 py-3 font-semibold text-white transition-all duration-300"
+                                style={buttonHoverStyles}
+                                {...buttonHoverHandlers}
                             >
                                 Read Full Biography
                                 <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />

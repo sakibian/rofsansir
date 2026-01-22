@@ -14,6 +14,8 @@ import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { edit } from '@/routes/profile';
 
+import AnimatedSection from '@/animations/components/AnimatedSection';
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Profile settings',
@@ -35,7 +37,12 @@ export default function Profile({
             <Head title="Profile settings" />
 
             <SettingsLayout>
-                <div className="space-y-6">
+                <AnimatedSection
+                    className="space-y-6"
+                    animationType="fade-in-up"
+                    delay={0}
+                >
+                    <div aria-label="Profile settings form" role="region">
                     <HeadingSmall
                         title="Profile information"
                         description="Update your name and email address"
@@ -139,9 +146,15 @@ export default function Profile({
                             </>
                         )}
                     </Form>
-                </div>
+                    </div>
+                </AnimatedSection>
 
-                <DeleteUser />
+                <AnimatedSection
+                    animationType="fade-in-up"
+                    delay={100}
+                >
+                    <DeleteUser />
+                </AnimatedSection>
             </SettingsLayout>
         </AppLayout>
     );

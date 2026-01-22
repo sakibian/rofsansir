@@ -2,8 +2,50 @@ import Header from '@/components/header';
 import Footer from '@/components/Footer';
 import { Head } from '@inertiajs/react';
 import { BookOpen, FileText, Search, Download, Clock, Shield, Lock, CheckCircle, Filter } from 'lucide-react';
+import { useScrollAnimation } from '@/animations/hooks/useScrollAnimation';
+import { useCardHoverAnimation, useButtonHoverAnimation } from '@/animations/hooks/useHoverAnimation';
+import AnimatedSection from '@/animations/components/AnimatedSection';
+import AnimatedGrid from '@/animations/components/AnimatedGrid';
 
 export default function Resources() {
+    const { elementRef: heroRef, isIntersecting: heroIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { elementRef: categoriesRef, isIntersecting: categoriesIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { elementRef: guidebooksRef, isIntersecting: guidebooksIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { elementRef: freeResourcesRef, isIntersecting: freeResourcesIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { elementRef: accessLevelsRef, isIntersecting: accessLevelsIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { elementRef: instructionsRef, isIntersecting: instructionsIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { elementRef: updatesRef, isIntersecting: updatesIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { hoverStyles: cardHoverStyles, hoverHandlers: cardHoverHandlers } = useCardHoverAnimation();
+    const { hoverStyles: buttonHoverStyles, hoverHandlers: buttonHoverHandlers } = useButtonHoverAnimation();
+
     return (
         <>
             <Head title="Resources - Rofsan Sir" />
@@ -11,7 +53,13 @@ export default function Resources() {
                 <Header />
 
                 {/* Page Header */}
-                <section className="bg-gradient-to-br from-brand-blue/5 via-white to-brand-navy/5 py-16">
+                <AnimatedSection
+                    className="bg-gradient-to-br from-brand-blue/5 via-white to-brand-navy/5 py-16"
+                    animate={heroIntersecting}
+                    animationType="fade-in-up"
+                    delay={0}
+                    elementRef={heroRef}
+                >
                     <div className="container-max section-padding">
                         <div className="text-center">
                             <h1 className="text-4xl md:text-5xl font-bold text-brand-navy mb-4">
@@ -22,10 +70,10 @@ export default function Resources() {
                             </p>
                         </div>
                     </div>
-                </section>
+                </AnimatedSection>
 
                 {/* Resource Categories */}
-                <section className="py-16">
+                <section className="py-16" aria-label="Resource categories" role="region">
                     <div className="container-max section-padding">
                         <h2 className="text-3xl font-bold text-brand-navy mb-12 text-center">Resource Categories</h2>
 
@@ -96,7 +144,7 @@ export default function Resources() {
                                 const colors = [
                                     { border: 'border-t-brand-blue', icon: 'text-brand-blue', bgIcon: 'bg-brand-blue/10' },
                                     { border: 'border-t-brand-navy', icon: 'text-brand-navy', bgIcon: 'bg-brand-navy/10' },
-                                    { border: 'border-t-brand-gold', icon: 'text-brand-navy', bgIcon: 'bg-brand-gold/10' },
+                                    { border: 'border-t-brand-navy', icon: 'text-brand-navy', bgIcon: 'bg-brand-navy/10' },
                                     { border: 'border-t-brand-blue', icon: 'text-brand-blue', bgIcon: 'bg-brand-blue/10' },
                                     { border: 'border-t-brand-navy', icon: 'text-brand-navy', bgIcon: 'bg-brand-navy/10' },
                                 ];
@@ -156,7 +204,7 @@ export default function Resources() {
                                     subtitle: "Intensive Preparation for Cambridge O Level Bengali 3204 - Paper 1 & 2",
                                     focus: "Extensive practice materials, exercises, and topic-wise drills",
                                     status: "premium",
-                                    color: "gold"
+                                    color: "navy"
                                 },
                                 {
                                     title: "O Level Bengali FOUNDATION PLUS",
@@ -177,7 +225,7 @@ export default function Resources() {
                                     subtitle: "A Complete Guide to 'O' Level Bengali - CIE Subject Code: 3204/2 - Paper-2",
                                     focus: "Comprehensive Paper 2 preparation",
                                     status: "premium",
-                                    color: "gold"
+                                    color: "navy"
                                 },
                                 {
                                     title: "Bengali Easy Composition",
@@ -195,15 +243,14 @@ export default function Resources() {
                                 }
                             ].map((book, index) => {
                                 const colorClasses = {
-                                    blue: { bg: 'bg-brand-blue', text: 'text-white', badge: 'bg-brand-gold' },
-                                    navy: { bg: 'bg-brand-navy', text: 'text-white', badge: 'bg-brand-gold' },
-                                    gold: { bg: 'bg-brand-gold', text: 'text-brand-navy', badge: 'bg-brand-navy' }
+                                    blue: { bg: 'bg-brand-blue', text: 'text-white', badge: 'bg-brand-navy' },
+                                    navy: { bg: 'bg-brand-navy', text: 'text-white', badge: 'bg-brand-navy' }
                                 };
                                 const colorClass = colorClasses[book.color as keyof typeof colorClasses];
                                 return (
                                     <div key={index} className="group bg-white p-6 rounded-2xl border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative">
                                         {book.status === "new" && (
-                                            <div className="absolute -top-2 -right-2 bg-brand-gold text-brand-navy text-xs px-2 py-1 rounded-full font-semibold shadow-lg">
+                                            <div className="absolute -top-2 -right-2 bg-brand-navy text-brand-navy text-xs px-2 py-1 rounded-full font-semibold shadow-lg">
                                                 NEW
                                             </div>
                                         )}

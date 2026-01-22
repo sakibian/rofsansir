@@ -5,6 +5,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { BookOpen, CheckCircle, LogOut } from 'lucide-react';
 import Header from '@/components/header';
 import Footer from '@/components/Footer';
+import { useScrollAnimation } from '@/animations/hooks/useScrollAnimation';
+import { useCardHoverAnimation, useButtonHoverAnimation } from '@/animations/hooks/useHoverAnimation';
+import AnimatedSection from '@/animations/components/AnimatedSection';
+import AnimatedGrid from '@/animations/components/AnimatedGrid';
 
 interface DriveFile {
     id: string;
@@ -93,10 +97,14 @@ export default function StudentDashboard({ driveData }: Props) {
             <div className="min-h-screen bg-background">
                 <Header />
 
-                <main className="py-8 px-4 sm:px-6 lg:px-8">
+                <main className="py-8 px-4 sm:px-6 lg:px-8" aria-label="Student dashboard content" role="main">
                     <div className="max-w-7xl mx-auto">
                         {/* Header */}
-                        <div className="mb-8">
+                        <AnimatedSection
+                            className="mb-8"
+                            animationType="fade-in-up"
+                            delay={0}
+                        >
                             <div className="flex items-center justify-between">
                                 <div>
                                     <h1 className="text-3xl font-bold text-foreground">Student Portal</h1>
@@ -113,10 +121,16 @@ export default function StudentDashboard({ driveData }: Props) {
                                     Logout
                                 </Button>
                             </div>
-                        </div>
+                        </AnimatedSection>
 
                         {/* Status Cards */}
-                        <div className="grid md:grid-cols-2 gap-6 mb-8">
+                        <AnimatedGrid
+                            className="grid md:grid-cols-2 gap-6 mb-8"
+                            animationType="fade-in-up"
+                            delay={100}
+                            staggerChildren={true}
+                            staggerDelay={200}
+                        >
                             <Card>
                                 <CardHeader className="flex flex-row items-center space-y-0 pb-2">
                                     <CardTitle className="text-sm font-medium">Account Status</CardTitle>
@@ -138,117 +152,123 @@ export default function StudentDashboard({ driveData }: Props) {
                                     <p className="text-xs text-muted-foreground">Access to study materials</p>
                                 </CardContent>
                             </Card>
-                        </div>
+                        </AnimatedGrid>
 
                         {/* Google Drive Section */}
-                        <Card className="mb-8">
-                            <CardHeader>
-                                <CardTitle className="flex items-center gap-2">
-                                    <BookOpen className="h-5 w-5" />
-                                    Study Materials
-                                </CardTitle>
-                                <CardDescription>
-                                    Access your O Level Bengali study resources and materials
-                                </CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                {props.flash?.error && (
-                                    <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
-                                        {props.flash.error}
-                                    </div>
-                                )}
-                                {props.flash?.success && (
-                                    <div className="mb-4 rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-800">
-                                        {props.flash.success}
-                                    </div>
-                                )}
+                        <AnimatedSection
+                            className="mb-8"
+                            animationType="fade-in-up"
+                            delay={200}
+                        >
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle className="flex items-center gap-2">
+                                        <BookOpen className="h-5 w-5" />
+                                        Study Materials
+                                    </CardTitle>
+                                    <CardDescription>
+                                        Access your O Level Bengali study resources and materials
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    {props.flash?.error && (
+                                        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
+                                            {props.flash.error}
+                                        </div>
+                                    )}
+                                    {props.flash?.success && (
+                                        <div className="mb-4 rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-800">
+                                            {props.flash.success}
+                                        </div>
+                                    )}
 
-                                <div className="border rounded-lg p-4">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <div className="flex items-center gap-3">
-                                            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-100">
-                                                <BookOpen className="h-5 w-5 text-blue-600" />
+                                    <div className="border rounded-lg p-4">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-blue-100">
+                                                    <BookOpen className="h-5 w-5 text-blue-600" />
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-medium text-foreground">{drive.name}</h4>
+                                                    {drive.last_authenticated && (
+                                                        <p className="text-sm text-muted-foreground">
+                                                            Last authenticated: {new Date(drive.last_authenticated).toLocaleDateString()}
+                                                        </p>
+                                                    )}
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h4 className="font-medium text-foreground">{drive.name}</h4>
-                                                {drive.last_authenticated && (
-                                                    <p className="text-sm text-muted-foreground">
-                                                        Last authenticated: {new Date(drive.last_authenticated).toLocaleDateString()}
-                                                    </p>
+                                            {!drive.has_access && (
+                                                <a
+                                                    href="/drive/access"
+                                                    className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
+                                                >
+                                                    Authenticate
+                                                </a>
+                                            )}
+                                        </div>
+
+                                        {drive.has_access ? (
+                                            <div className="space-y-2">
+                                                <h5 className="text-sm font-medium text-gray-900">Contents:</h5>
+                                                {drive.contents.length === 0 ? (
+                                                    <p className="text-sm text-gray-500 italic">This drive appears to be empty or loading...</p>
+                                                ) : (
+                                                    <div className="space-y-1">
+                                                        {drive.contents.map((file) => (
+                                                            <div key={file.id} className="flex items-center justify-between py-2 px-3 rounded bg-gray-50">
+                                                                <div className="flex items-center gap-2">
+                                                                    {file.isFolder ? (
+                                                                        <span className="text-blue-500">📁</span>
+                                                                    ) : (
+                                                                        <span className="text-gray-500">📄</span>
+                                                                    )}
+                                                                    <span className="text-sm">{file.name}</span>
+                                                                </div>
+                                                                <div className="flex items-center gap-2">
+                                                                    {!file.isFolder && file.webContentLink && (
+                                                                        <a
+                                                                            href={file.webContentLink}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                            className="text-blue-600 hover:text-blue-800 text-sm underline"
+                                                                        >
+                                                                            Download
+                                                                        </a>
+                                                                    )}
+                                                                    {file.webViewLink && (
+                                                                        <a
+                                                                            href={file.webViewLink}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                            className="text-gray-600 hover:text-gray-800 text-sm underline"
+                                                                        >
+                                                                            View
+                                                                        </a>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
                                                 )}
                                             </div>
-                                        </div>
-                                        {!drive.has_access && (
-                                            <a
-                                                href="/drive/access"
-                                                className="bg-primary text-primary-foreground px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors"
-                                            >
-                                                Authenticate
-                                            </a>
+                                        ) : (
+                                            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                                                <p className="text-sm text-yellow-800">
+                                                    <strong>Authentication Required:</strong> Click "Authenticate" to access study materials with your Gmail account.
+                                                </p>
+                                            </div>
                                         )}
                                     </div>
 
-                                    {drive.has_access ? (
-                                        <div className="space-y-2">
-                                            <h5 className="text-sm font-medium text-gray-900">Contents:</h5>
-                                            {drive.contents.length === 0 ? (
-                                                <p className="text-sm text-gray-500 italic">This drive appears to be empty or loading...</p>
-                                            ) : (
-                                                <div className="space-y-1">
-                                                    {drive.contents.map((file) => (
-                                                        <div key={file.id} className="flex items-center justify-between py-2 px-3 rounded bg-gray-50">
-                                                            <div className="flex items-center gap-2">
-                                                                {file.isFolder ? (
-                                                                    <span className="text-blue-500">📁</span>
-                                                                ) : (
-                                                                    <span className="text-gray-500">📄</span>
-                                                                )}
-                                                                <span className="text-sm">{file.name}</span>
-                                                            </div>
-                                                            <div className="flex items-center gap-2">
-                                                                {!file.isFolder && file.webContentLink && (
-                                                                    <a
-                                                                        href={file.webContentLink}
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer"
-                                                                        className="text-blue-600 hover:text-blue-800 text-sm underline"
-                                                                    >
-                                                                        Download
-                                                                    </a>
-                                                                )}
-                                                                {file.webViewLink && (
-                                                                    <a
-                                                                        href={file.webViewLink}
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer"
-                                                                        className="text-gray-600 hover:text-gray-800 text-sm underline"
-                                                                    >
-                                                                        View
-                                                                    </a>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </div>
-                                    ) : (
-                                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                                            <p className="text-sm text-yellow-800">
-                                                <strong>Authentication Required:</strong> Click "Authenticate" to access study materials with your Gmail account.
-                                            </p>
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className="bg-green-50 border border-green-200 rounded-lg p-4 mt-6">
-                                    <p className="text-sm text-green-800">
-                                        <strong>Access Granted:</strong> You have read-only access to view and download files from Google Drive.
-                                        Files include PDFs, documents, and other study materials.
-                                    </p>
-                                </div>
-                            </CardContent>
-                        </Card>
+                                    <div className="bg-green-50 border border-green-200 rounded-lg p-4 mt-6">
+                                        <p className="text-sm text-green-800">
+                                            <strong>Access Granted:</strong> You have read-only access to view and download files from Google Drive.
+                                            Files include PDFs, documents, and other study materials.
+                                        </p>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </AnimatedSection>
                     </div>
                 </main>
 

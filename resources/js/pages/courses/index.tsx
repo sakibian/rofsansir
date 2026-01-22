@@ -2,8 +2,18 @@ import Header from '@/components/header';
 import Footer from '@/components/Footer';
 import { Head, Link } from '@inertiajs/react';
 import { Star, Award, Users, Monitor, Phone, MapPin, Mail, GraduationCap, Clock, BookOpen, Target, CheckCircle } from 'lucide-react';
+import useStaggeredAnimation from '@/animations/hooks/useStaggeredAnimation';
+import { useCardHoverAnimation, useButtonHoverAnimation } from '@/animations/hooks/useHoverAnimation';
 
 export default function Courses() {
+    const { elementRef, isIntersecting } = useStaggeredAnimation<HTMLDivElement>({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { hoverStyles: cardHoverStyles, hoverHandlers: cardHoverHandlers } = useCardHoverAnimation();
+    const { hoverStyles: buttonHoverStyles, hoverHandlers: buttonHoverHandlers } = useButtonHoverAnimation();
+
     return (
         <>
             <Head>
@@ -28,12 +38,17 @@ export default function Courses() {
                 <meta name="twitter:image" content="https://rofsansir.com/logos/logo.png" />
             </Head>
 
-            <div className="min-h-screen bg-white">
+            <div
+                ref={elementRef}
+                className={`min-h-screen bg-white transition-opacity duration-1000 ${
+                    isIntersecting ? 'opacity-100' : 'opacity-0'
+                }`}
+            >
                 <div className="relative z-10">
                     <Header />
 
                     {/* Hero Section */}
-                    <section className="pt-32 pb-20 px-4 md:px-8 bg-gradient-to-br from-[#006DD6]/5 to-[#344871]/5">
+                    <section className="pt-32 pb-20 px-4 md:px-8 bg-gradient-to-br from-[#006DD6]/5 to-[#344871]/5" aria-label="Courses hero section" role="banner">
                         <div className="container mx-auto max-w-6xl">
                             <div className="text-center mb-16">
                                 <div className="inline-flex items-center px-6 py-3 bg-[#006DD6] text-white rounded-full mb-8">
@@ -83,7 +98,10 @@ export default function Courses() {
 
                             <div className="grid md:grid-cols-3 gap-8 mb-20">
                                 {/* Foundation Program */}
-                                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 transition-all duration-300"
+                                    style={cardHoverStyles}
+                                    {...cardHoverHandlers}
+                                >
                                     <div className="text-center mb-6">
                                         <div className="w-16 h-16 bg-[#006DD6] rounded-full flex items-center justify-center mx-auto mb-4">
                                             <BookOpen className="w-8 h-8 text-white" />
@@ -127,7 +145,10 @@ export default function Courses() {
                                 </div>
 
                                 {/* Class IX Program */}
-                                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 transition-all duration-300"
+                                    style={cardHoverStyles}
+                                    {...cardHoverHandlers}
+                                >
                                     <div className="text-center mb-6">
                                         <div className="w-16 h-16 bg-[#344871] rounded-full flex items-center justify-center mx-auto mb-4">
                                             <Target className="w-8 h-8 text-white" />
@@ -171,9 +192,12 @@ export default function Courses() {
                                 </div>
 
                                 {/* Class X Program */}
-                                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                                <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 transition-all duration-300"
+                                    style={cardHoverStyles}
+                                    {...cardHoverHandlers}
+                                >
                                     <div className="text-center mb-6">
-                                        <div className="w-16 h-16 bg-[#E9BA08] rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <div className="w-16 h-16 bg-brand-navy rounded-full flex items-center justify-center mx-auto mb-4">
                                             <Award className="w-8 h-8 text-white" />
                                         </div>
                                         <h3 className="text-xl font-bold text-[#344871] mb-2">Exam Focused</h3>
@@ -208,7 +232,7 @@ export default function Courses() {
 
                                     <Link
                                         href="/courses/class10"
-                                        className="w-full bg-[#E9BA08] text-white py-3 px-6 rounded-lg font-medium hover:bg-[#d4a607] transition-colors text-center block"
+                                        className="w-full bg-brand-navy text-white py-3 px-6 rounded-lg font-medium hover:bg-brand-navy/90 transition-colors text-center block"
                                     >
                                         Learn More
                                     </Link>
@@ -242,7 +266,7 @@ export default function Courses() {
                                     </div>
 
                                     <div className="text-center">
-                                        <div className="w-16 h-16 bg-[#E9BA08] rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <div className="w-16 h-16 bg-brand-navy rounded-full flex items-center justify-center mx-auto mb-4">
                                             <Target className="w-8 h-8 text-white" />
                                         </div>
                                         <h3 className="font-bold text-[#344871] mb-2">CAIE Aligned</h3>
@@ -336,10 +360,16 @@ export default function Courses() {
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <button className="bg-[#E9BA08] text-[#344871] px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#d4a607] transition-colors">
+                                <button className="bg-brand-navy text-[#344871] px-8 py-4 rounded-lg font-bold text-lg transition-colors"
+                                    style={buttonHoverStyles}
+                                    {...buttonHoverHandlers}
+                                >
                                     Enroll Now
                                 </button>
-                                <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-[#344871] transition-colors">
+                                <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors"
+                                    style={buttonHoverStyles}
+                                    {...buttonHoverHandlers}
+                                >
                                     Schedule Consultation
                                 </button>
                             </div>
@@ -355,7 +385,10 @@ export default function Courses() {
                             </div>
 
                             <div className="grid md:grid-cols-3 gap-8">
-                                <div className="text-center">
+                                <div className="text-center transition-all duration-300"
+                                    style={cardHoverStyles}
+                                    {...cardHoverHandlers}
+                                >
                                     <div className="w-16 h-16 bg-[#006DD6] rounded-full flex items-center justify-center mx-auto mb-4">
                                         <Phone className="w-8 h-8 text-white" />
                                     </div>
@@ -364,7 +397,10 @@ export default function Courses() {
                                     <p className="text-gray-600 text-sm">+880 1711-772662</p>
                                 </div>
 
-                                <div className="text-center">
+                                <div className="text-center transition-all duration-300"
+                                    style={cardHoverStyles}
+                                    {...cardHoverHandlers}
+                                >
                                     <div className="w-16 h-16 bg-[#344871] rounded-full flex items-center justify-center mx-auto mb-4">
                                         <Mail className="w-8 h-8 text-white" />
                                     </div>
@@ -372,8 +408,11 @@ export default function Courses() {
                                     <p className="text-gray-600 text-sm">rofsankhan@gmail.com</p>
                                 </div>
 
-                                <div className="text-center">
-                                    <div className="w-16 h-16 bg-[#E9BA08] rounded-full flex items-center justify-center mx-auto mb-4">
+                                <div className="text-center transition-all duration-300"
+                                    style={cardHoverStyles}
+                                    {...cardHoverHandlers}
+                                >
+                                    <div className="w-16 h-16 bg-brand-navy rounded-full flex items-center justify-center mx-auto mb-4">
                                         <MapPin className="w-8 h-8 text-white" />
                                     </div>
                                     <h3 className="font-bold text-[#344871] mb-2">Visit Us</h3>

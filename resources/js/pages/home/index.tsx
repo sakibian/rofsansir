@@ -1,6 +1,8 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/header';
 import { Head } from '@inertiajs/react';
+// Animation components are used in section components
+import '@/animations/index';
 import AssessmentSection from './components/AssessmentSection';
 import BooksSection from './components/BooksSection';
 import CoursesSection from './components/CoursesSection';
@@ -111,7 +113,7 @@ export default function Home({ routines }: Props) {
             </Head>
             <div className="min-h-screen bg-background">
                 <Header />
-                <main>
+                <main aria-label="Main content sections" role="main">
                     <HeroSection />
                     <MentorSection />
                     <CoursesSection />

@@ -1,5 +1,7 @@
 import { BookOpen, CheckCircle, Clock, Trophy, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { AnimatedButton, AnimatedCTA, useScrollAnimation } from '../../../animations';
+import AnimatedSection from '../../../animations/components/AnimatedSection';
 
 const teacherImages = [
     '/teacher/3 - with senior colleuge.jpg',
@@ -32,6 +34,14 @@ const HeroSection = () => {
     const [isHovered, setIsHovered] = useState(false);
     const [progress, setProgress] = useState(0);
 
+    // Scroll animation for hero content
+    const { elementRef: heroRef, isIntersecting: heroVisible } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    // Custom hover animations for buttons (removed unused variables)
+
     useEffect(() => {
         let interval: NodeJS.Timeout;
         let progressInterval: NodeJS.Timeout;
@@ -63,13 +73,17 @@ const HeroSection = () => {
     }, [isHovered]);
 
     return (
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#006DD6]/5 to-[#344871]/5 py-20 px-4 md:px-8">
+        <section ref={heroRef} className="relative overflow-hidden bg-gradient-to-br from-brand-blue/5 to-brand-navy/5 px-4 py-20 md:px-8">
             <div className="container mx-auto max-w-6xl">
                 <div className="grid items-center gap-12 lg:grid-cols-2">
                     {/* Left Content */}
-                    <div className="text-center lg:text-left">
+                    <div className={`text-center lg:text-left transition-all duration-1000 ${
+                        heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                    }`}>
                         {/* Badge */}
-                        <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#E9BA08] px-4 py-2 text-[#344871]">
+                        <div className={`mb-6 inline-flex items-center gap-2 rounded-full bg-brand-navy px-4 py-2 text-brand-navy transition-all duration-1000 delay-300 ${
+                            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                        }`}>
                             <CheckCircle className="h-4 w-4" />
                             <span className="text-sm font-bold tracking-wide uppercase">
                                 Cambridge Certified Educator
@@ -77,14 +91,18 @@ const HeroSection = () => {
                         </div>
 
                         {/* Main Heading */}
-                        <h1 className="text-4xl md:text-6xl font-bold text-[#344871] mb-6 leading-tight">
+                        <h1 className={`mb-6 text-4xl leading-tight font-bold text-brand-navy md:text-6xl transition-all duration-1000 delay-500 ${
+                            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                        }`}>
                             Learn O Level
-                            <span className="text-[#006DD6]"> Bengali </span>
+                            <span className="text-brand-blue"> Bengali </span>
                             with Rofsan Sir
                         </h1>
 
                         {/* Description */}
-                        <p className="mb-8 max-w-lg text-lg text-gray-600 mx-auto lg:mx-0">
+                        <p className={`mx-auto mb-8 max-w-lg text-lg text-gray-600 lg:mx-0 transition-all duration-1000 delay-700 ${
+                            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                        }`}>
                             Rofsan Sir is a CAIE-trained educator and
                             Cambridge-approved O Level Bengali Examiner with
                             over eight years of experience in English-medium O
@@ -93,30 +111,35 @@ const HeroSection = () => {
                         </p>
 
                         {/* CTA Buttons */}
-                        <div className="mb-8 flex flex-col gap-4 sm:flex-row justify-center lg:justify-start">
-                            <button className="bg-[#006DD6] text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#0054A5] transition-colors shadow-lg">
+                        <div className={`mb-8 flex flex-col justify-center gap-4 sm:flex-row lg:justify-start transition-all duration-1000 delay-900 ${
+                            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                        }`}>
+                            <AnimatedCTA>
                                 Book Free Consultation
-                            </button>
-                            <button className="border-2 border-[#006DD6] text-[#006DD6] px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#006DD6] hover:text-white transition-colors">
+                            </AnimatedCTA>
+                            <AnimatedButton variant="outline" size="lg">
                                 Download Routines
-                            </button>
+                            </AnimatedButton>
                         </div>
 
                         {/* Stats Cards */}
-                        <div className="grid grid-cols-2 gap-4 max-w-md mx-auto lg:mx-0">
+                        <div className={`mx-auto grid max-w-md grid-cols-2 gap-4 lg:mx-0 transition-all duration-1000 delay-1100 ${
+                            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                        }`}>
                             {stats.map((stat, index) => (
                                 <div
                                     key={stat.label}
-                                    className="bg-white p-4 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow"
+                                    className="flex items-center rounded-xl border border-gray-100 bg-white p-4 shadow-lg transition-shadow hover:-translate-y-1 hover:shadow-xl"
+                                    style={{ animationDelay: `${index * 100}ms` }}
                                 >
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 bg-[#006DD6] rounded-lg flex items-center justify-center">
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-blue">
                                             <stat.icon className="h-5 w-5 text-white" />
                                         </div>
                                         <div>
-                                            <div className="text-xl font-bold text-[#344871]">
+                                            <div className="text-xl font-bold text-brand-navy">
                                                 {stat.value}
-                                                <span className="text-[#344871]">
+                                                <span className="text-brand-navy">
                                                     {stat.suffix}
                                                 </span>
                                             </div>
@@ -134,7 +157,7 @@ const HeroSection = () => {
                     <div className="relative">
                         {/* Main Image Container */}
                         <div
-                            className="relative mx-auto max-w-md aspect-square transform overflow-hidden rounded-2xl shadow-2xl transition-transform duration-500 hover:scale-105"
+                            className="relative mx-auto aspect-square max-w-md transform overflow-hidden rounded-2xl shadow-2xl transition-transform duration-500 hover:scale-105"
                             onMouseEnter={() => setIsHovered(true)}
                             onMouseLeave={() => setIsHovered(false)}
                         >
@@ -167,7 +190,7 @@ const HeroSection = () => {
                             {/* Progress Bar */}
                             <div className="absolute top-0 right-0 left-0 h-1 bg-white/20">
                                 <div
-                                    className="h-full bg-gradient-to-r from-[#E9BA08] to-[#006DD6] transition-all duration-50 ease-linear"
+                                    className="h-full bg-gradient-to-r from-brand-navy to-brand-blue transition-all duration-50 ease-linear"
                                     style={{ width: `${progress}%` }}
                                 />
                             </div>
@@ -183,7 +206,7 @@ const HeroSection = () => {
                                         }}
                                         className={`h-2 w-2 rounded-full transition-all duration-300 ${
                                             index === currentImageIndex
-                                                ? 'scale-125 bg-[#E9BA08]'
+                                                ? 'scale-125 bg-brand-navy'
                                                 : 'bg-white/50 hover:bg-white/70'
                                         }`}
                                         aria-label={`Go to image ${index + 1}`}
@@ -193,7 +216,7 @@ const HeroSection = () => {
                         </div>
 
                         {/* Floating Badge */}
-                        <div className="absolute -top-6 right-6 rounded-full bg-[#E9BA08] px-4 py-2 text-sm font-bold text-[#344871] shadow-xl">
+                        <div className="absolute -top-6 right-6 rounded-full bg-brand-navy px-4 py-2 text-sm font-bold text-brand-navy shadow-xl">
                             🏆 Top Rated Teacher
                         </div>
                     </div>

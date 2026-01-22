@@ -144,7 +144,7 @@ export default function Class9Course() {
                                 </div>
 
                                 <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group delay-200">
-                                    <div className="w-12 h-12 bg-[#E9BA08] rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                                    <div className="w-12 h-12 bg-[#344871] rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                                         <Award className="w-6 h-6 text-white" />
                                     </div>
                                     <h3 className="text-xl font-bold text-[#344871] mb-3">Reading Techniques</h3>
@@ -168,7 +168,7 @@ export default function Class9Course() {
                                 </div>
 
                                 <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group delay-500">
-                                    <div className="w-12 h-12 bg-[#E9BA08] rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                                    <div className="w-12 h-12 bg-[#344871] rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                                         <Award className="w-6 h-6 text-white" />
                                     </div>
                                     <h3 className="text-xl font-bold text-[#344871] mb-3">Writing Skills</h3>
@@ -248,7 +248,7 @@ export default function Class9Course() {
 
                             <div className="bg-gradient-to-r from-[#344871]/10 to-[#006DD6]/10 rounded-2xl p-8 md:p-12">
                                 <div className="text-center mb-8">
-                                    <Award className="w-16 h-16 text-[#E9BA08] mx-auto mb-4" />
+                                    <Award className="w-16 h-16 text-[#344871] mx-auto mb-4" />
                                     <h3 className="text-2xl font-bold text-[#344871] mb-4">Program Success</h3>
                                 </div>
 
@@ -274,7 +274,7 @@ export default function Class9Course() {
                                     </div>
 
                                     <div className="text-center">
-                                        <div className="w-12 h-12 bg-[#E9BA08] rounded-full flex items-center justify-center mx-auto mb-3">
+                                        <div className="w-12 h-12 bg-[#344871] rounded-full flex items-center justify-center mx-auto mb-3">
                                             <Target className="w-6 h-6 text-white" />
                                         </div>
                                         <h4 className="font-bold text-[#344871] mb-2">Exam Readiness</h4>

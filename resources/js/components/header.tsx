@@ -14,7 +14,7 @@ const Header = () => {
     ];
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b border-brand-gold/20 bg-white/95 backdrop-blur-md transition-all duration-300 supports-[backdrop-filter]:bg-white/90">
+        <header className="sticky top-0 z-50 w-full border-b border-brand-navy/20 bg-white/95 backdrop-blur-md transition-all duration-300 supports-[backdrop-filter]:bg-white/90">
             <div className="container-max section-padding">
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
@@ -35,10 +35,10 @@ const Header = () => {
                             <a
                                 key={link.label}
                                 href={link.href}
-                                className="relative rounded px-2 py-1 text-sm font-medium text-brand-navy/70 transition-all duration-300 hover:text-brand-gold focus:text-brand-gold focus:ring-2 focus:ring-brand-gold/20 focus:ring-offset-2 focus:outline-none"
+                                className="relative rounded px-2 py-1 text-sm font-medium text-brand-navy/70 transition-all duration-300 hover:text-brand-navy focus:text-brand-navy focus:ring-2 focus:ring-brand-navy/20 focus:ring-offset-2 focus:outline-none"
                             >
                                 {link.label}
-                                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-brand-gold transition-all duration-300 group-hover:w-full"></span>
+                                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-brand-navy transition-all duration-300 group-hover:w-full"></span>
                             </a>
                         ))}
                     </nav>
@@ -49,7 +49,7 @@ const Header = () => {
                             variant="default"
                             size="sm"
                             asChild
-                            className="bg-brand-gold text-white transition-all duration-300 hover:bg-brand-gold/90 hover:shadow-lg hover:shadow-brand-gold/25"
+                            className="bg-brand-navy text-white transition-all duration-300 hover:bg-brand-navy/90 hover:shadow-lg hover:shadow-brand-navy/25"
                         >
                             <a href="/student/login">Students Portal</a>
                         </Button>
@@ -57,7 +57,7 @@ const Header = () => {
 
                     {/* Mobile Menu Button */}
                     <button
-                        className="rounded-lg p-2 transition-colors duration-300 hover:bg-brand-gold/10 focus:ring-2 focus:ring-brand-gold/20 focus:outline-none md:hidden"
+                        className="rounded-lg p-2 transition-colors duration-300 hover:bg-brand-navy/10 focus:ring-2 focus:ring-brand-navy/20 focus:outline-none md:hidden"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                         aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
                     >
@@ -71,7 +71,7 @@ const Header = () => {
 
                 {/* Mobile Menu */}
                 <div
-                    className={`overflow-hidden border-t border-brand-gold/20 bg-white/95 backdrop-blur-md transition-all duration-500 md:hidden ${
+                    className={`overflow-hidden border-t border-brand-navy/20 bg-white/95 backdrop-blur-md transition-all duration-500 md:hidden ${
                         mobileMenuOpen
                             ? 'max-h-96 opacity-100'
                             : 'max-h-0 opacity-0'
@@ -82,7 +82,7 @@ const Header = () => {
                             <a
                                 key={link.label}
                                 href={link.href}
-                                className="rounded px-2 py-1 text-sm font-medium text-brand-navy/70 transition-all duration-300 hover:translate-x-2 hover:text-brand-gold focus:text-brand-gold focus:ring-2 focus:ring-brand-gold/20 focus:ring-offset-2 focus:outline-none"
+                                className="rounded px-2 py-1 text-sm font-medium text-brand-navy/70 transition-all duration-300 hover:translate-x-2 hover:text-brand-navy focus:text-brand-navy focus:ring-2 focus:ring-brand-navy/20 focus:ring-offset-2 focus:outline-none"
                                 onClick={() => setMobileMenuOpen(false)}
                                 style={{
                                     transitionDelay: mobileMenuOpen
@@ -98,7 +98,7 @@ const Header = () => {
                         ))}
                         <Button
                             variant="default"
-                            className="mt-2 bg-brand-gold text-white transition-all duration-300 hover:bg-brand-gold/90 hover:shadow-lg hover:shadow-brand-gold/25"
+                            className="mt-2 bg-brand-navy text-white transition-all duration-300 hover:bg-brand-navy/90 hover:shadow-lg hover:shadow-brand-navy/25"
                         >
                             Enroll Now
                         </Button>

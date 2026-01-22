@@ -1,74 +1,153 @@
 import {
-    Award,
-    BookOpen,
     Facebook,
-    Globe,
     Instagram,
+    Linkedin,
     Mail,
     MapPin,
-    MessageCircle,
     Phone,
-    TrendingUp,
+    Youtube,
 } from 'lucide-react';
 
 const Footer = () => {
     const quickLinks = [
-        { label: 'Home', href: '#' },
-        { label: 'Courses & Admission', href: '#courses' },
-        { label: 'Resources', href: '#resources' },
-        { label: 'Students Portal', href: '#portal' },
-        { label: 'Contact Us', href: '#contact' },
+        { label: 'Home', href: '/' },
+        { label: 'About', href: '/about' },
+        { label: 'Courses', href: '/courses' },
+        { label: 'Resources', href: '/resources' },
+        { label: 'Tips', href: '/tips' },
+        { label: 'Contact', href: '/contact' },
     ];
 
-    const trustBadges = [
-        {
-            name: 'Cambridge Assessment International Education',
-            logo: '/logos/cambridge-logo.png',
-            alt: 'Cambridge Assessment Logo',
-        },
-        {
-            name: 'Edexcel',
-            logo: '/logos/edexcellogo.png',
-            alt: 'Edexcel Logo',
-        },
-        {
-            name: 'ELITES - Education Excellence Leadership',
-            logo: '/logos/ELITES.png',
-            alt: 'ELITES Logo',
-        },
+    const courses = [
+        { label: 'O Level Bengali', href: '/courses/o-level-bengali' },
+        { label: 'Paper 1: Composition', href: '/courses/paper-1' },
+        { label: 'Paper 2: Language', href: '/courses/paper-2' },
+        { label: 'Grammar Mastery', href: '/courses/grammar' },
+        { label: 'Vocabulary Building', href: '/courses/vocabulary' },
+        { label: 'Exam Preparation', href: '/courses/exam-prep' },
+    ];
+
+    const resources = [
+        { label: 'Study Materials', href: '/resources/study-materials' },
+        { label: 'Practice Tests', href: '/resources/practice-tests' },
+        { label: 'Video Tutorials', href: '/resources/video-tutorials' },
+        { label: 'Exam Tips', href: '/resources/exam-tips' },
+        { label: 'Downloads', href: '/resources/downloads' },
+        { label: 'Blog', href: '/resources/blog' },
     ];
 
     return (
         <>
+            {/* Back to Top Button */}
+            <button
+                onClick={() =>
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth',
+                    })
+                }
+                className="fixed right-6 bottom-6 z-50 flex items-center gap-2 rounded-lg bg-brand-navy px-4 py-2 font-semibold text-brand-navy shadow-lg transition-all duration-300 hover:bg-brand-navy/90"
+            >
+                <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 10l7-7m0 0l7 7m-7-7v18"
+                    />
+                </svg>
+                Back to Top
+            </button>
+
             {/* Main Footer */}
-            <footer className="bg-foreground pt-16 pb-8 text-white">
-                <div className="container-max section-padding">
-                    <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
-                        {/* Column 1: About Rofsan Sir */}
-                        <div className="text-left lg:col-span-1">
-                            <div className="mb-4">
-                                <img
-                                    src="/logos/footer-logo.png"
-                                    alt="Rofsan Sir Logo"
-                                    className="h-auto w-auto"
-                                />
+            <footer className="bg-gradient-to-br from-brand-navy via-brand-blue to-brand-navy text-white">
+                <div className="container-max section-padding py-16">
+                    <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+                        {/* Brand Section */}
+                        <div className="space-y-6">
+                            <div className="flex items-center gap-3">
+                                <div className="flex items-center justify-center rounded-xl bg-white/10 backdrop-blur-sm">
+                                    <img
+                                        src="/logos/footer-logo.png"
+                                        alt="Rofsan Sir Logo"
+                                        className="h-64 w-64"
+                                    />
+                                </div>
                             </div>
-                            <p className="text-sm font-medium text-gray-300">
-                                আগে চাই মাতৃভাষার শুদ্ধ পাঠ গ্রহণি
-                            </p>
+
+                            <div className="space-y-3 text-sm text-white/70">
+                                <div className="flex items-center gap-3">
+                                    <MapPin className="h-4 w-4 text-white/80" />
+                                    <span>
+                                        Lalmatia, Dhaka-1207, Bangladesh
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <Phone className="h-4 w-4 text-white/80" />
+                                    <span>+880 1948-116595</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <Mail className="h-4 w-4 text-white/80" />
+                                    <span>rofsankhan@gmail.com</span>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-3">
+                                <a
+                                    href="https://www.facebook.com/rofsankhan"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-300 hover:bg-brand-navy hover:text-brand-navy"
+                                    aria-label="Facebook"
+                                >
+                                    <Facebook className="h-5 w-5" />
+                                </a>
+                                <a
+                                    href="https://www.youtube.com/@rofsankhan"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-300 hover:bg-brand-navy hover:text-brand-navy"
+                                    aria-label="YouTube"
+                                >
+                                    <Youtube className="h-5 w-5" />
+                                </a>
+                                <a
+                                    href="https://www.instagram.com/rofsankhan"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-300 hover:bg-brand-navy hover:text-brand-navy"
+                                    aria-label="Instagram"
+                                >
+                                    <Instagram className="h-5 w-5" />
+                                </a>
+                                <a
+                                    href="https://www.linkedin.com/in/rofsankhan"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-300 hover:bg-brand-navy hover:text-brand-navy"
+                                    aria-label="LinkedIn"
+                                >
+                                    <Linkedin className="h-5 w-5" />
+                                </a>
+                            </div>
                         </div>
 
-                        {/* Column 2: Quick Links */}
-                        <div>
-                            <h4 className="mb-4 font-bold text-white">
+                        {/* Quick Links */}
+                        <div className="space-y-6">
+                            <h4 className="text-lg font-semibold text-white">
                                 Quick Links
                             </h4>
-                            <ul className="space-y-2">
+                            <ul className="space-y-3 text-white/80">
                                 {quickLinks.map((link) => (
                                     <li key={link.label}>
                                         <a
                                             href={link.href}
-                                            className="text-sm text-gray-300 transition-all duration-300 hover:text-white hover:translate-x-1"
+                                            className="transition-colors hover:text-white"
                                         >
                                             {link.label}
                                         </a>
@@ -77,156 +156,75 @@ const Footer = () => {
                             </ul>
                         </div>
 
-                        {/* Column 3: Contact Information */}
-                        <div>
-                            <h4 className="mb-4 font-bold text-white">
-                                Contact Us
+                        {/* Courses */}
+                        <div className="space-y-6">
+                            <h4 className="text-lg font-semibold text-white">
+                                Courses
                             </h4>
-                            <div className="space-y-3 text-sm">
-                                <div className="flex items-start gap-3">
-                                    <MapPin className="mt-1 h-4 w-4 text-primary" />
-                                    <div className="text-gray-300">
-                                        <p className="font-medium">
-                                            Main Location:
-                                        </p>
-                                        <p>
-                                            7/7, Block-C, Lalmatia
-                                            <br />
-                                            Dhaka-1207, Bangladesh
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-3">
-                                    <Phone className="mt-1 h-4 w-4 text-primary" />
-                                    <div className="text-gray-300">
-                                        <p>01711-772662</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-3">
-                                    <Mail className="mt-1 h-4 w-4 text-primary" />
-                                    <div className="text-gray-300">
-                                        <p>rofsankhan@gmail.com</p>
-                                    </div>
-                                </div>
-                            </div>
+                            <ul className="space-y-3 text-white/80">
+                                {courses.map((course) => (
+                                    <li key={course.label}>
+                                        <a
+                                            href={course.href}
+                                            className="transition-colors hover:text-white"
+                                        >
+                                            {course.label}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
 
-                        {/* Column 4: Office Hours & Social */}
-                        <div>
-                            <h4 className="mb-4 font-bold text-white">
-                                Office Hours
+                        {/* Resources */}
+                        <div className="space-y-6">
+                            <h4 className="text-lg font-semibold text-white">
+                                Resources
                             </h4>
-                            <div className="mb-6 space-y-2 text-sm text-gray-300">
-                                <p>
-                                    <span className="font-medium">
-                                        Saturday - Thursday:
-                                    </span>
-                                    <br />
-                                    9:00 AM - 8:00 PM
-                                </p>
-                                <p>
-                                    <span className="font-medium">Friday:</span>
-                                    <br />
-                                    Closed
-                                </p>
-                            </div>
-
-                            <h4 className="mb-4 font-bold text-white">
-                                Follow Us
-                            </h4>
-                            <div className="flex gap-4">
-                                <a
-                                    href="#"
-                                    className="text-gray-300 transition-colors hover:text-white"
-                                >
-                                    <Facebook className="h-5 w-5" />
-                                </a>
-                                <a
-                                    href="#"
-                                    className="text-gray-300 transition-colors hover:text-white"
-                                >
-                                    <Instagram className="h-5 w-5" />
-                                </a>
-                                <a
-                                    href="#"
-                                    className="text-gray-300 transition-colors hover:text-white"
-                                >
-                                    <MessageCircle className="h-5 w-5" />
-                                </a>
-                            </div>
-                        </div>
-
-                        {/* Column 5: Resources & Quick Info */}
-                        <div>
-                            <h4 className="mb-4 font-bold text-white">
-                                Important Info
-                            </h4>
-                            <div className="mb-6 space-y-3 text-sm text-gray-300">
-                                <div className="flex items-center gap-2">
-                                    <Globe className="h-4 w-4 text-primary" />
-                                    <span>Online Classes Available</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <Award className="h-4 w-4 text-primary" />
-                                    <span>Cambridge Certified</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <BookOpen className="h-4 w-4 text-primary" />
-                                    <span>Published Author</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <TrendingUp className="h-4 w-4 text-primary" />
-                                    <span>Proven Results</span>
-                                </div>
-                            </div>
+                            <ul className="space-y-3 text-white/80">
+                                {resources.map((resource) => (
+                                    <li key={resource.label}>
+                                        <a
+                                            href={resource.href}
+                                            className="transition-colors hover:text-white"
+                                        >
+                                            {resource.label}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     </div>
+                </div>
 
-                    {/* Bottom Footer Bar */}
-                    <div className="border-t border-white/20 pt-8">
+                {/* Bottom Bar */}
+                <div className="border-t border-white/20 bg-white/5">
+                    <div className="container-max section-padding">
                         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-                            <p className="text-sm text-gray-400">
-                                © 2026 Rofsan Khan - O Level Bengali. All
-                                Rights Reserved.
+                            <p className="text-sm text-white/70">
+                                © {new Date().getFullYear()} Rofsan Sir. All
+                                rights reserved.
                             </p>
-                            <div className="flex flex-wrap gap-6 text-sm">
+
+                            <div className="flex items-center gap-6 text-sm text-white/70">
                                 <a
-                                    href="#"
-                                    className="text-gray-400 transition-colors hover:text-white"
+                                    href="/privacy"
+                                    className="transition-colors hover:text-white"
                                 >
                                     Privacy Policy
                                 </a>
                                 <a
-                                    href="#"
-                                    className="text-gray-400 transition-colors hover:text-white"
+                                    href="/terms"
+                                    className="transition-colors hover:text-white"
                                 >
-                                    Terms & Conditions
+                                    Terms of Service
                                 </a>
                                 <a
-                                    href="#"
-                                    className="text-gray-400 transition-colors hover:text-white"
-                                >
-                                    Refund Policy
-                                </a>
-                                <a
-                                    href="#"
-                                    className="text-gray-400 transition-colors hover:text-white"
+                                    href="/sitemap"
+                                    className="transition-colors hover:text-white"
                                 >
                                     Sitemap
                                 </a>
-                                <a
-                                    href="/admin-login"
-                                    className="text-gray-400 transition-colors hover:text-white"
-                                >
-                                    Admin
-                                </a>
                             </div>
-                            <a
-                                href="https://sakibian.com"
-                                className="text-sm text-gray-400"
-                            >
-                                Website Developed by sakibian.com
-                            </a>
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,6 @@
 import { BookOpen, CheckCircle, TestTube } from 'lucide-react';
+import useStaggeredAnimation from '@/animations/hooks/useStaggeredAnimation';
+import { useCardHoverAnimation } from '@/animations/hooks/useHoverAnimation';
 
 const courseFeatures = [
     {
@@ -22,14 +24,26 @@ const courseFeatures = [
 ];
 
 const CoursesSection = () => {
+    const { elementRef, isIntersecting } = useStaggeredAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { hoverStyles, hoverHandlers } = useCardHoverAnimation();
+
     return (
         <section
+            ref={elementRef}
             id="courses"
-            className="py-20 px-4 md:px-8"
+            className={`py-20 px-4 md:px-8 transition-opacity duration-1000 ${
+                isIntersecting ? 'opacity-100' : 'opacity-0'
+            }`}
+            aria-label="O Level Bangla Course Features"
+            role="region"
         >
             <div className="container mx-auto max-w-6xl">
                 <div className="mb-16 text-center">
-                    <h2 className="mb-6 text-3xl md:text-4xl font-bold text-[#344871]">
+                    <h2 className="mb-6 text-3xl md:text-4xl font-bold text-brand-navy">
                         O Level Bangla Full Course
                     </h2>
                     <p className="mx-auto max-w-3xl text-lg text-gray-600">
@@ -43,20 +57,22 @@ const CoursesSection = () => {
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                     {courseFeatures.map((feature, index) => {
                         const colors = [
-                            { border: 'border-t-[#006DD6]', icon: 'text-[#006DD6]', bgIcon: 'bg-[#006DD6]/10' },
-                            { border: 'border-t-[#344871]', icon: 'text-[#344871]', bgIcon: 'bg-[#344871]/10' },
-                            { border: 'border-t-[#E9BA08]', icon: 'text-[#344871]', bgIcon: 'bg-[#E9BA08]/10' },
+                            { border: 'border-t-brand-blue', icon: 'text-brand-blue', bgIcon: 'bg-brand-blue/10' },
+                            { border: 'border-t-brand-navy', icon: 'text-brand-navy', bgIcon: 'bg-brand-navy/10' },
+                            { border: 'border-t-brand-navy', icon: 'text-brand-navy', bgIcon: 'bg-brand-navy/10' },
                         ];
                         const color = colors[index];
                         return (
                             <div
                                 key={index}
-                                className={`group flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 ${color.border} border-t-4`}
+                                className={`flex flex-col items-center rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-lg transition-all duration-300 ${color.border} border-t-4`}
+                                style={hoverStyles}
+                                {...hoverHandlers}
                             >
                                 <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-lg transition-all duration-300 group-hover:scale-110 ${color.bgIcon}`}>
                                     <feature.icon className={`h-8 w-8 ${color.icon} transition-transform duration-300`} />
                                 </div>
-                                <h3 className="mb-4 text-xl font-bold text-[#344871]">
+                                <h3 className="mb-4 text-xl font-bold text-brand-navy">
                                     {feature.title}
                                 </h3>
                                 <ul className="space-y-2 mb-4">

@@ -34,7 +34,7 @@ export default function Class10Course() {
                     <section className="pb-16 px-4 md:px-8">
                         <div className="container mx-auto max-w-6xl">
                             <div className="text-center mb-12">
-                                <div className="inline-flex items-center px-4 py-2 bg-[#E9BA08] text-[#344871] rounded-full mb-6">
+                                <div className="inline-flex items-center px-4 py-2 bg-[#344871] text-[#344871] rounded-full mb-6">
                                     <Award className="w-4 h-4 mr-2" />
                                     <span className="font-medium">Exam Focused Program</span>
                                 </div>
@@ -50,19 +50,19 @@ export default function Class10Course() {
                             {/* Key Stats */}
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mb-12">
                                 <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 text-center">
-                                    <div className="text-2xl font-bold text-[#E9BA08] mb-2">1 Year</div>
+                                    <div className="text-2xl font-bold text-[#344871] mb-2">1 Year</div>
                                     <div className="text-gray-600 text-sm">Intensive Program</div>
                                 </div>
                                 <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 text-center">
-                                    <div className="text-2xl font-bold text-[#E9BA08] mb-2">Full</div>
+                                    <div className="text-2xl font-bold text-[#344871] mb-2">Full</div>
                                     <div className="text-gray-600 text-sm">Syllabus Coverage</div>
                                 </div>
                                 <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 text-center">
-                                    <div className="text-2xl font-bold text-[#E9BA08] mb-2">Mock</div>
+                                    <div className="text-2xl font-bold text-[#344871] mb-2">Mock</div>
                                     <div className="text-gray-600 text-sm">Exam Practice</div>
                                 </div>
                                 <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 text-center">
-                                    <div className="text-2xl font-bold text-[#E9BA08] mb-2">100%</div>
+                                    <div className="text-2xl font-bold text-[#344871] mb-2">100%</div>
                                     <div className="text-gray-600 text-sm">Exam Ready</div>
                                 </div>
                             </div>
@@ -87,14 +87,14 @@ export default function Class10Course() {
                                             <span className="text-gray-700">Saturday-Thursday</span>
                                         </div>
                                         <div className="flex items-center gap-2">
-                                            <Award className="w-5 h-5 text-[#E9BA08]" />
+                                            <Award className="w-5 h-5 text-[#344871]" />
                                             <span className="text-gray-700">Exam Excellence</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="bg-white p-8 rounded-2xl shadow-lg">
                                     <div className="text-center mb-6">
-                                        <GraduationCap className="w-16 h-16 text-[#E9BA08] mx-auto mb-4" />
+                                        <GraduationCap className="w-16 h-16 text-[#344871] mx-auto mb-4" />
                                         <h3 className="text-xl font-bold text-[#344871]">Perfect For</h3>
                                     </div>
                                     <ul className="space-y-3">
@@ -144,7 +144,7 @@ export default function Class10Course() {
                                 </div>
 
                                 <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group delay-200">
-                                    <div className="w-12 h-12 bg-[#E9BA08] rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                                    <div className="w-12 h-12 bg-[#344871] rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                                         <Award className="w-6 h-6 text-white" />
                                     </div>
                                     <h3 className="text-xl font-bold text-[#344871] mb-3">Time Management</h3>
@@ -168,7 +168,7 @@ export default function Class10Course() {
                                 </div>
 
                                 <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group delay-500">
-                                    <div className="w-12 h-12 bg-[#E9BA08] rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                                    <div className="w-12 h-12 bg-[#344871] rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                                         <Award className="w-6 h-6 text-white" />
                                     </div>
                                     <h3 className="text-xl font-bold text-[#344871] mb-3">Exam Confidence</h3>
@@ -246,9 +246,9 @@ export default function Class10Course() {
                                 </p>
                             </div>
 
-                            <div className="bg-gradient-to-r from-[#E9BA08]/10 to-[#006DD6]/10 rounded-2xl p-8 md:p-12">
+                            <div className="bg-gradient-to-r from-[#344871]/10 to-[#006DD6]/10 rounded-2xl p-8 md:p-12">
                                 <div className="text-center mb-8">
-                                    <Award className="w-16 h-16 text-[#E9BA08] mx-auto mb-4" />
+                                    <Award className="w-16 h-16 text-[#344871] mx-auto mb-4" />
                                     <h3 className="text-2xl font-bold text-[#344871] mb-4">Exam Excellence</h3>
                                 </div>
 
@@ -274,7 +274,7 @@ export default function Class10Course() {
                                     </div>
 
                                     <div className="text-center">
-                                        <div className="w-12 h-12 bg-[#E9BA08] rounded-full flex items-center justify-center mx-auto mb-3">
+                                        <div className="w-12 h-12 bg-[#344871] rounded-full flex items-center justify-center mx-auto mb-3">
                                             <Target className="w-6 h-6 text-white" />
                                         </div>
                                         <h4 className="font-bold text-[#344871] mb-2">Grade Excellence</h4>
@@ -286,7 +286,7 @@ export default function Class10Course() {
                     </section>
 
                     {/* CTA Section */}
-                    <section className="py-16 px-4 md:px-8 bg-gradient-to-r from-[#E9BA08] to-[#344871]">
+                    <section className="py-16 px-4 md:px-8 bg-gradient-to-r from-[#344871] to-[#344871]">
                         <div className="container mx-auto max-w-4xl text-center">
                             <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
                                 Ready for Exam Success?

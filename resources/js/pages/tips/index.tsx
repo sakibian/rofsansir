@@ -2,8 +2,60 @@ import Header from '@/components/header';
 import Footer from '@/components/Footer';
 import { Head } from '@inertiajs/react';
 import { BookOpen, CheckCircle, Lightbulb, MessageCircle, Target, TrendingUp, AlertTriangle, Calendar, Star } from 'lucide-react';
+import { useScrollAnimation } from '@/animations/hooks/useScrollAnimation';
+import { useCardHoverAnimation, useButtonHoverAnimation } from '@/animations/hooks/useHoverAnimation';
+import AnimatedSection from '@/animations/components/AnimatedSection';
+import AnimatedGrid from '@/animations/components/AnimatedGrid';
 
 export default function Tips() {
+    const { elementRef: heroRef, isIntersecting: heroIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { elementRef: introRef, isIntersecting: introIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { elementRef: categoriesRef, isIntersecting: categoriesIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { elementRef: markSchemeRef, isIntersecting: markSchemeIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { elementRef: successRef, isIntersecting: successIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { elementRef: criteriaRef, isIntersecting: criteriaIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { elementRef: mistakesRef, isIntersecting: mistakesIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { elementRef: askRef, isIntersecting: askIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { elementRef: resourcesRef, isIntersecting: resourcesIntersecting } = useScrollAnimation({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { hoverStyles: cardHoverStyles, hoverHandlers: cardHoverHandlers } = useCardHoverAnimation();
+    const { hoverStyles: buttonHoverStyles, hoverHandlers: buttonHoverHandlers } = useButtonHoverAnimation();
+
     return (
         <>
             <Head title="Examiner Tips - Rofsan Sir" />
@@ -11,7 +63,12 @@ export default function Tips() {
                 <Header />
 
                 {/* Page Header */}
-                <section className="bg-gradient-to-br from-brand-blue/5 via-white to-brand-navy/5 py-16">
+                <AnimatedSection
+                    className="bg-gradient-to-br from-brand-blue/5 via-white to-brand-navy/5 py-16"
+                    animationType="fade-in-up"
+                    delay={0}
+                    elementRef={heroRef}
+                >
                     <div className="container-max section-padding">
                         <div className="text-center">
                             <h1 className="text-4xl md:text-5xl font-bold text-brand-navy mb-4">
@@ -22,10 +79,15 @@ export default function Tips() {
                             </p>
                         </div>
                     </div>
-                </section>
+                </AnimatedSection>
 
                 {/* Introduction */}
-                <section className="py-16">
+                <AnimatedSection
+                    className="py-16"
+                    animationType="fade-in-up"
+                    delay={100}
+                    elementRef={introRef}
+                >
                     <div className="container-max section-padding">
                         <div className="max-w-4xl mx-auto text-center">
                             <p className="text-lg text-gray-600 leading-relaxed mb-6">
@@ -36,10 +98,17 @@ export default function Tips() {
                             </p>
                         </div>
                     </div>
-                </section>
+                </AnimatedSection>
 
                 {/* Examiner Tips Categories */}
-                <section className="py-16 bg-surface">
+                <AnimatedSection
+                    className="py-16 bg-surface"
+                    animationType="fade-in-up"
+                    delay={200}
+                    ref={categoriesRef}
+                    aria-label="Examiner tips categories"
+                    role="region"
+                >
                     <div className="container-max section-padding">
                         <h2 className="text-3xl font-bold text-brand-navy mb-12 text-center">Examiner Tips Blog Categories</h2>
 
@@ -108,36 +177,36 @@ export default function Tips() {
                         {/* General Exam Strategy Tips */}
                         <div className="mt-12 bg-white p-8 rounded-2xl border border-gray-200 shadow-lg">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="w-12 h-12 bg-brand-gold/10 rounded-full flex items-center justify-center">
+                                <div className="w-12 h-12 bg-brand-navy/10 rounded-full flex items-center justify-center">
                                     <TrendingUp className="h-6 w-6 text-brand-navy" />
                                 </div>
                                 <h3 className="text-xl font-bold text-brand-navy">General Exam Strategy Tips</h3>
                             </div>
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                <div className="border-l-4 border-brand-gold/30 pl-4">
+                                <div className="border-l-4 border-brand-navy/30 pl-4">
                                     <h4 className="font-semibold text-brand-navy mb-1">Tip #10: The A* Mindset</h4>
                                     <p className="text-sm text-gray-600">What separates grade A students from A* students.</p>
                                 </div>
-                                <div className="border-l-4 border-brand-gold/30 pl-4">
+                                <div className="border-l-4 border-brand-navy/30 pl-4">
                                     <h4 className="font-semibold text-brand-navy mb-1">Tip #11: Past Paper Practice Method</h4>
                                     <p className="text-sm text-gray-600">The right way to use past papers for maximum improvement.</p>
                                 </div>
-                                <div className="border-l-4 border-brand-gold/30 pl-4">
+                                <div className="border-l-4 border-brand-navy/30 pl-4">
                                     <h4 className="font-semibold text-brand-navy mb-1">Tip #12: Handwriting & Presentation</h4>
                                     <p className="text-sm text-gray-600">Yes, it matters - here's how much.</p>
                                 </div>
-                                <div className="border-l-4 border-brand-gold/30 pl-4">
+                                <div className="border-l-4 border-brand-navy/30 pl-4">
                                     <h4 className="font-semibold text-brand-navy mb-1">Tip #13: Revision Strategy</h4>
                                     <p className="text-sm text-gray-600">A 6-week plan for comprehensive Bengali revision.</p>
                                 </div>
-                                <div className="border-l-4 border-brand-gold/30 pl-4">
+                                <div className="border-l-4 border-brand-navy/30 pl-4">
                                     <h4 className="font-semibold text-brand-navy mb-1">Tip #14: Exam Day Checklist</h4>
                                     <p className="text-sm text-gray-600">What to do the night before and morning of your exam.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
+                </AnimatedSection>
 
                 {/* Weekly Feature */}
                 <section className="py-16">

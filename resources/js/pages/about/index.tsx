@@ -17,6 +17,8 @@ import {
     Trophy,
     Heart
 } from 'lucide-react';
+import useStaggeredAnimation from '@/animations/hooks/useStaggeredAnimation';
+import { useCardHoverAnimation, useButtonHoverAnimation } from '@/animations/hooks/useHoverAnimation';
 
 type AboutCard = {
     icon: React.ComponentType<{ className?: string }>;
@@ -61,7 +63,7 @@ const aboutCards: AboutCard[] = [
             'Continuous professional development'
         ],
         summary: 'Strong academic foundation combined with specialized Cambridge training, ensuring world-class Bengali language instruction.',
-        color: 'gold'
+        color: 'navy'
     },
     {
         icon: Target,
@@ -97,7 +99,7 @@ const aboutCards: AboutCard[] = [
             'Genuine language proficiency'
         ],
         summary: 'Proven track record of transforming student confidence and achieving outstanding examination results year after year.',
-        color: 'gold'
+        color: 'navy'
     },
     {
         icon: BookOpen,
@@ -133,11 +135,11 @@ const aboutCards: AboutCard[] = [
             'Strong foundational skills'
         ],
         summary: 'Choose clarity, confidence, and excellence in Bengali education. Experience teaching that makes learning enjoyable and successful.',
-        color: 'gold'
+        color: 'navy'
     }
 ];
 
-type ColorType = 'blue' | 'navy' | 'gold';
+type ColorType = 'blue' | 'navy';
 
 const colorClasses: Record<ColorType, { border: string; icon: string; bgIcon: string; hover: string }> = {
     blue: {
@@ -151,24 +153,31 @@ const colorClasses: Record<ColorType, { border: string; icon: string; bgIcon: st
         icon: 'text-brand-navy',
         bgIcon: 'bg-brand-navy/10',
         hover: 'hover:shadow-brand-navy/20'
-    },
-    gold: {
-        border: 'border-t-brand-gold',
-        icon: 'text-brand-navy',
-        bgIcon: 'bg-brand-gold/10',
-        hover: 'hover:shadow-brand-gold/20'
     }
 };
 
 export default function About() {
+    const { elementRef, isIntersecting } = useStaggeredAnimation<HTMLDivElement>({
+        threshold: 0.1,
+        triggerOnce: true,
+    });
+
+    const { hoverStyles: cardHoverStyles, hoverHandlers: cardHoverHandlers } = useCardHoverAnimation();
+    const { hoverStyles: buttonHoverStyles, hoverHandlers: buttonHoverHandlers } = useButtonHoverAnimation();
+
     return (
         <>
             <Head title="About Rofsan Sir - Cambridge Examiner" />
-            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
+            <div
+                ref={elementRef}
+                className={`min-h-screen bg-gradient-to-br from-gray-50 to-white transition-opacity duration-1000 ${
+                    isIntersecting ? 'opacity-100' : 'opacity-0'
+                }`}
+            >
                 <Header />
 
                 {/* Page Header */}
-                <section className="bg-gradient-to-br from-brand-blue/5 via-white to-brand-navy/5 py-20">
+                <section className="bg-gradient-to-br from-brand-blue/5 via-white to-brand-navy/5 py-20" aria-label="About page header" role="banner">
                     <div className="container-max section-padding">
                         <div className="text-center">
                             <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-brand-navy to-brand-blue bg-clip-text text-transparent mb-6">
@@ -179,7 +188,7 @@ export default function About() {
                             </p>
                             <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm text-brand-navy/80">
                                 <span className="flex items-center gap-2">
-                                    <Star className="h-4 w-4 text-brand-gold" />
+                                    <Star className="h-4 w-4 text-brand-navy" />
                                     8+ Years Experience
                                 </span>
                                 <span className="flex items-center gap-2">
@@ -196,7 +205,7 @@ export default function About() {
                 </section>
 
                 {/* About Cards Grid */}
-                <section className="py-20 px-4 md:px-8">
+                <section className="py-20 px-4 md:px-8" aria-label="About Rofsan Sir details" role="region">
                     <div className="container mx-auto max-w-7xl">
                         <div className="mb-16 text-center">
                             <h2 className="mb-6 text-3xl md:text-5xl font-bold text-brand-navy">
@@ -215,7 +224,9 @@ export default function About() {
                                 return (
                                     <div
                                         key={index}
-                                        className={`group flex flex-col rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2 ${colorClass.border} border-t-4 ${colorClass.hover}`}
+                                        className={`flex flex-col rounded-2xl border border-gray-200 bg-white p-8 text-center shadow-lg transition-all duration-500 ${colorClass.border} border-t-4`}
+                                        style={cardHoverStyles}
+                                        {...cardHoverHandlers}
                                     >
                                         <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-lg transition-all duration-300 group-hover:scale-110 mx-auto ${colorClass.bgIcon}`}>
                                             <card.icon className={`h-8 w-8 ${colorClass.icon} transition-transform duration-300`} />
@@ -242,7 +253,7 @@ export default function About() {
                 </section>
 
                 {/* Vision & Mission Section */}
-                <section className="py-20 bg-gradient-to-r from-brand-navy/5 to-brand-blue/5">
+                <section className="py-20 bg-gradient-to-r from-brand-navy/5 to-brand-blue/5" aria-label="Vision and mission" role="region">
                     <div className="container-max section-padding">
                         <h2 className="text-3xl md:text-4xl font-bold text-brand-navy mb-12 text-center">Vision & Mission</h2>
 
@@ -261,7 +272,7 @@ export default function About() {
 
                             <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-lg">
                                 <div className="flex items-center gap-3 mb-6">
-                                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-gold/10">
+                                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-navy/10">
                                         <Lightbulb className="h-6 w-6 text-brand-navy" />
                                     </div>
                                     <h3 className="text-2xl font-bold text-brand-navy">Mission</h3>
@@ -275,7 +286,7 @@ export default function About() {
                 </section>
 
                 {/* Connect Section */}
-                <section className="py-20">
+                <section className="py-20" aria-label="Contact information" role="region">
                     <div className="container-max section-padding">
                         <h2 className="text-3xl md:text-4xl font-bold text-brand-navy mb-12 text-center">Connect With Rofsan Khan</h2>
 
@@ -303,7 +314,7 @@ export default function About() {
                                     </div>
 
                                     <div className="flex items-start gap-4">
-                                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-gold/10">
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-navy/10">
                                             <Phone className="h-5 w-5 text-brand-navy" />
                                         </div>
                                         <div>
@@ -321,13 +332,17 @@ export default function About() {
                                     <div className="flex flex-col sm:flex-row gap-4">
                                         <a
                                             href="/courses"
-                                            className="flex-1 inline-flex items-center justify-center gap-3 bg-gradient-to-r from-brand-blue to-brand-navy text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105"
+                                            className="flex-1 inline-flex items-center justify-center gap-3 bg-gradient-to-r from-brand-blue to-brand-navy text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300"
+                                            style={buttonHoverStyles}
+                                            {...buttonHoverHandlers}
                                         >
                                             Explore Courses
                                         </a>
                                         <a
                                             href="/contact"
-                                            className="flex-1 inline-flex items-center justify-center gap-3 bg-white text-brand-navy border border-brand-navy px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:bg-brand-navy hover:text-white"
+                                            className="flex-1 inline-flex items-center justify-center gap-3 bg-white text-brand-navy border border-brand-navy px-6 py-3 rounded-xl font-semibold transition-all duration-300"
+                                            style={buttonHoverStyles}
+                                            {...buttonHoverHandlers}
                                         >
                                             Contact Now
                                         </a>
